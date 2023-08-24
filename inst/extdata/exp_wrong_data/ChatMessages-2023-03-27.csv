@@ -1,0 +1,36 @@
+session_code,id_in_session,participant_code,channel,nickname,body,timestamp
+7bfqtokx,2,iay3dhkn,1-chatapp-1,Participant 2,Hello,1679926176.8622322
+7bfqtokx,1,46kxib6w,1-chatapp-1,Participant 1,Hello,1679926186.2184594
+7bfqtokx,2,iay3dhkn,1-chatapp-1,Participant 2,Sample text 1,1679926199.8832426
+7bfqtokx,1,46kxib6w,1-chatapp-1,Participant 1,Sample text 2,1679926204.4859912
+7bfqtokx,2,iay3dhkn,1-chatapp-1,Participant 2,Goodbye,1679926209.9444165
+7bfqtokx,1,46kxib6w,1-chatapp-1,Participant 1,Goodbye,1679926213.9743862
+7bfqtokx,7,164r1hs4,1-chatapp-4,Participant 1,Hello ,1679926363.357307
+7bfqtokx,8,lsl3vbij,1-chatapp-4,Participant 2,"Hello, how are you? ",1679926369.4993718
+7bfqtokx,7,164r1hs4,1-chatapp-4,Participant 1,I am fine. Sorry for not giving you enough money!,1679926379.5320628
+7bfqtokx,8,lsl3vbij,1-chatapp-4,Participant 2,It's okay,1679926390.1915042
+7bfqtokx,6,rvce7958,1-chatapp-3,Participant 2,Hello,1679926414.5550432
+7bfqtokx,5,2d72mfgh,1-chatapp-3,Participant 1,Hi,1679926418.8008356
+7bfqtokx,6,rvce7958,1-chatapp-3,Participant 2,Sample text^1,1679926423.8744936
+7bfqtokx,5,2d72mfgh,1-chatapp-3,Participant 1,Sample text 2,1679926428.452823
+7bfqtokx,6,rvce7958,1-chatapp-3,Participant 2,Another sample,1679926438.0092793
+7bfqtokx,5,2d72mfgh,1-chatapp-3,Participant 1,yes!!!,1679926443.3187451
+7bfqtokx,3,4zhzdmzo,1-chatapp-2,Participant 1,Hello ,1679926501.626914
+7bfqtokx,4,3ttf7yix,1-chatapp-2,Participant 2,Hello ,1679926505.6700084
+7bfqtokx,3,4zhzdmzo,1-chatapp-2,Participant 1,This ! is my first sample text ^123,1679926515.960473
+7bfqtokx,4,3ttf7yix,1-chatapp-2,Participant 2,This is my second sample text,1679926524.1675825
+7bfqtokx,4,3ttf7yix,1-chatapp-2,Participant 2,"Oh no, my first!!!",1679926530.765887
+vd1h01iv,2,xmxl46rm,2-chatapp-6,Participant 2,Hello,1679926629.190523
+vd1h01iv,1,xx78b3x0,2-chatapp-6,Participant 1,Hello ,1679926632.9810913
+vd1h01iv,2,xmxl46rm,2-chatapp-6,Participant 2,Bye,1679926635.8345468
+vd1h01iv,1,xx78b3x0,2-chatapp-6,Participant 1,Bye,1679926640.3718634
+t0rog7nz,5,xkobdvuh,3-chatapp-10,Participant 1,Helo,1679926744.3719845
+t0rog7nz,6,1l5kal0r,3-chatapp-10,Participant 2,HI,1679926748.6160805
+t0rog7nz,3,a7dppel1,3-chatapp-9,Participant 1,Hello,1679926758.7965178
+t0rog7nz,4,wk247s9w,3-chatapp-9,Participant 2,Hi,1679926762.8595996
+t0rog7nz,2,jxh15obl,3-chatapp-8,Participant 2,67,1679926782.945577
+t0rog7nz,4,wk247s9w,3-chatapp-9,Participant 2,Bye,1679926792.9370947
+qyu3qg0q,1,7l0hmpcq,5-chatapp-14,Participant 1,Hey,1679926951.7375157
+qyu3qg0q,2,ia9rnfvc,5-chatapp-14,Participant 2,Hey,1679926955.5151262
+qyu3qg0q,2,ia9rnfvc,5-chatapp-14,Participant 2,Bye,1679926957.2808733
+qyu3qg0q,1,7l0hmpcq,5-chatapp-14,Participant 1,Bye,1679926960.5997083

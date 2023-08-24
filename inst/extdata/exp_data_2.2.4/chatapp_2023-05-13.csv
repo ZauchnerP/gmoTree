@@ -1,0 +1,15 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.ip_address,participant.time_started,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.payoff,group.id_in_subsession,subsession.round_number,session.code,session.label,session.experimenter_name,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,giqwyeh7,Person1,0,15,17,survey,CognitiveReflectionTest,127.0.0.1,2023-05-13 08:07:44.394673+00:00,1,,,134,1,0,1,1,mugt25jb,,,,,,0
+2,ibauvcv6,Person2,0,18,17,survey,Demographics,127.0.0.1,2023-05-13 08:07:44.890091+00:00,1,,,166,2,0,1,1,mugt25jb,,,,,,0
+3,mqaatrt4,Person3,0,4,17,dictator,ResultsWaitPage,127.0.0.1,2023-05-13 08:07:45.825341+00:00,1,,,0,1,0,2,1,mugt25jb,,,,,,0
+4,k8tihf8g,Person4,0,1,17,start,Start,127.0.0.1,2023-05-13 08:07:46.509581+00:00,1,,,0,2,0,2,1,mugt25jb,,,,,,0
+5,xb5oapsv,Person5,0,18,17,survey,Demographics,127.0.0.1,2023-05-13 08:07:47.117394+00:00,1,,,189,1,0,3,1,mugt25jb,,,,,,0
+6,oh3pjgtd,Person6,0,17,17,survey,Demographics,127.0.0.1,2023-05-13 08:07:47.829122+00:00,1,,,111,2,0,3,1,mugt25jb,,,,,,0
+7,744avqxx,Person7,0,1,17,start,Start,127.0.0.1,2023-05-13 08:07:48.984720+00:00,1,,,0,1,0,4,1,mugt25jb,,,,,,0
+8,u3jdbpav,Person8,0,2,17,dictator,Introduction,127.0.0.1,2023-05-13 08:07:50.258132+00:00,1,,,0,2,0,4,1,mugt25jb,,,,,,0
+9,k9v23vx9,,0,0,17,,,,,0,,,0,1,0,5,1,mugt25jb,,,,,,0
+10,1a5k98k4,,0,0,17,,,,,0,,,0,2,0,5,1,mugt25jb,,,,,,0
+1,pwg27fum,,0,18,17,survey,Demographics,127.0.0.1,2023-05-13 08:11:32.834582+00:00,1,,,155,1,0,1,1,1d33zgt8,,,,,,0
+2,trua2ysc,,0,18,17,survey,Demographics,127.0.0.1,2023-05-13 08:11:33.343669+00:00,1,,,145,2,0,1,1,1d33zgt8,,,,,,0
+3,gab9azw4,,0,7,17,dictator,Offer,127.0.0.1,2023-05-13 08:11:33.860623+00:00,1,,,12,1,0,2,1,1d33zgt8,,,,,,0
+4,6ox6u8dx,,0,6,17,dictator,Introduction,127.0.0.1,2023-05-13 08:11:34.419168+00:00,1,,,88,2,0,2,1,1d33zgt8,,,,,,0

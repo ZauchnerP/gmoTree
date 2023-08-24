@@ -1,0 +1,9 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._round_number,participant._current_page_name,participant.ip_address,participant.time_started,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.payoff,group.id_in_subsession,subsession.round_number,session.code,session.label,session.experimenter_name,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,7h4f7nhb,,0,3,17,dictator,1,Offer,127.0.0.1,2023-05-15 11:54:19.405472+00:00,1,,,0,1,0,1,1,g2athxx0,,,,,,1
+2,q5m0bupv,,0,1,17,start,1,Start,127.0.0.1,2023-05-15 11:54:19.452335+00:00,1,,,0,2,0,1,1,g2athxx0,,,,,,1
+1,58mp2shv,,0,3,17,dictator,1,Offer,127.0.0.1,2023-05-15 12:00:56.424786+00:00,1,,,0,1,0,1,1,lfy0dqvn,,,,,,1
+2,h9deh7vd,,0,4,17,dictator,1,ResultsWaitPage,127.0.0.1,2023-05-15 12:00:56.615877+00:00,1,,,0,2,0,1,1,lfy0dqvn,,,,,,1
+1,cybtvgeg,,0,1,17,start,1,Start,127.0.0.1,2023-05-16 15:49:37.887112+00:00,1,,,0,1,0,1,1,cwpc31ys,,,,,,0
+2,pwm92rv7,,0,4,17,dictator,1,ResultsWaitPage,127.0.0.1,2023-05-16 15:49:38.502804+00:00,1,,,0,2,0,1,1,cwpc31ys,,,,,,0
+3,c6yv70yw,,0,18,17,survey,1,Demographics,127.0.0.1,2023-05-16 15:49:38.972722+00:00,1,,,60,3,0,1,1,cwpc31ys,,,,,,0
+4,fo2mv7pu,,0,18,17,survey,1,Demographics,127.0.0.1,2023-05-16 15:49:39.486065+00:00,1,,,240,4,0,1,1,cwpc31ys,,,,,,0

@@ -1,0 +1,4 @@
+participant__session__code,participant__session_id,participant__id_in_session,participant__code,channel,nickname,body,timestamp
+cwpc31ys,3,3,c6yv70yw,3-1-4,Player 1,test message,1684255173.9796607
+cwpc31ys,3,4,fo2mv7pu,3-1-4,Player 2,other message,1684255179.820032
+cwpc31ys,3,3,c6yv70yw,3-1-4,Player 1,okay,1684255184.1788046

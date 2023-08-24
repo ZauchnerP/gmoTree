@@ -1,0 +1,7 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.ip_address,participant.time_started,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.payoff,group.id_in_subsession,group.kept,subsession.round_number,session.code,session.label,session.experimenter_name,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,nbz8a11o,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.719433+00:00,1,,,297,1,99,1,99,1,xym04r43,,,,,,0
+2,wtxqect9,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.738162+00:00,1,,,3,2,1,1,99,1,xym04r43,,,,,,0
+1,nbz8a11o,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.719433+00:00,1,,,297,1,99,1,99,2,xym04r43,,,,,,0
+2,wtxqect9,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.738162+00:00,1,,,3,2,1,1,99,2,xym04r43,,,,,,0
+1,nbz8a11o,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.719433+00:00,1,,,297,1,99,1,99,3,xym04r43,,,,,,0
+2,wtxqect9,,1,17,16,survey,Demographics,127.0.0.1,2023-04-06 20:26:21.738162+00:00,1,,,3,2,1,1,99,3,xym04r43,,,,,,0

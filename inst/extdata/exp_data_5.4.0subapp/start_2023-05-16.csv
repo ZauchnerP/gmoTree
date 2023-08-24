@@ -1,0 +1,9 @@
+﻿participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.time_started_utc,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.role,player.payoff,group.id_in_subsession,subsession.round_number,session.code,session.label,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,dhgisush,,0,3,17,dictator,Offer,2023-05-16 17:25:12.131078,1,,,0.0,1,,0.0,1,1,2wlrl5kb,,,,,1
+2,p6m495xi,,0,2,17,dictator,Introduction,2023-05-16 17:25:14.227178,1,,,0.0,2,,0.0,1,1,2wlrl5kb,,,,,1
+1,sdh9ar2m,,0,18,17,survey,Demographics,2023-05-16 17:25:31.066782,1,,,166.0,1,,0.0,1,1,jk9ekpl0,,,,,0
+2,vbuvng7x,,0,18,17,survey,Demographics,2023-05-16 17:25:31.457731,1,,,134.0,2,,0.0,1,1,jk9ekpl0,,,,,0
+3,1k58kgm7,,0,4,17,dictator,ResultsWaitPage,2023-05-16 17:25:31.887836,1,,,0.0,3,,0.0,1,1,jk9ekpl0,,,,,0
+4,j2g9mcaf,,0,2,17,dictator,Introduction,2023-05-16 17:25:32.282418,1,,,0.0,4,,0.0,1,1,jk9ekpl0,,,,,0
+1,c9inx5wl,Person1,0,18,17,survey,Demographics,2023-05-16 17:27:34.655856,1,,,110.0,1,,0.0,1,1,mz2r27bk,,,,,0
+2,kr8yd7f3,Person2,0,18,17,survey,Demographics,2023-05-16 17:27:40.265191,1,,,190.0,2,,0.0,1,1,mz2r27bk,,,,,0

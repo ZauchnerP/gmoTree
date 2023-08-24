@@ -1,0 +1,91 @@
+﻿participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.time_started_utc,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.role,player.payoff,group.id_in_subsession,group.kept,subsession.round_number,session.code,session.label,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,46kxib6w,Person1,0,17,16,survey,Demographics,2023-03-27 14:09:04.640153,1,,,80.0,1,,10.0,1,10.0,1,7bfqtokx,,,,,0
+2,iay3dhkn,Person2,0,17,16,survey,Demographics,2023-03-27 14:09:05.096409,1,,,220.0,2,,90.0,1,10.0,1,7bfqtokx,,,,,0
+3,4zhzdmzo,Person4,0,17,16,survey,Demographics,2023-03-27 14:09:06.305467,1,,,144.0,1,,20.0,2,20.0,1,7bfqtokx,,,,,0
+4,3ttf7yix,Person5,0,17,16,survey,Demographics,2023-03-27 14:09:06.993953,1,,,156.0,2,,80.0,2,20.0,1,7bfqtokx,,,,,0
+5,2d72mfgh,Person6,0,17,16,survey,Demographics,2023-03-27 14:09:07.592067,1,,,188.0,1,,22.0,3,22.0,1,7bfqtokx,,,,,0
+6,rvce7958,Person7,0,17,16,survey,Demographics,2023-03-27 14:09:07.984583,1,,,112.0,2,,78.0,3,22.0,1,7bfqtokx,,,,,0
+7,164r1hs4,Person8,0,13,16,chatapp,chat,2023-03-27 14:09:08.412382,1,,,166.0,1,,44.0,4,44.0,1,7bfqtokx,,,,,0
+8,lsl3vbij,Person9,0,17,16,survey,Demographics,2023-03-27 14:09:08.942393,1,,,134.0,2,,56.0,4,44.0,1,7bfqtokx,,,,,0
+9,ktjz5jli,Person10,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:09:09.570515,1,,,0.0,1,,0.0,5,22.0,1,7bfqtokx,,,,,0
+10,x0mrpuux,,0,0,16,,,,0,,,0.0,2,,0.0,5,22.0,1,7bfqtokx,,,,,0
+1,46kxib6w,Person1,0,17,16,survey,Demographics,2023-03-27 14:09:04.640153,1,,,80.0,1,,20.0,1,20.0,2,7bfqtokx,,,,,0
+2,iay3dhkn,Person2,0,17,16,survey,Demographics,2023-03-27 14:09:05.096409,1,,,220.0,2,,80.0,1,20.0,2,7bfqtokx,,,,,0
+3,4zhzdmzo,Person4,0,17,16,survey,Demographics,2023-03-27 14:09:06.305467,1,,,144.0,1,,90.0,2,90.0,2,7bfqtokx,,,,,0
+4,3ttf7yix,Person5,0,17,16,survey,Demographics,2023-03-27 14:09:06.993953,1,,,156.0,2,,10.0,2,90.0,2,7bfqtokx,,,,,0
+5,2d72mfgh,Person6,0,17,16,survey,Demographics,2023-03-27 14:09:07.592067,1,,,188.0,1,,80.0,3,80.0,2,7bfqtokx,,,,,0
+6,rvce7958,Person7,0,17,16,survey,Demographics,2023-03-27 14:09:07.984583,1,,,112.0,2,,20.0,3,80.0,2,7bfqtokx,,,,,0
+7,164r1hs4,Person8,0,13,16,chatapp,chat,2023-03-27 14:09:08.412382,1,,,166.0,1,,55.0,4,55.0,2,7bfqtokx,,,,,0
+8,lsl3vbij,Person9,0,17,16,survey,Demographics,2023-03-27 14:09:08.942393,1,,,134.0,2,,45.0,4,55.0,2,7bfqtokx,,,,,0
+9,ktjz5jli,Person10,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:09:09.570515,1,,,0.0,1,,0.0,5,,2,7bfqtokx,,,,,0
+10,x0mrpuux,,0,0,16,,,,0,,,0.0,2,,0.0,5,,2,7bfqtokx,,,,,0
+1,46kxib6w,Person1,0,17,16,survey,Demographics,2023-03-27 14:09:04.640153,1,,,80.0,1,,50.0,1,50.0,3,7bfqtokx,,,,,0
+2,iay3dhkn,Person2,0,17,16,survey,Demographics,2023-03-27 14:09:05.096409,1,,,220.0,2,,50.0,1,50.0,3,7bfqtokx,,,,,0
+3,4zhzdmzo,Person4,0,17,16,survey,Demographics,2023-03-27 14:09:06.305467,1,,,144.0,1,,34.0,2,34.0,3,7bfqtokx,,,,,0
+4,3ttf7yix,Person5,0,17,16,survey,Demographics,2023-03-27 14:09:06.993953,1,,,156.0,2,,66.0,2,34.0,3,7bfqtokx,,,,,0
+5,2d72mfgh,Person6,0,17,16,survey,Demographics,2023-03-27 14:09:07.592067,1,,,188.0,1,,86.0,3,86.0,3,7bfqtokx,,,,,0
+6,rvce7958,Person7,0,17,16,survey,Demographics,2023-03-27 14:09:07.984583,1,,,112.0,2,,14.0,3,86.0,3,7bfqtokx,,,,,0
+7,164r1hs4,Person8,0,13,16,chatapp,chat,2023-03-27 14:09:08.412382,1,,,166.0,1,,67.0,4,67.0,3,7bfqtokx,,,,,0
+8,lsl3vbij,Person9,0,17,16,survey,Demographics,2023-03-27 14:09:08.942393,1,,,134.0,2,,33.0,4,67.0,3,7bfqtokx,,,,,0
+9,ktjz5jli,Person10,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:09:09.570515,1,,,0.0,1,,0.0,5,,3,7bfqtokx,,,,,0
+10,x0mrpuux,,0,0,16,,,,0,,,0.0,2,,0.0,5,,3,7bfqtokx,,,,,0
+1,xx78b3x0,Person1,0,17,16,survey,Demographics,2023-03-27 14:16:27.265131,1,,,162.0,1,,56.0,1,56.0,1,vd1h01iv,,,,,0
+2,xmxl46rm,Person2,0,17,16,survey,Demographics,2023-03-27 14:16:27.736155,1,,,138.0,2,,44.0,1,56.0,1,vd1h01iv,,,,,0
+3,vbhvhozv,Person3,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.285839,1,,,67.0,1,,67.0,2,67.0,1,vd1h01iv,,,,,0
+4,2scvem7a,Person4,0,7,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.673152,1,,,33.0,2,,33.0,2,67.0,1,vd1h01iv,,,,,0
+1,xx78b3x0,Person1,0,17,16,survey,Demographics,2023-03-27 14:16:27.265131,1,,,162.0,1,,56.0,1,56.0,2,vd1h01iv,,,,,0
+2,xmxl46rm,Person2,0,17,16,survey,Demographics,2023-03-27 14:16:27.736155,1,,,138.0,2,,44.0,1,56.0,2,vd1h01iv,,,,,0
+3,vbhvhozv,Person3,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.285839,1,,,67.0,1,,0.0,2,,2,vd1h01iv,,,,,0
+4,2scvem7a,Person4,0,7,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.673152,1,,,33.0,2,,0.0,2,,2,vd1h01iv,,,,,0
+1,xx78b3x0,Person1,0,17,16,survey,Demographics,2023-03-27 14:16:27.265131,1,,,162.0,1,,50.0,1,50.0,3,vd1h01iv,,,,,0
+2,xmxl46rm,Person2,0,17,16,survey,Demographics,2023-03-27 14:16:27.736155,1,,,138.0,2,,50.0,1,50.0,3,vd1h01iv,,,,,0
+3,vbhvhozv,Person3,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.285839,1,,,67.0,1,,0.0,2,,3,vd1h01iv,,,,,0
+4,2scvem7a,Person4,0,7,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.673152,1,,,33.0,2,,0.0,2,,3,vd1h01iv,,,,,0
+1,iagvtslv,Person1,0,17,16,survey,Demographics,2023-03-27 14:18:04.608853,1,,,179.0,1,,78.0,1,78.0,1,t0rog7nz,,,,,0
+2,jxh15obl,Person2,0,15,16,survey,Offer,2023-03-27 14:18:04.992824,1,,,121.0,2,,22.0,1,78.0,1,t0rog7nz,,,,,0
+3,a7dppel1,Person3,0,17,16,survey,Demographics,2023-03-27 14:18:05.456749,1,,,129.0,1,,55.0,2,55.0,1,t0rog7nz,,,,,0
+4,wk247s9w,Person4,0,17,16,survey,Demographics,2023-03-27 14:18:08.192504,1,,,171.0,2,,45.0,2,55.0,1,t0rog7nz,,,,,0
+5,xkobdvuh,Person5,0,17,16,survey,Demographics,2023-03-27 14:18:08.930555,1,,,150.0,1,,56.0,3,56.0,1,t0rog7nz,,,,,0
+6,1l5kal0r,Person6,0,17,16,survey,Demographics,2023-03-27 14:18:09.598918,1,,,150.0,2,,44.0,3,56.0,1,t0rog7nz,,,,,0
+1,iagvtslv,Person1,0,17,16,survey,Demographics,2023-03-27 14:18:04.608853,1,,,179.0,1,,45.0,1,45.0,2,t0rog7nz,,,,,0
+2,jxh15obl,Person2,0,15,16,survey,Offer,2023-03-27 14:18:04.992824,1,,,121.0,2,,55.0,1,45.0,2,t0rog7nz,,,,,0
+3,a7dppel1,Person3,0,17,16,survey,Demographics,2023-03-27 14:18:05.456749,1,,,129.0,1,,51.0,2,51.0,2,t0rog7nz,,,,,0
+4,wk247s9w,Person4,0,17,16,survey,Demographics,2023-03-27 14:18:08.192504,1,,,171.0,2,,49.0,2,51.0,2,t0rog7nz,,,,,0
+5,xkobdvuh,Person5,0,17,16,survey,Demographics,2023-03-27 14:18:08.930555,1,,,150.0,1,,60.0,3,60.0,2,t0rog7nz,,,,,0
+6,1l5kal0r,Person6,0,17,16,survey,Demographics,2023-03-27 14:18:09.598918,1,,,150.0,2,,40.0,3,60.0,2,t0rog7nz,,,,,0
+1,iagvtslv,Person1,0,17,16,survey,Demographics,2023-03-27 14:18:04.608853,1,,,179.0,1,,56.0,1,56.0,3,t0rog7nz,,,,,0
+2,jxh15obl,Person2,0,15,16,survey,Offer,2023-03-27 14:18:04.992824,1,,,121.0,2,,44.0,1,56.0,3,t0rog7nz,,,,,0
+3,a7dppel1,Person3,0,17,16,survey,Demographics,2023-03-27 14:18:05.456749,1,,,129.0,1,,23.0,2,23.0,3,t0rog7nz,,,,,0
+4,wk247s9w,Person4,0,17,16,survey,Demographics,2023-03-27 14:18:08.192504,1,,,171.0,2,,77.0,2,23.0,3,t0rog7nz,,,,,0
+5,xkobdvuh,Person5,0,17,16,survey,Demographics,2023-03-27 14:18:08.930555,1,,,150.0,1,,34.0,3,34.0,3,t0rog7nz,,,,,0
+6,1l5kal0r,Person6,0,17,16,survey,Demographics,2023-03-27 14:18:09.598918,1,,,150.0,2,,66.0,3,34.0,3,t0rog7nz,,,,,0
+1,7wa8kk3d,Person1,0,1,16,dictator,Introduction,2023-03-27 14:21:11.807202,1,,,0.0,1,,0.0,1,,1,l8ecm1uh,,,,,0
+2,znri6myc,Person2,0,1,16,dictator,Introduction,2023-03-27 14:21:12.340856,1,,,0.0,2,,0.0,1,,1,l8ecm1uh,,,,,0
+3,ao9kqvqn,Person3,0,1,16,dictator,Introduction,2023-03-27 14:21:12.797378,1,,,0.0,1,,0.0,2,,1,l8ecm1uh,,,,,0
+4,d4sq7zio,Person4,0,1,16,dictator,Introduction,2023-03-27 14:21:13.126738,1,,,0.0,2,,0.0,2,,1,l8ecm1uh,,,,,0
+5,n38k7owj,,0,0,16,,,,0,,,0.0,1,,0.0,3,,1,l8ecm1uh,,,,,0
+6,ft1whkoy,,0,0,16,,,,0,,,0.0,2,,0.0,3,,1,l8ecm1uh,,,,,0
+1,7wa8kk3d,Person1,0,1,16,dictator,Introduction,2023-03-27 14:21:11.807202,1,,,0.0,1,,0.0,1,,2,l8ecm1uh,,,,,0
+2,znri6myc,Person2,0,1,16,dictator,Introduction,2023-03-27 14:21:12.340856,1,,,0.0,2,,0.0,1,,2,l8ecm1uh,,,,,0
+3,ao9kqvqn,Person3,0,1,16,dictator,Introduction,2023-03-27 14:21:12.797378,1,,,0.0,1,,0.0,2,,2,l8ecm1uh,,,,,0
+4,d4sq7zio,Person4,0,1,16,dictator,Introduction,2023-03-27 14:21:13.126738,1,,,0.0,2,,0.0,2,,2,l8ecm1uh,,,,,0
+5,n38k7owj,,0,0,16,,,,0,,,0.0,1,,0.0,3,,2,l8ecm1uh,,,,,0
+6,ft1whkoy,,0,0,16,,,,0,,,0.0,2,,0.0,3,,2,l8ecm1uh,,,,,0
+1,7wa8kk3d,Person1,0,1,16,dictator,Introduction,2023-03-27 14:21:11.807202,1,,,0.0,1,,0.0,1,,3,l8ecm1uh,,,,,0
+2,znri6myc,Person2,0,1,16,dictator,Introduction,2023-03-27 14:21:12.340856,1,,,0.0,2,,0.0,1,,3,l8ecm1uh,,,,,0
+3,ao9kqvqn,Person3,0,1,16,dictator,Introduction,2023-03-27 14:21:12.797378,1,,,0.0,1,,0.0,2,,3,l8ecm1uh,,,,,0
+4,d4sq7zio,Person4,0,1,16,dictator,Introduction,2023-03-27 14:21:13.126738,1,,,0.0,2,,0.0,2,,3,l8ecm1uh,,,,,0
+5,n38k7owj,,0,0,16,,,,0,,,0.0,1,,0.0,3,,3,l8ecm1uh,,,,,0
+6,ft1whkoy,,0,0,16,,,,0,,,0.0,2,,0.0,3,,3,l8ecm1uh,,,,,0
+1,7l0hmpcq,Person2,0,17,16,survey,Demographics,2023-03-27 14:22:03.278253,1,,,201.0,1,,45.0,1,45.0,1,qyu3qg0q,,,,,0
+2,ia9rnfvc,Person3,0,17,16,survey,Demographics,2023-03-27 14:22:03.285265,1,,,99.0,2,,55.0,1,45.0,1,qyu3qg0q,,,,,0
+1,7l0hmpcq,Person2,0,17,16,survey,Demographics,2023-03-27 14:22:03.278253,1,,,201.0,1,,100.0,1,100.0,2,qyu3qg0q,,,,,0
+2,ia9rnfvc,Person3,0,17,16,survey,Demographics,2023-03-27 14:22:03.285265,1,,,99.0,2,,0.0,1,100.0,2,qyu3qg0q,,,,,0
+1,7l0hmpcq,Person2,0,17,16,survey,Demographics,2023-03-27 14:22:03.278253,1,,,201.0,1,,56.0,1,56.0,3,qyu3qg0q,,,,,0
+2,ia9rnfvc,Person3,0,17,16,survey,Demographics,2023-03-27 14:22:03.285265,1,,,99.0,2,,44.0,1,56.0,3,qyu3qg0q,,,,,0
+1,sik9o0t0,,0,0,16,,,,0,,,0.0,1,,0.0,1,,1,87k2lr4z,,,,,1
+2,z2mym2bh,,0,0,16,,,,0,,,0.0,2,,0.0,1,,1,87k2lr4z,,,,,1
+1,sik9o0t0,,0,0,16,,,,0,,,0.0,1,,0.0,1,,2,87k2lr4z,,,,,1
+2,z2mym2bh,,0,0,16,,,,0,,,0.0,2,,0.0,1,,2,87k2lr4z,,,,,1
+1,sik9o0t0,,0,0,16,,,,0,,,0.0,1,,0.0,1,,3,87k2lr4z,,,,,1
+2,z2mym2bh,,0,0,16,,,,0,,,0.0,2,,0.0,1,,3,87k2lr4z,,,,,1

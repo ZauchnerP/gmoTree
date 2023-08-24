@@ -1,0 +1,5 @@
+session_code,participant_id_in_session,participant_code,page_index,app_name,page_name,epoch_time,round_number,timeout_happened,is_wait_page
+wj25lcvo,2,mkolhawa,1,start,Start,1683127111,1,0,0
+wj25lcvo,1,1hualed9,1,start,Start,1683127113,1,0,0
+wj25lcvo,1,1hualed9,2,dictator,Introduction,1683127115,1,0,0
+wj25lcvo,1,1hualed9,3,dictator,Offer,1683127118,1,0,0
