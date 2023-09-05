@@ -2061,7 +2061,7 @@ testthat::test_that("Delete sessions - old ", {
   test5 <- !(session %in% otree2$Chats$participant__session__code)
   testthat::expect_true(all(c(test1, test2, test3, test4, test5)))
 
-  # Test if participant is really deleted # todo die sind noch alle falsch
+  # Test if participant is really deleted
   test1 <- !(part %in% otree2$all_apps_wide$participant.code)
   test2 <- !(part %in% otree2$dictator$participant.code)
   test3 <- !(part %in% otree2$start$participant.code)

@@ -23,7 +23,7 @@
 #' Time data frame or from the "time_started"
 #' variable in all_apps_wide ("real"). Important: If integer,
 #' it represents the position within the page index sequence,
-#' not the numeric value of the index.
+#' not the numeric value of the page_index variable.
 #' @param tz Character. Time zone.
 #' @param sinfo Character.
 #' "session_id" to use session ID for additional information in the data frame
@@ -57,11 +57,15 @@
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
 #'
-#' # Make a data frame of durations
-#' extime(oTree)
-#'
 #' # Show time for one participant
 #' extime(oTree, pcode = "wk247s9w")
+#' 
+#' # Make a data frame of durations
+#' extime(oTree)
+#' 
+#' # Make a data frame of durations (beginning from the end of the second page)
+#' extime(oTree, startat = 2)
+
 
 #' @export
 extime <- function(
