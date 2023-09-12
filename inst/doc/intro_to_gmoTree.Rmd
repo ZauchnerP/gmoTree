@@ -1,0 +1,479 @@
+---
+title: "Introduction to gmoTree"
+author: "Patricia F. Zauchner"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: yes
+vignette: >
+  %\VignetteIndexEntry{Introduction to gmoTree}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r collapse=TRUE, include=FALSE}
+library(gmoTree)
+```
+
+Handling data from online experiments made with oTree (https://www.otree.org/) can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. gmoTree is not an official package of the oTree team but is built to complement the oTree open-source platform. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
+
+# Importing and cleaning up data
+
+## Background information on the data downloaded by oTree
+
+An oTree experiment is structured around one or more
+modular units called 'apps,' which encompass one or multiple 'pages.'
+Data generated from each app can be downloaded individually,
+offering the flexibility to analyze separate components of the experiment.
+For an all-encompassing view of the experiment, the data from all apps
+can also be downloaded in a comprehensive file labeled 'all_apps_wide.'
+
+In addition to the aforementioned app data and the cumulative all_apps_wide
+file, oTree generates a file with time stamps for every page. A file
+documenting all chat interactions is also provided if the experiment
+includes one or multiple chat rooms. In newer oTree versions, also custom
+data can be downloaded.
+
+When an oTree experiment is run across different databases, this set of
+data files is downloaded for each database. This would include individual
+app data files, the all_apps_wide file, a file for the time stamps of every
+page, and a chat log file if a chat room was used in the experiment.
+
+The gmoTree package's functionality lies in its ability to load and aggregate all of these files with ease.
+
+## import_otree()
+
+We can import all oTree data and combine them into a list of data frames
+using the ```import otree() ``` function.
+Each data frame is named according to its associated app, and the function
+generates an accompanying info list that details essential information regarding
+the imported files, such as any deleted cases.
+This information list is updated as we use other functions within the package.
+
+It is worth noting that even if we only use one all_apps_wide file,
+we should still load the data with ```import otree() ``` if we want to access other functions within the gmoTree package. Alternatively, we could reproduce the structure created by this function by hand. The following example shows how to import oTree data, the structure of the oTree list of data frames after importing the data, and all of the information provided in ```oTree$info```.
+
+```{r,  collapse=TRUE}
+# Get path to the package data
+path <- system.file("extdata/exp_data_5.4.0", package = "gmoTree")
+
+# Import without specifications
+# Import all oTree files in this folder and its subfolders
+otree <- gmoTree::import_otree(path = path)
+
+# Check the structure of the oTree list of data frames
+str(otree, 1)
+
+# The initial info list
+otree$info
+```
+Caution: This function only works if the oTree data is saved using the typical oTree file pattern!
+
+## delete_duplicate()
+
+Sometimes, the same data is imported several times. This could happen for several reasons. First, one data set might be part of another because of the download of temporarily stored data before downloading the final data frame. Second, if room-specific and global data is imported, the data in the ```all_apps_wide``` data frame are there two times. Third, the same data is stored in several imported folders. The function ```delete_duplicate()``` deletes duplicate data from all apps and ```all_apps_wide```. It, however, does not change the ```Time``` and ```Chats``` data frames.
+
+Before running the function, let us first check the number of participant codes and the initial count before executing the ```delete_duplicate()``` function. In the imported ```all_apps_wide``` data frame, we have 12 participant codes. However, among these, only 8 are unique, which indicates the presence of duplicate data. The ```info``` data frame suggests that there are initially 12 entries.
+
+```{r,  collapse=TRUE}
+# Initial check before deletion
+length(otree$all_apps_wide$participant.code)
+length(unique(otree$all_apps_wide$participant.code))
+otree$info$initial_n
+```
+
+To remove these duplicates, we employ the ```delete_duplicate()``` function:
+
+```{r, collapse=TRUE}
+# Delete duplicate cases
+otree <- delete_duplicate(otree)
+```
+
+Please note that details about the deleted rows are not added to a list of deleted cases. This is because the list might be used for analysis, and this function mainly focuses on cleaning up an untidy data import. However, the count in ```info$initial_n``` is adjusted accordingly.
+
+After the deletion operation, we should find that all participant codes are unique, and the count ```info$initial_n``` matches the number of unique participant codes.
+
+```{r, collapse=TRUE}
+# Check participant codes and initial_n after deletion
+length(otree$all_apps_wide$participant.code)
+length(unique(otree$all_apps_wide$participant.code))
+otree$info$initial_n
+```
+
+
+## Dealing with messy Chats and Time data frames
+
+If we combine data from experiments that ran on different versions of oTree,
+it might happen that there are several variables referring to the same
+attribute in the ```Time``` and in the ```Chats``` data frames. The functions ```messy_chat()``` and ```messy_time()``` integrate the corresponding variables if used with the argument ```combine = TRUE```.
+
+To show an example, let us first load data from different versions of oTree.
+
+```{r, collapse=TRUE}
+# Import data from different oTree versions
+otree_all <- gmoTree::import_otree(
+  path = system.file("extdata", package = "gmoTree"))
+
+# Check names of Time data frame
+names(otree_all$Time)
+
+# Check names of Chats data frame
+names(otree_all$Chats)
+```
+
+Now we can run the functions ```messy_time()``` and ```messy_chat()```. The warning messages are part of the expected output, indicating precisely which variables were combined. There is no need for concern when we see them. However, you can also turn them off using ```info = FALSE```.
+
+```{r, collapse=TRUE}
+otree_all <- messy_time(otree_all,
+                        combine = TRUE,
+                        info = TRUE)
+```
+
+```{r, collapse=TRUE}
+otree_all <- messy_chat(otree_all,
+                        combine = TRUE,
+                        info = TRUE)
+```
+
+```{r, collapse=TRUE}
+# Check names of Time data frame again
+names(otree_all$Time)
+
+# Check names of Chats data frame again
+names(otree_all$Chats)
+```
+
+
+# Dealing with dropouts and deleting cases
+
+## show_dropouts()
+
+Sometimes, participants drop out of experiments. To get an overview of
+the dropouts, we can use the function ```show_dropouts()```.
+It creates three data frames/tables with information on the participants
+that did not finish at (a) certain app(s) or page(s).
+
+First, the function ```show_dropouts()``` creates a data frame ```full``` that provides specific information on the apps and pages where participants left the experiment prematurely. Additionally, this data frame indicates which apps were affected by the participants who dropped out.
+
+```{r show dropouts, collapse=TRUE}
+# Show everyone that has not finished with the app "survey"
+dropout_list <- show_dropouts(otree, "survey")
+
+head(dropout_list$full)
+```
+
+Second, the function ```show_dropouts()``` also generates a smaller data frame ```unique``` that only includes information on each person once.
+```{r, collapse=TRUE}
+dropout_list$unique
+```
+
+Third, the function ```show_dropouts()``` furthermore creates a table ```all_end```, which contains information on all participants and where they ended the experiment. The columns contain the names of the pages of the experiment; the rows contain the names of the apps.
+
+```{r, collapse=TRUE}
+dropout_list$all_end
+```
+
+
+## delete_dropouts()
+
+Normally, we want to exclude dropouts from our analysis.
+The function ```delete_dropouts()``` removes all data related to participants
+who prematurely terminated the experiment from the data frames
+in the oTree list, except the data contained within the info list
+and the ```Chats``` data frame. I highly recommend personally deleting the chat data because it can occasionally become unintelligible once one person's input is removed. Therefore, this function does not delete the chat input of the participants who dropped out of the experiment.
+
+Before running the example, let us first check the row numbers of some data frames.
+
+```{r,  collapse=TRUE}
+# First, check some row numbers
+nrow(otree$all_apps_wide)
+nrow(otree$survey)
+nrow(otree$Time)
+nrow(otree$Chats)
+```
+
+When we run the function ```delete_dropouts()``` and check the row numbers again, we see that cases were deleted in each data frame but not in the `Chats` data frame.
+
+```{r delete dropouts,  collapse=TRUE}
+# Delete all cases that didn't end the experiment on the page "Demographics"
+# within the app "survey"
+otree2 <- delete_dropouts(otree,
+                         final_apps = c("survey"),
+                         final_pages = c("Demographics"),
+                         info = TRUE)
+
+# Check row numbers again
+nrow(otree2$all_apps_wide)
+nrow(otree2$survey)
+nrow(otree2$Time)
+nrow(otree2$Chats)
+
+```
+
+Just as ```show_dropouts()```, the ```delete_dropouts()``` function also gives detailed information on all the deleted cases.
+
+```{r, collapse=TRUE}
+head(otree2$info$deleted_cases$full)
+
+
+otree2$info$deleted_cases$unique
+
+
+otree2$info$deleted_cases$all_end
+```
+
+Caution: This function does not delete any data from the original
+CSV and Excel files!
+
+
+## delete_cases()
+
+Sometimes, participants ask for their data to be deleted. The ```delete_cases()``` function can delete a person from each app's data frame, ```all_apps_wide```, and the ```Time``` data frame. Again, data in the ```Chats``` data frame must be deleted by hand.
+
+```{r,  collapse=TRUE}
+# First, check some row numbers
+nrow(otree2$all_apps_wide)
+nrow(otree2$survey)
+nrow(otree2$Time)
+nrow(otree2$Chats)
+```
+
+```{r delete cases,  collapse=TRUE}
+# Delete one participant
+person <- otree2$all_apps_wide$participant.code[1]
+otree2 <- delete_cases(otree2,
+                       pcodes = person,
+                       reason = "requested",
+                       saved_vars = "participant._index_in_pages",
+                       info = TRUE)
+
+```
+
+```{r,  collapse=TRUE}
+# Check row numbers again
+nrow(otree2$all_apps_wide)
+nrow(otree2$survey)
+nrow(otree2$Time)
+nrow(otree2$Chats)
+```
+
+This function adds the information of all these deleted cases to the previously created information on all deleted cases.
+
+```{r, collapse=TRUE}
+# Check for all deleted cases (also dropouts):
+tail(otree2$info$deleted_cases$full)
+```
+
+
+Caution: This function does not delete any data from the original
+CSV and Excel files!
+
+## delete_sessions()
+
+While we certainly hope that it never becomes necessary, there may be instances where an entire session needs to be removed from the data set due to unforeseen issues. However, if that occurs, we can use the function ```delete_sessions()```.
+This function removes not only the sessions' data in all apps, ```all_apps_wide```, and the ```Time``` data frame but also the sessions' chat data in the ```Chats``` data frame because chatting is usually restricted within a session.
+
+In the following, we see the row numbers before deletion, the application of the function, and the row numbers after deletion. Apart from the other functions, the sessions' entries in the ```Chats``` data frame are destroyed here since chat data occurs just once per session and may thus be eliminated without impacting the comprehensibility of the chat data.
+
+```{r,  collapse=TRUE}
+# First, check some row numbers
+nrow(otree2$all_apps_wide)
+nrow(otree2$survey)
+nrow(otree2$Time)
+nrow(otree2$Chats)
+```
+
+```{r delete sessions,  collapse=TRUE}
+# Delete one session
+otree2 <- delete_sessions(otree,
+  scodes = "jk9ekpl0",
+  reason = "Only tests",
+  info = TRUE)
+```
+
+```{r,  collapse=TRUE}
+# Check row numbers again
+nrow(otree2$all_apps_wide)
+nrow(otree2$survey)
+nrow(otree2$Time)
+nrow(otree2$Chats)
+```
+
+
+# Deleting sensitive information
+
+## delete_pabels()
+
+It is not uncommon for the participant.label variable to contain sensitive information like an MTurk worker ID. This can raise serious privacy concerns. The function ```delete_plabels()``` automatically removes the ```participant.label``` variable from all data frames. Additionally, the function has the option to delete all MTurk-related variables.
+
+In the following, we see the application of the  ```delete_plabels()``` function, preceded by information on the sensitive variables before running the function and followed by information on the sensitive variables after running the function.
+
+```{r delete plables,  collapse=TRUE}
+# Check variables
+head(otree2$all_apps_wide$participant.label)
+head(otree2$all_apps_wide$participant.mturk_worker_id)
+head(otree2$survey$participant.label)
+
+# Delete all participant labels
+otree2 <- delete_plabels(otree2, del_mturk = TRUE)
+
+# Check variables
+head(otree2$all_apps_wide$participant.label)
+head(otree2$all_apps_wide$participant.mturk_worker_id)
+head(otree2$survey$participant.label)
+```
+
+Caution: This function does not delete the variable from the
+original CSV and Excel files!
+
+# Making IDs
+
+## make_ids()
+
+When working with oTree, participant codes, session codes, and group IDs are used to identify the cases. However, often, researchers prefer a streamlined, consecutive numbering system that spans all sessions, beginning with the first participant, session, or group and concluding with the last. The ```make_ids()``` function provides a way to achieve this goal. Before using the function, let us inspect the underlying variables first.
+
+
+```{r, collapse=TRUE}
+# Check variables first
+otree2$all_apps_wide$participant.code
+otree2$all_apps_wide$session.code
+otree2$all_apps_wide$dictator.1.group.id_in_subsession
+```
+
+
+```{r, collapse=TRUE}
+# Make session IDs only
+otree2 <- make_ids(otree2)
+```
+
+This function returns the following variables.
+
+```{r, collapse=TRUE}
+# Check variables
+otree2$all_apps_wide$participant_id
+otree2$all_apps_wide$session_id
+```
+
+In the prior example, Group IDs were not calculated because group IDs must be called specifically. Since the group IDs per app in our data do not match (groups are only relevant in the dictator app), just using `group_id = TRUE` would lead to an error message.
+
+For cases where the group IDs vary among apps, it can be specified in ```make_ids()``` which app or variable should be used for extracting group information. For instance, the following syntax can be used to obtain group IDs from the variable `dictator.1.group.id_in_subsession` in `all_apps_wide`.
+
+```{r, collapse=TRUE}
+# Get IDs from "from_variable" in the data frame "all_apps_wide"
+otree2 <- make_ids(otree2,
+                   # gmake = TRUE,  # Not necessary if from_var is not NULL
+                   from_var = "dictator.1.group.id_in_subsession")
+```
+
+```{r, collapse=TRUE}
+# Check variables
+otree2$all_apps_wide$participant_id
+otree2$all_apps_wide$group_id
+otree2$all_apps_wide$session_id
+```
+
+# Calculating the time
+
+## apptime()
+
+If we need to determine how much time the participants spent on a specific app, the ````apptime()```` function is a powerful tool that can help. This function calculates summary statistics such as the mean, minimum, and maximum time spent on each page, as well as a detailed list of durations for each participant in the app. The following example shows how much time the participants spent on the app 'survey' in minutes.
+
+```{r apptime, collapse=TRUE}
+# Calculate the time all participants spent on app "survey"
+apptime(otree2, apps = "survey", digits = 3)
+```
+
+We can also get the time for specified individuals only. Without the specification of the apps, we get their durations for all apps individually.
+
+```{r apptime with participant, collapse=TRUE}
+# Calculate the time one participant spent on app "dictator"
+apptime(otree2, pcode = "c9inx5wl", digits = 3)
+```
+
+## extime()
+
+If we need to determine how much time participants spent on the complete experiment, we can use the ````extime()```` function. This function calculates summary statistics such as the mean, minimum, and maximum time spent on the experiment, as well as a detailed list of durations for each participant. (Note that these min, max, and mean values only have two digits because of the underlying data.)
+
+```{r extime, collapse=TRUE}
+# Calculate the time that all participants spent on the experiment
+extime(otree2, digits = 3)
+```
+
+We can also get the duration for just one participant.
+
+```{r extime with pcode, collapse=TRUE}
+# Calculate the time one participant spent on the experiment
+extime(otree2, pcode = "c9inx5wl", digits = 3)
+```
+
+## pagesec()
+
+The older versions of oTree included a variable called `seconds_on_page` in the `Time` data frame. Although there is a good reason to omit it, we sometimes want to have more detailed information on the time spent on one page. Therefore, I created  the function ```pagesec()``` that adds a new variable `seconds_on_page2` to the `Time` data frame.
+
+```{r pagesec, collapse=TRUE}
+# Create two new columns: seconds_on_page2 and minutes_on_page
+otree2 <- pagesec(otree2, rounded = TRUE, minutes = TRUE)
+tail(otree2$Time)
+```
+
+# Transferring variables between the apps
+
+## assignv()
+
+The function ```assignv()``` copies a variable from the `all_apps_wide` data frame to the data frames of all other apps. In the following example, the variable survey.1.player.gender is copied from `all_apps_wide` to all other app data frames; in all of these data frames, the new variable is named `gender`. It also copies the variable to `all_apps_wide` to keep some degree of consistency.
+
+```{r assignv, collapse=TRUE}
+# Assign variable "survey.1.player.gender" and name it "gender"
+otree2 <- assignv(oTree = otree2,
+                 variable = "survey.1.player.gender",
+                 newvar = "gender")
+# Control
+otree2$dictator$gender
+otree2$chatapp$gender
+# In app "survey", the variable is now twice because it is taken from here
+otree2$survey$gender
+otree2$survey$player.gender
+# In app "all_apps_wide," the variable is also there twice
+# (This can be avoided by calling the new variable the same
+# as the old variable)
+otree2$all_apps_wide$gender
+otree2$all_apps_wide$survey.1.player.gender
+```
+
+## assignv_to_aaw()
+
+The function ```assignv_to_aaw()``` copies a variable from one of the data frames to the ```all_apps_wide``` data frame. In the following example, a variable from the app `survey` is copied to ```all_apps_wide``` and placed directly after the variable ```survey.1.player.age```.
+
+```{r assignv_to_aaw,  collapse=TRUE}
+# Create a new variable
+otree2$survey$younger30 <- ifelse(otree2$survey$player.age < 30, 0, 1)
+
+# Get variable younger30 from survey to all_apps_wide
+# and put the new variable right behind the old age variable
+otree2 <- assignv_to_aaw(otree2,
+                        app = "survey",
+                        variable = "younger30",
+                        newvar = "younger30",
+                        resafter = "survey.1.player.age")
+
+# Control
+otree2$all_apps_wide$survey.1.player.age
+
+# Check the position of the old age variable and the new variable
+match("survey.1.player.age", colnames(otree2$all_apps_wide))
+match("younger30", colnames(otree2$all_apps_wide))
+```
+
+# Before running the experiment
+
+## show_constant()
+
+When we program experiments, we frequently add variables that turn out to be useless later. When we forget to remove them, especially in experiments with numerous rounds, the data frame becomes unreasonably huge.  With the function ```show_constant()```,  we may identify variables that have no variation and remove them before the experiment. In the following example, a variable named ```constant``` is created, which does not vary. The function ```show_constant()``` shows us many variables that are also unchanging; however, we cannot delete most of them because they are oTree internal. Yet, to prevent an unreasonably large data frame, we should remove the variable ```constant``` before running the experiment.
+
+```{r show constant, collapse=TRUE}
+# Make a constant column (this variable is usually created in oTree)
+otree2$dictator$constant <- 3
+
+# Show all columns that contain columns containing only one specified value
+show_constant(oTree = otree2)
+```

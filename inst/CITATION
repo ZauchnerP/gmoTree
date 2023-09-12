@@ -3,7 +3,7 @@ bibentry(
   title    = "gmoTree: oTree Data Manipulation Tool",
   author   = "Patricia F. Zauchner",
   year     = "2023",
-  note     = "R package version 0.0.1",
+  note     = "R package version 0.0.2",
   url      = "https://github.com/ZauchnerP/gmoTree",
-  textVersion = "Zauchner, Patricia F. (2023). gmoTree: oTree Data Manipulation Tool. R package version 0.0.1, <https://github.com/ZauchnerP/gmoTree/>"
+  textVersion = "Zauchner, Patricia F. (2023). gmoTree: oTree Data Manipulation Tool. R package version 0.0.2, <https://github.com/ZauchnerP/gmoTree/>"
 ) 

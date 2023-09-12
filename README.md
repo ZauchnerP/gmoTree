@@ -27,7 +27,7 @@ To install this package, use the following command:
 
 # List of all functions
 See the page <a href="https://zauchnerp.github.io/gmoTree/articles/intro_to_gmoTree.html" target="_blank">Introduction to gmoTree</a> for a
-more detailed overview of the functions. Or see the <a href="https://zauchnerp.github.io/gmoTree" target="_blank">website of gmoTree</a> for more information on the package in general.
+more detailed overview of the functions. Or see the <a href="https://zauchnerp.github.io/gmoTree/" target="_blank">website of gmoTree</a> for more information on the package in general.
 
 ## Importing data
 

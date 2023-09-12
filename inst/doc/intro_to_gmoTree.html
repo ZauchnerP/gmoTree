@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Patricia F. Zauchner" />
+
+<meta name="date" content="2023-09-06" />
+
+<title>Introduction to gmoTree</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to gmoTree</h1>
+<h4 class="author">Patricia F. Zauchner</h4>
+<h4 class="date">2023-09-06</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#importing-and-cleaning-up-data" id="toc-importing-and-cleaning-up-data">Importing and cleaning up
+data</a>
+<ul>
+<li><a href="#background-information-on-the-data-downloaded-by-otree" id="toc-background-information-on-the-data-downloaded-by-otree">Background
+information on the data downloaded by oTree</a></li>
+<li><a href="#import_otree" id="toc-import_otree">import_otree()</a></li>
+<li><a href="#delete_duplicate" id="toc-delete_duplicate">delete_duplicate()</a></li>
+<li><a href="#dealing-with-messy-chats-and-time-data-frames" id="toc-dealing-with-messy-chats-and-time-data-frames">Dealing with
+messy Chats and Time data frames</a></li>
+</ul></li>
+<li><a href="#dealing-with-dropouts-and-deleting-cases" id="toc-dealing-with-dropouts-and-deleting-cases">Dealing with dropouts
+and deleting cases</a>
+<ul>
+<li><a href="#show_dropouts" id="toc-show_dropouts">show_dropouts()</a></li>
+<li><a href="#delete_dropouts" id="toc-delete_dropouts">delete_dropouts()</a></li>
+<li><a href="#delete_cases" id="toc-delete_cases">delete_cases()</a></li>
+<li><a href="#delete_sessions" id="toc-delete_sessions">delete_sessions()</a></li>
+</ul></li>
+<li><a href="#deleting-sensitive-information" id="toc-deleting-sensitive-information">Deleting sensitive
+information</a>
+<ul>
+<li><a href="#delete_pabels" id="toc-delete_pabels">delete_pabels()</a></li>
+</ul></li>
+<li><a href="#making-ids" id="toc-making-ids">Making IDs</a>
+<ul>
+<li><a href="#make_ids" id="toc-make_ids">make_ids()</a></li>
+</ul></li>
+<li><a href="#calculating-the-time" id="toc-calculating-the-time">Calculating the time</a>
+<ul>
+<li><a href="#apptime" id="toc-apptime">apptime()</a></li>
+<li><a href="#extime" id="toc-extime">extime()</a></li>
+<li><a href="#pagesec" id="toc-pagesec">pagesec()</a></li>
+</ul></li>
+<li><a href="#transferring-variables-between-the-apps" id="toc-transferring-variables-between-the-apps">Transferring variables
+between the apps</a>
+<ul>
+<li><a href="#assignv" id="toc-assignv">assignv()</a></li>
+<li><a href="#assignv_to_aaw" id="toc-assignv_to_aaw">assignv_to_aaw()</a></li>
+</ul></li>
+<li><a href="#before-running-the-experiment" id="toc-before-running-the-experiment">Before running the experiment</a>
+<ul>
+<li><a href="#show_constant" id="toc-show_constant">show_constant()</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>Handling data from online experiments made with oTree (<a href="https://www.otree.org/" class="uri">https://www.otree.org/</a>)
+can be challenging, especially when dealing with complex experimental
+designs that span multiple sessions and return numerous files that must
+be combined. This is where the gmoTree package comes in. gmoTree is not
+an official package of the oTree team but is built to complement the
+oTree open-source platform. It helps streamline the data processing
+workflow by providing tools designed to import, merge, and manage data
+from oTree experiments.</p>
+<div id="importing-and-cleaning-up-data" class="section level1">
+<h1>Importing and cleaning up data</h1>
+<div id="background-information-on-the-data-downloaded-by-otree" class="section level2">
+<h2>Background information on the data downloaded by oTree</h2>
+<p>An oTree experiment is structured around one or more modular units
+called ‘apps,’ which encompass one or multiple ‘pages.’ Data generated
+from each app can be downloaded individually, offering the flexibility
+to analyze separate components of the experiment. For an
+all-encompassing view of the experiment, the data from all apps can also
+be downloaded in a comprehensive file labeled ‘all_apps_wide.’</p>
+<p>In addition to the aforementioned app data and the cumulative
+all_apps_wide file, oTree generates a file with time stamps for every
+page. A file documenting all chat interactions is also provided if the
+experiment includes one or multiple chat rooms. In newer oTree versions,
+also custom data can be downloaded.</p>
+<p>When an oTree experiment is run across different databases, this set
+of data files is downloaded for each database. This would include
+individual app data files, the all_apps_wide file, a file for the time
+stamps of every page, and a chat log file if a chat room was used in the
+experiment.</p>
+<p>The gmoTree package’s functionality lies in its ability to load and
+aggregate all of these files with ease.</p>
+</div>
+<div id="import_otree" class="section level2">
+<h2>import_otree()</h2>
+<p>We can import all oTree data and combine them into a list of data
+frames using the <code>import otree()</code> function. Each data frame
+is named according to its associated app, and the function generates an
+accompanying info list that details essential information regarding the
+imported files, such as any deleted cases. This information list is
+updated as we use other functions within the package.</p>
+<p>It is worth noting that even if we only use one all_apps_wide file,
+we should still load the data with <code>import otree()</code> if we
+want to access other functions within the gmoTree package.
+Alternatively, we could reproduce the structure created by this function
+by hand. The following example shows how to import oTree data, the
+structure of the oTree list of data frames after importing the data, and
+all of the information provided in <code>oTree$info</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Get path to the package data</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata/exp_data_5.4.0&quot;</span>, <span class="at">package =</span> <span class="st">&quot;gmoTree&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Import without specifications</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># Import all oTree files in this folder and its subfolders</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>otree <span class="ot">&lt;-</span> gmoTree<span class="sc">::</span><span class="fu">import_otree</span>(<span class="at">path =</span> path)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## Warning in gmoTree::import_otree(path = path): You have stored all_apps_wide</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">## globally but also room-specific. This function will import both of them.</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">## (Globally, the files are saved as &quot;all_apps_wide_.&quot; Room-specific, the files</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">## are saved as &quot;All apps - wide-&quot; or &quot;all_apps_wide-.&quot;) After importing the data,</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="do">## make sure nothing is there twice! (Advice: You may use delete_duplicate() to</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="do">## remove duplicate rows of all oTree data frames.</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co"># Check the structure of the oTree list of data frames</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">str</span>(otree, <span class="dv">1</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="do">## List of 8</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="do">##  $ all_apps_wide:&#39;data.frame&#39;:   12 obs. of  60 variables:</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="do">##  $ info         :List of 2</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="do">##  $ chatapp      :&#39;data.frame&#39;:   8 obs. of  24 variables:</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="do">##  $ dictator     :&#39;data.frame&#39;:   48 obs. of  25 variables:</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="do">##  $ start        :&#39;data.frame&#39;:   8 obs. of  24 variables:</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="do">##  $ survey       :&#39;data.frame&#39;:   8 obs. of  29 variables:</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="do">##  $ Time         :&#39;data.frame&#39;:   77 obs. of  10 variables:</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="do">##  $ Chats        :&#39;data.frame&#39;:   6 obs. of  7 variables:</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co"># The initial info list</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>otree<span class="sc">$</span>info</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="do">## $imported_files</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="do">## [1] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/ChatMessages-2023-05-16.csv&quot; </span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="do">## [2] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/PageTimes-2023-05-16.csv&quot;    </span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="do">## [3] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/survey_2023-05-16.csv&quot;       </span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="do">## [4] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/start_2023-05-16.csv&quot;        </span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="do">## [5] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/dictator_2023-05-16.csv&quot;     </span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="do">## [6] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/dictator_2023-05-00.csv&quot;     </span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="do">## [7] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/chatapp_2023-05-16.csv&quot;      </span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="do">## [8] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/all_apps_wide_2023-05-16.csv&quot;</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="do">## [9] &quot;C:/Users/pzauchner/AppData/Local/Temp/Rtmpq8bbA2/Rinst1f7453bdd3/gmoTree/extdata/exp_data_5.4.0/all_apps_wide-2023-05-16.csv&quot;</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="do">## $initial_n</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="do">## [1] 12</span></span></code></pre></div>
+<p>Caution: This function only works if the oTree data is saved using
+the typical oTree file pattern!</p>
+</div>
+<div id="delete_duplicate" class="section level2">
+<h2>delete_duplicate()</h2>
+<p>Sometimes, the same data is imported several times. This could happen
+for several reasons. First, one data set might be part of another
+because of the download of temporarily stored data before downloading
+the final data frame. Second, if room-specific and global data is
+imported, the data in the <code>all_apps_wide</code> data frame are
+there two times. Third, the same data is stored in several imported
+folders. The function <code>delete_duplicate()</code> deletes duplicate
+data from all apps and <code>all_apps_wide</code>. It, however, does not
+change the <code>Time</code> and <code>Chats</code> data frames.</p>
+<p>Before running the function, let us first check the number of
+participant codes and the initial count before executing the
+<code>delete_duplicate()</code> function. In the imported
+<code>all_apps_wide</code> data frame, we have 12 participant codes.
+However, among these, only 8 are unique, which indicates the presence of
+duplicate data. The <code>info</code> data frame suggests that there are
+initially 12 entries.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Initial check before deletion</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">length</span>(otree<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="do">## [1] 12</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(otree<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>otree<span class="sc">$</span>info<span class="sc">$</span>initial_n</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="do">## [1] 12</span></span></code></pre></div>
+<p>To remove these duplicates, we employ the
+<code>delete_duplicate()</code> function:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Delete duplicate cases</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>otree <span class="ot">&lt;-</span> <span class="fu">delete_duplicate</span>(otree)</span></code></pre></div>
+<p>Please note that details about the deleted rows are not added to a
+list of deleted cases. This is because the list might be used for
+analysis, and this function mainly focuses on cleaning up an untidy data
+import. However, the count in <code>info$initial_n</code> is adjusted
+accordingly.</p>
+<p>After the deletion operation, we should find that all participant
+codes are unique, and the count <code>info$initial_n</code> matches the
+number of unique participant codes.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Check participant codes and initial_n after deletion</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">length</span>(otree<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(otree<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code))</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>otree<span class="sc">$</span>info<span class="sc">$</span>initial_n</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="do">## [1] 8</span></span></code></pre></div>
+</div>
+<div id="dealing-with-messy-chats-and-time-data-frames" class="section level2">
+<h2>Dealing with messy Chats and Time data frames</h2>
+<p>If we combine data from experiments that ran on different versions of
+oTree, it might happen that there are several variables referring to the
+same attribute in the <code>Time</code> and in the <code>Chats</code>
+data frames. The functions <code>messy_chat()</code> and
+<code>messy_time()</code> integrate the corresponding variables if used
+with the argument <code>combine = TRUE</code>.</p>
+<p>To show an example, let us first load data from different versions of
+oTree.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Import data from different oTree versions</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>otree_all <span class="ot">&lt;-</span> gmoTree<span class="sc">::</span><span class="fu">import_otree</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="at">package =</span> <span class="st">&quot;gmoTree&quot;</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">## Warning in gmoTree::import_otree(path = system.file(&quot;extdata&quot;, package =</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="do">## &quot;gmoTree&quot;)): You have stored all_apps_wide globally but also room-specific.</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="do">## This function will import both of them. (Globally, the files are saved as</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="do">## &quot;all_apps_wide_.&quot; Room-specific, the files are saved as &quot;All apps - wide-&quot; or</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="do">## &quot;all_apps_wide-.&quot;) After importing the data, make sure nothing is there twice!</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="do">## (Advice: You may use delete_duplicate() to remove duplicate rows of all oTree</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="do">## data frames.</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># Check names of Time data frame</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="fu">names</span>(otree_all<span class="sc">$</span>Time)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="do">##  [1] &quot;session_code&quot;               &quot;participant_id_in_session&quot; </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="do">##  [3] &quot;participant_code&quot;           &quot;page_index&quot;                </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="do">##  [5] &quot;app_name&quot;                   &quot;page_name&quot;                 </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="do">##  [7] &quot;epoch_time&quot;                 &quot;round_number&quot;              </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="do">##  [9] &quot;timeout_happened&quot;           &quot;is_wait_page&quot;              </span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="do">## [11] &quot;epoch_time_completed&quot;       &quot;session_id&quot;                </span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="do">## [13] &quot;participant__id_in_session&quot; &quot;participant__code&quot;         </span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="do">## [15] &quot;time_stamp&quot;                 &quot;seconds_on_page&quot;           </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="do">## [17] &quot;subsession_pk&quot;              &quot;auto_submitted&quot;</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># Check names of Chats data frame</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="fu">names</span>(otree_all<span class="sc">$</span>Chats)</span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="do">##  [1] &quot;session_code&quot;               &quot;id_in_session&quot;             </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="do">##  [3] &quot;participant_code&quot;           &quot;channel&quot;                   </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="do">##  [5] &quot;nickname&quot;                   &quot;body&quot;                      </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="do">##  [7] &quot;timestamp&quot;                  &quot;participant__session__code&quot;</span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="do">##  [9] &quot;participant__session_id&quot;    &quot;participant__id_in_session&quot;</span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="do">## [11] &quot;participant__code&quot;</span></span></code></pre></div>
+<p>Now we can run the functions <code>messy_time()</code> and
+<code>messy_chat()</code>. The warning messages are part of the expected
+output, indicating precisely which variables were combined. There is no
+need for concern when we see them. However, you can also turn them off
+using <code>info = FALSE</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>otree_all <span class="ot">&lt;-</span> <span class="fu">messy_time</span>(otree_all,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                        <span class="at">combine =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                        <span class="at">info =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="do">## Warning in messy_time(otree_all, combine = TRUE, info = TRUE): More than one variable referred to the time stamp. You asked for combining them with the argument combine = TRUE. Variable(s) &quot;epoch_time,&quot; and &quot;time_stamp&quot; was/were integrated to variable &quot;epoch_time_completed&quot; and deleted afterward.</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="do">## More than one variable referred to the participant code. You asked for combining them with the argument combine = TRUE. Variable &quot;participant__code&quot; was integrated into variable &quot;participant_code&quot; The variable &quot;participant__code&quot; was deleted afterward.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>otree_all <span class="ot">&lt;-</span> <span class="fu">messy_chat</span>(otree_all,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                        <span class="at">combine =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                        <span class="at">info =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="do">## Warning in messy_chat(otree_all, combine = TRUE, info = TRUE): More than one variable referred to the session code in your Chats data frame. You asked for combining them with the argument combine = TRUE. Therefore, variable &quot;participant__session__code&quot; was integrated into variable &quot;session_code.&quot; The variable &quot;participant__session__code&quot; was deleted afterward.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="do">## More than one variable referred to the session code in your Chats data frame. You asked for combining them with the argument combine = TRUE. Therefore, variable &quot;participant__code&quot; was integrated into variable &quot;participant_code&quot; The variable &quot;participant__code&quot; was deleted afterward.</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Check names of Time data frame again</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">names</span>(otree_all<span class="sc">$</span>Time)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="do">##  [1] &quot;session_code&quot;               &quot;participant_id_in_session&quot; </span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="do">##  [3] &quot;participant_code&quot;           &quot;page_index&quot;                </span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="do">##  [5] &quot;app_name&quot;                   &quot;page_name&quot;                 </span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">##  [7] &quot;round_number&quot;               &quot;timeout_happened&quot;          </span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="do">##  [9] &quot;is_wait_page&quot;               &quot;epoch_time_completed&quot;      </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="do">## [11] &quot;session_id&quot;                 &quot;participant__id_in_session&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="do">## [13] &quot;seconds_on_page&quot;            &quot;subsession_pk&quot;             </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="do">## [15] &quot;auto_submitted&quot;</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co"># Check names of Chats data frame again</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="fu">names</span>(otree_all<span class="sc">$</span>Chats)</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="do">## [1] &quot;session_code&quot;               &quot;id_in_session&quot;             </span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="do">## [3] &quot;participant_code&quot;           &quot;channel&quot;                   </span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="do">## [5] &quot;nickname&quot;                   &quot;body&quot;                      </span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="do">## [7] &quot;timestamp&quot;                  &quot;participant__session_id&quot;   </span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="do">## [9] &quot;participant__id_in_session&quot;</span></span></code></pre></div>
+</div>
+</div>
+<div id="dealing-with-dropouts-and-deleting-cases" class="section level1">
+<h1>Dealing with dropouts and deleting cases</h1>
+<div id="show_dropouts" class="section level2">
+<h2>show_dropouts()</h2>
+<p>Sometimes, participants drop out of experiments. To get an overview
+of the dropouts, we can use the function <code>show_dropouts()</code>.
+It creates three data frames/tables with information on the participants
+that did not finish at (a) certain app(s) or page(s).</p>
+<p>First, the function <code>show_dropouts()</code> creates a data frame
+<code>full</code> that provides specific information on the apps and
+pages where participants left the experiment prematurely. Additionally,
+this data frame indicates which apps were affected by the participants
+who dropped out.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Show everyone that has not finished with the app &quot;survey&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>dropout_list <span class="ot">&lt;-</span> <span class="fu">show_dropouts</span>(otree, <span class="st">&quot;survey&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="fu">head</span>(dropout_list<span class="sc">$</span>full)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="do">##   participant.code session.code  end_app        end_page</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="do">## 1         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="do">## 2         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="do">## 3         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="do">## 4         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="do">## 5         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="do">## 6         dhgisush     2wlrl5kb dictator           Offer</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="do">##                                                reason</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="do">## 1 Experiment not completed. Noticed at: all_apps_wide</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="do">## 2       Experiment not completed. Noticed at: chatapp</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="do">## 3      Experiment not completed. Noticed at: dictator</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="do">## 4         Experiment not completed. Noticed at: start</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="do">## 5        Experiment not completed. Noticed at: survey</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="do">## 6 Experiment not completed. Noticed at: all_apps_wide</span></span></code></pre></div>
+<p>Second, the function <code>show_dropouts()</code> also generates a
+smaller data frame <code>unique</code> that only includes information on
+each person once.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>dropout_list<span class="sc">$</span>unique</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="do">##    participant.code session.code  end_app        end_page</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="do">## 1          1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## 6          dhgisush     2wlrl5kb dictator           Offer</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">## 11         j2g9mcaf     jk9ekpl0 dictator    Introduction</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">## 16         p6m495xi     2wlrl5kb dictator    Introduction</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">##                      reason</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## 1  Experiment not completed</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## 6  Experiment not completed</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="do">## 11 Experiment not completed</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="do">## 16 Experiment not completed</span></span></code></pre></div>
+<p>Third, the function <code>show_dropouts()</code> furthermore creates
+a table <code>all_end</code>, which contains information on all
+participants and where they ended the experiment. The columns contain
+the names of the pages of the experiment; the rows contain the names of
+the apps.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>dropout_list<span class="sc">$</span>all_end</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="do">##           </span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="do">##            Demographics Introduction Offer ResultsWaitPage</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="do">##   dictator            0            2     1               1</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="do">##   survey              4            0     0               0</span></span></code></pre></div>
+</div>
+<div id="delete_dropouts" class="section level2">
+<h2>delete_dropouts()</h2>
+<p>Normally, we want to exclude dropouts from our analysis. The function
+<code>delete_dropouts()</code> removes all data related to participants
+who prematurely terminated the experiment from the data frames in the
+oTree list, except the data contained within the info list and the
+<code>Chats</code> data frame. I highly recommend personally deleting
+the chat data because it can occasionally become unintelligible once one
+person’s input is removed. Therefore, this function does not delete the
+chat input of the participants who dropped out of the experiment.</p>
+<p>Before running the example, let us first check the row numbers of
+some data frames.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># First, check some row numbers</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">nrow</span>(otree<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">nrow</span>(otree<span class="sc">$</span>survey)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="do">## [1] 8</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">nrow</span>(otree<span class="sc">$</span>Time)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="do">## [1] 77</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="fu">nrow</span>(otree<span class="sc">$</span>Chats)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<p>When we run the function <code>delete_dropouts()</code> and check the
+row numbers again, we see that cases were deleted in each data frame but
+not in the <code>Chats</code> data frame.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Delete all cases that didn&#39;t end the experiment on the page &quot;Demographics&quot;</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># within the app &quot;survey&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">delete_dropouts</span>(otree,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>                         <span class="at">final_apps =</span> <span class="fu">c</span>(<span class="st">&quot;survey&quot;</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>                         <span class="at">final_pages =</span> <span class="fu">c</span>(<span class="st">&quot;Demographics&quot;</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>                         <span class="at">info =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="do">## 4 case(s) deleted</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="do">## Dropouts are deleted from all data frames. Except: The list of oTree data frames includes a chat. As the interpretation of chat data depends on how participants engage with each other, the data must be deleted with more care than deleting data in other apps. Hence, this function does not delete data in this data frame. Please do this manually if necessary!</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co"># Check row numbers again</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>survey)</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="do">## [1] 66</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Chats)</span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<p>Just as <code>show_dropouts()</code>, the
+<code>delete_dropouts()</code> function also gives detailed information
+on all the deleted cases.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>info<span class="sc">$</span>deleted_cases<span class="sc">$</span>full)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="do">##   participant.code session.code  end_app        end_page</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="do">## 1         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="do">## 2         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="do">## 3         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="do">## 4         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="do">## 5         1k58kgm7     jk9ekpl0 dictator ResultsWaitPage</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="do">## 6         dhgisush     2wlrl5kb dictator           Offer</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="do">##                           reason</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="do">## 1        ENC. Noticed at: survey</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="do">## 2         ENC. Noticed at: start</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="do">## 3      ENC. Noticed at: dictator</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="do">## 4       ENC. Noticed at: chatapp</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="do">## 5 ENC. Noticed at: all_apps_wide</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="do">## 6        ENC. Noticed at: survey</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>otree2<span class="sc">$</span>info<span class="sc">$</span>deleted_cases<span class="sc">$</span>unique</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="do">##    participant.code session.code  end_app        end_page reason</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="do">## 1          1k58kgm7     jk9ekpl0 dictator ResultsWaitPage    ENC</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="do">## 6          dhgisush     2wlrl5kb dictator           Offer    ENC</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="do">## 11         j2g9mcaf     jk9ekpl0 dictator    Introduction    ENC</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="do">## 16         p6m495xi     2wlrl5kb dictator    Introduction    ENC</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>otree2<span class="sc">$</span>info<span class="sc">$</span>deleted_cases<span class="sc">$</span>all_end</span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="do">##           </span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="do">##            Demographics Introduction Offer ResultsWaitPage</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="do">##   dictator            0            2     1               1</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="do">##   survey              4            0     0               0</span></span></code></pre></div>
+<p>Caution: This function does not delete any data from the original CSV
+and Excel files!</p>
+</div>
+<div id="delete_cases" class="section level2">
+<h2>delete_cases()</h2>
+<p>Sometimes, participants ask for their data to be deleted. The
+<code>delete_cases()</code> function can delete a person from each app’s
+data frame, <code>all_apps_wide</code>, and the <code>Time</code> data
+frame. Again, data in the <code>Chats</code> data frame must be deleted
+by hand.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># First, check some row numbers</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>survey)</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="do">## [1] 66</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Chats)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># Delete one participant</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>person <span class="ot">&lt;-</span> otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code[<span class="dv">1</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">delete_cases</span>(otree2,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>                       <span class="at">pcodes =</span> person,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>                       <span class="at">reason =</span> <span class="st">&quot;requested&quot;</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>                       <span class="at">saved_vars =</span> <span class="st">&quot;participant._index_in_pages&quot;</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>                       <span class="at">info =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="do">## 1 case(s) deleted. Cases are deleted from all data frames. Except: The list of oTree data frames includes a chat. As the interpretation of chat data depends on how participants engage with each other, the data must be deleted with more care than deleting data in other apps. Hence, this function does not delete data in this data frame. Please do this manually if necessary!</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Check row numbers again</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>survey)</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="do">## [1] 48</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Chats)</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<p>This function adds the information of all these deleted cases to the
+previously created information on all deleted cases.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># Check for all deleted cases (also dropouts):</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">tail</span>(otree2<span class="sc">$</span>info<span class="sc">$</span>deleted_cases<span class="sc">$</span>full)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="do">##    participant.code session.code  end_app     end_page</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="do">## 16         p6m495xi     2wlrl5kb dictator Introduction</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="do">## 17         p6m495xi     2wlrl5kb dictator Introduction</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="do">## 18         p6m495xi     2wlrl5kb dictator Introduction</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="do">## 19         p6m495xi     2wlrl5kb dictator Introduction</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="do">## 20         p6m495xi     2wlrl5kb dictator Introduction</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="do">## 21         sdh9ar2m         &lt;NA&gt;                      </span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="do">##                            reason  session participant._index_in_pages</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="do">## 16        ENC. Noticed at: survey     &lt;NA&gt;                          NA</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="do">## 17         ENC. Noticed at: start     &lt;NA&gt;                          NA</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="do">## 18      ENC. Noticed at: dictator     &lt;NA&gt;                          NA</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="do">## 19       ENC. Noticed at: chatapp     &lt;NA&gt;                          NA</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="do">## 20 ENC. Noticed at: all_apps_wide     &lt;NA&gt;                          NA</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="do">## 21                      requested jk9ekpl0                          18</span></span></code></pre></div>
+<p>Caution: This function does not delete any data from the original CSV
+and Excel files!</p>
+</div>
+<div id="delete_sessions" class="section level2">
+<h2>delete_sessions()</h2>
+<p>While we certainly hope that it never becomes necessary, there may be
+instances where an entire session needs to be removed from the data set
+due to unforeseen issues. However, if that occurs, we can use the
+function <code>delete_sessions()</code>. This function removes not only
+the sessions’ data in all apps, <code>all_apps_wide</code>, and the
+<code>Time</code> data frame but also the sessions’ chat data in the
+<code>Chats</code> data frame because chatting is usually restricted
+within a session.</p>
+<p>In the following, we see the row numbers before deletion, the
+application of the function, and the row numbers after deletion. Apart
+from the other functions, the sessions’ entries in the
+<code>Chats</code> data frame are destroyed here since chat data occurs
+just once per session and may thus be eliminated without impacting the
+comprehensibility of the chat data.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># First, check some row numbers</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>survey)</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="do">## [1] 3</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="do">## [1] 48</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Chats)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="do">## [1] 6</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># Delete one session</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">delete_sessions</span>(otree,</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="at">scodes =</span> <span class="st">&quot;jk9ekpl0&quot;</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="at">reason =</span> <span class="st">&quot;Only tests&quot;</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="at">info =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="do">## 4 case(s) deleted</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># Check row numbers again</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>all_apps_wide)</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>survey)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="do">## [1] 4</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="do">## [1] 38</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="fu">nrow</span>(otree2<span class="sc">$</span>Chats)</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="do">## [1] 3</span></span></code></pre></div>
+</div>
+</div>
+<div id="deleting-sensitive-information" class="section level1">
+<h1>Deleting sensitive information</h1>
+<div id="delete_pabels" class="section level2">
+<h2>delete_pabels()</h2>
+<p>It is not uncommon for the participant.label variable to contain
+sensitive information like an MTurk worker ID. This can raise serious
+privacy concerns. The function <code>delete_plabels()</code>
+automatically removes the <code>participant.label</code> variable from
+all data frames. Additionally, the function has the option to delete all
+MTurk-related variables.</p>
+<p>In the following, we see the application of the
+<code>delete_plabels()</code> function, preceded by information on the
+sensitive variables before running the function and followed by
+information on the sensitive variables after running the function.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># Check variables</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.label)</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="do">## [1] &quot;&quot;        &quot;&quot;        &quot;Person1&quot; &quot;Person2&quot;</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.mturk_worker_id)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="do">## [1] NA NA NA NA</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>survey<span class="sc">$</span>participant.label)</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="do">## [1] &quot;&quot;        &quot;&quot;        &quot;Person1&quot; &quot;Person2&quot;</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co"># Delete all participant labels</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">delete_plabels</span>(otree2, <span class="at">del_mturk =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co"># Check variables</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.label)</span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="do">## NULL</span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.mturk_worker_id)</span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a><span class="do">## NULL</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a><span class="fu">head</span>(otree2<span class="sc">$</span>survey<span class="sc">$</span>participant.label)</span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a><span class="do">## NULL</span></span></code></pre></div>
+<p>Caution: This function does not delete the variable from the original
+CSV and Excel files!</p>
+</div>
+</div>
+<div id="making-ids" class="section level1">
+<h1>Making IDs</h1>
+<div id="make_ids" class="section level2">
+<h2>make_ids()</h2>
+<p>When working with oTree, participant codes, session codes, and group
+IDs are used to identify the cases. However, often, researchers prefer a
+streamlined, consecutive numbering system that spans all sessions,
+beginning with the first participant, session, or group and concluding
+with the last. The <code>make_ids()</code> function provides a way to
+achieve this goal. Before using the function, let us inspect the
+underlying variables first.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># Check variables first</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant.code</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="do">## [1] &quot;dhgisush&quot; &quot;p6m495xi&quot; &quot;c9inx5wl&quot; &quot;kr8yd7f3&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>session.code</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="do">## [1] &quot;2wlrl5kb&quot; &quot;2wlrl5kb&quot; &quot;mz2r27bk&quot; &quot;mz2r27bk&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>dictator.<span class="fl">1.</span>group.id_in_subsession</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="do">## [1] 1 1 1 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># Make session IDs only</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">make_ids</span>(otree2)</span></code></pre></div>
+<p>This function returns the following variables.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># Check variables</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant_id</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="do">## [1] 1 2 3 4</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>session_id</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="do">## [1] 1 1 2 2</span></span></code></pre></div>
+<p>In the prior example, Group IDs were not calculated because group IDs
+must be called specifically. Since the group IDs per app in our data do
+not match (groups are only relevant in the dictator app), just using
+<code>group_id = TRUE</code> would lead to an error message.</p>
+<p>For cases where the group IDs vary among apps, it can be specified in
+<code>make_ids()</code> which app or variable should be used for
+extracting group information. For instance, the following syntax can be
+used to obtain group IDs from the variable
+<code>dictator.1.group.id_in_subsession</code> in
+<code>all_apps_wide</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co"># Get IDs from &quot;from_variable&quot; in the data frame &quot;all_apps_wide&quot;</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">make_ids</span>(otree2,</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>                   <span class="co"># gmake = TRUE,  # Not necessary if from_var is not NULL</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                   <span class="at">from_var =</span> <span class="st">&quot;dictator.1.group.id_in_subsession&quot;</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="do">## Warning in make_ids(otree2, from_var = &quot;dictator.1.group.id_in_subsession&quot;):</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="do">## The group variable values are constant. Group IDs now correspond to session</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="do">## IDs.</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Check variables</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>participant_id</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="do">## [1] 1 2 3 4</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>group_id</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="do">## [1] 1 1 2 2</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>session_id</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="do">## [1] 1 1 2 2</span></span></code></pre></div>
+</div>
+</div>
+<div id="calculating-the-time" class="section level1">
+<h1>Calculating the time</h1>
+<div id="apptime" class="section level2">
+<h2>apptime()</h2>
+<p>If we need to determine how much time the participants spent on a
+specific app, the <code>apptime()</code> function is a powerful tool
+that can help. This function calculates summary statistics such as the
+mean, minimum, and maximum time spent on each page, as well as a
+detailed list of durations for each participant in the app. The
+following example shows how much time the participants spent on the app
+‘survey’ in minutes.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co"># Calculate the time all participants spent on app &quot;survey&quot;</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">apptime</span>(otree2, <span class="at">apps =</span> <span class="st">&quot;survey&quot;</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="do">## $mean_duration</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="do">## [1] 0.242</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="do">## $min_duration</span></span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="do">## [1] 0.233</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="do">## $max_duration</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="do">## [1] 0.25</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="do">## $single_durations</span></span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="do">##   participant  session duration</span></span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="do">## 1    c9inx5wl mz2r27bk    0.250</span></span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a><span class="do">## 2    kr8yd7f3 mz2r27bk    0.233</span></span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a><span class="do">## $messages</span></span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a><span class="do">## [1] &quot;For some participants, no duration could be calculated. See list in $warnings. Did they make it to the app(s)?&quot;</span></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a><span class="do">## $warnings</span></span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a><span class="do">## [1] &quot;dhgisush&quot; &quot;p6m495xi&quot;</span></span></code></pre></div>
+<p>We can also get the time for specified individuals only. Without the
+specification of the apps, we get their durations for all apps
+individually.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co"># Calculate the time one participant spent on app &quot;dictator&quot;</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">apptime</span>(otree2, <span class="at">pcode =</span> <span class="st">&quot;c9inx5wl&quot;</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="do">## $chatapp</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="do">## [1] 0.267</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="do">## $dictator</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="do">## [1] 0.5</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="do">## $start</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="do">## [1] 0.017</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="do">## $survey</span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="do">## [1] 0.25</span></span></code></pre></div>
+</div>
+<div id="extime" class="section level2">
+<h2>extime()</h2>
+<p>If we need to determine how much time participants spent on the
+complete experiment, we can use the <code>extime()</code> function. This
+function calculates summary statistics such as the mean, minimum, and
+maximum time spent on the experiment, as well as a detailed list of
+durations for each participant. (Note that these min, max, and mean
+values only have two digits because of the underlying data.)</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co"># Calculate the time that all participants spent on the experiment</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">extime</span>(otree2, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="do">## $mean_duration</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="do">## [1] 0.525</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="do">## $min_duration</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="do">## [1] 0.05</span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="do">## $max_duration</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="do">## [1] 1.033</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="do">## $single_durations</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="do">##   participant  session duration</span></span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="do">## 2    p6m495xi 2wlrl5kb    0.050</span></span>
+<span id="cb30-15"><a href="#cb30-15" tabindex="-1"></a><span class="do">## 1    dhgisush 2wlrl5kb    0.117</span></span>
+<span id="cb30-16"><a href="#cb30-16" tabindex="-1"></a><span class="do">## 4    kr8yd7f3 mz2r27bk    0.900</span></span>
+<span id="cb30-17"><a href="#cb30-17" tabindex="-1"></a><span class="do">## 3    c9inx5wl mz2r27bk    1.033</span></span></code></pre></div>
+<p>We can also get the duration for just one participant.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="co"># Calculate the time one participant spent on the experiment</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="fu">extime</span>(otree2, <span class="at">pcode =</span> <span class="st">&quot;c9inx5wl&quot;</span>, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="do">## [1] 1.033</span></span></code></pre></div>
+</div>
+<div id="pagesec" class="section level2">
+<h2>pagesec()</h2>
+<p>The older versions of oTree included a variable called
+<code>seconds_on_page</code> in the <code>Time</code> data frame.
+Although there is a good reason to omit it, we sometimes want to have
+more detailed information on the time spent on one page. Therefore, I
+created the function <code>pagesec()</code> that adds a new variable
+<code>seconds_on_page2</code> to the <code>Time</code> data frame.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co"># Create two new columns: seconds_on_page2 and minutes_on_page</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">pagesec</span>(otree2, <span class="at">rounded =</span> <span class="cn">TRUE</span>, <span class="at">minutes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="fu">tail</span>(otree2<span class="sc">$</span>Time)</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="do">##    timeout_happened is_wait_page group_id session_id participant_id</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="do">## 72                0            0        2          2              3</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="do">## 73                0            0        2          2              4</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="do">## 74                0            0        2          2              4</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="do">## 75                0            0        2          2              3</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="do">## 76                0            0        2          2              4</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="do">## 77                0            0        2          2              3</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="do">##    session_code participant_id_in_session participant_code page_index app_name</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="do">## 72     mz2r27bk                         1         c9inx5wl         15   survey</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="do">## 73     mz2r27bk                         2         kr8yd7f3         15   survey</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="do">## 74     mz2r27bk                         2         kr8yd7f3         16   survey</span></span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a><span class="do">## 75     mz2r27bk                         1         c9inx5wl         16   survey</span></span>
+<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a><span class="do">## 76     mz2r27bk                         2         kr8yd7f3         17   survey</span></span>
+<span id="cb32-17"><a href="#cb32-17" tabindex="-1"></a><span class="do">## 77     mz2r27bk                         1         c9inx5wl         17   survey</span></span>
+<span id="cb32-18"><a href="#cb32-18" tabindex="-1"></a><span class="do">##                  page_name epoch_time_completed round_number minutes_on_page</span></span>
+<span id="cb32-19"><a href="#cb32-19" tabindex="-1"></a><span class="do">## 72 CognitiveReflectionTest           1684258104            1            0.05</span></span>
+<span id="cb32-20"><a href="#cb32-20" tabindex="-1"></a><span class="do">## 73 CognitiveReflectionTest           1684258108            1            0.13</span></span>
+<span id="cb32-21"><a href="#cb32-21" tabindex="-1"></a><span class="do">## 74                   Offer           1684258109            1            0.02</span></span>
+<span id="cb32-22"><a href="#cb32-22" tabindex="-1"></a><span class="do">## 75                   Offer           1684258110            1            0.10</span></span>
+<span id="cb32-23"><a href="#cb32-23" tabindex="-1"></a><span class="do">## 76            Demographics           1684258114            1            0.08</span></span>
+<span id="cb32-24"><a href="#cb32-24" tabindex="-1"></a><span class="do">## 77            Demographics           1684258116            1            0.10</span></span></code></pre></div>
+</div>
+</div>
+<div id="transferring-variables-between-the-apps" class="section level1">
+<h1>Transferring variables between the apps</h1>
+<div id="assignv" class="section level2">
+<h2>assignv()</h2>
+<p>The function <code>assignv()</code> copies a variable from the
+<code>all_apps_wide</code> data frame to the data frames of all other
+apps. In the following example, the variable survey.1.player.gender is
+copied from <code>all_apps_wide</code> to all other app data frames; in
+all of these data frames, the new variable is named <code>gender</code>.
+It also copies the variable to <code>all_apps_wide</code> to keep some
+degree of consistency.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co"># Assign variable &quot;survey.1.player.gender&quot; and name it &quot;gender&quot;</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">assignv</span>(<span class="at">oTree =</span> otree2,</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>                 <span class="at">variable =</span> <span class="st">&quot;survey.1.player.gender&quot;</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>                 <span class="at">newvar =</span> <span class="st">&quot;gender&quot;</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="co"># Control</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>otree2<span class="sc">$</span>dictator<span class="sc">$</span>gender</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="do">##  [1] &quot;&quot;       &quot;&quot;       &quot;&quot;       &quot;&quot;       &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;  </span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a><span class="do">##  [9] &quot;Female&quot; &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>otree2<span class="sc">$</span>chatapp<span class="sc">$</span>gender</span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a><span class="do">## [1] &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co"># In app &quot;survey&quot;, the variable is now twice because it is taken from here</span></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>otree2<span class="sc">$</span>survey<span class="sc">$</span>gender</span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="do">## [1] &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a>otree2<span class="sc">$</span>survey<span class="sc">$</span>player.gender</span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="do">## [1] &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a><span class="co"># In app &quot;all_apps_wide,&quot; the variable is also there twice</span></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a><span class="co"># (This can be avoided by calling the new variable the same</span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a><span class="co"># as the old variable)</span></span>
+<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>gender</span>
+<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="do">## [1] &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;</span></span>
+<span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>survey.<span class="fl">1.</span>player.gender</span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="do">## [1] &quot;&quot;       &quot;&quot;       &quot;Female&quot; &quot;Male&quot;</span></span></code></pre></div>
+</div>
+<div id="assignv_to_aaw" class="section level2">
+<h2>assignv_to_aaw()</h2>
+<p>The function <code>assignv_to_aaw()</code> copies a variable from one
+of the data frames to the <code>all_apps_wide</code> data frame. In the
+following example, a variable from the app <code>survey</code> is copied
+to <code>all_apps_wide</code> and placed directly after the variable
+<code>survey.1.player.age</code>.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co"># Create a new variable</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>otree2<span class="sc">$</span>survey<span class="sc">$</span>younger30 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(otree2<span class="sc">$</span>survey<span class="sc">$</span>player.age <span class="sc">&lt;</span> <span class="dv">30</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co"># Get variable younger30 from survey to all_apps_wide</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co"># and put the new variable right behind the old age variable</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>otree2 <span class="ot">&lt;-</span> <span class="fu">assignv_to_aaw</span>(otree2,</span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>                        <span class="at">app =</span> <span class="st">&quot;survey&quot;</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                        <span class="at">variable =</span> <span class="st">&quot;younger30&quot;</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                        <span class="at">newvar =</span> <span class="st">&quot;younger30&quot;</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>                        <span class="at">resafter =</span> <span class="st">&quot;survey.1.player.age&quot;</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co"># Control</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>otree2<span class="sc">$</span>all_apps_wide<span class="sc">$</span>survey.<span class="fl">1.</span>player.age</span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="do">## [1] NA NA 66 33</span></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co"># Check the position of the old age variable and the new variable</span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="fu">match</span>(<span class="st">&quot;survey.1.player.age&quot;</span>, <span class="fu">colnames</span>(otree2<span class="sc">$</span>all_apps_wide))</span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a><span class="do">## [1] 52</span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a><span class="fu">match</span>(<span class="st">&quot;younger30&quot;</span>, <span class="fu">colnames</span>(otree2<span class="sc">$</span>all_apps_wide))</span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="do">## [1] 53</span></span></code></pre></div>
+</div>
+</div>
+<div id="before-running-the-experiment" class="section level1">
+<h1>Before running the experiment</h1>
+<div id="show_constant" class="section level2">
+<h2>show_constant()</h2>
+<p>When we program experiments, we frequently add variables that turn
+out to be useless later. When we forget to remove them, especially in
+experiments with numerous rounds, the data frame becomes unreasonably
+huge. With the function <code>show_constant()</code>, we may identify
+variables that have no variation and remove them before the experiment.
+In the following example, a variable named <code>constant</code> is
+created, which does not vary. The function <code>show_constant()</code>
+shows us many variables that are also unchanging; however, we cannot
+delete most of them because they are oTree internal. Yet, to prevent an
+unreasonably large data frame, we should remove the variable
+<code>constant</code> before running the experiment.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co"># Make a constant column (this variable is usually created in oTree)</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>otree2<span class="sc">$</span>dictator<span class="sc">$</span>constant <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co"># Show all columns that contain columns containing only one specified value</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="fu">show_constant</span>(<span class="at">oTree =</span> otree2)</span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="do">## $all_apps_wide</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="do">##  [1] &quot;participant._is_bot&quot;                         </span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="do">##  [2] &quot;participant._max_page_index&quot;                 </span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="do">##  [3] &quot;participant.visited&quot;                         </span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="do">##  [4] &quot;session.label&quot;                               </span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a><span class="do">##  [5] &quot;session.comment&quot;                             </span></span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a><span class="do">##  [6] &quot;session.config.real_world_currency_per_point&quot;</span></span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a><span class="do">##  [7] &quot;session.config.name&quot;                         </span></span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a><span class="do">##  [8] &quot;session.config.participation_fee&quot;            </span></span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="do">##  [9] &quot;start.1.player.role&quot;                         </span></span>
+<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a><span class="do">## [10] &quot;start.1.player.payoff&quot;                       </span></span>
+<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a><span class="do">## [11] &quot;start.1.group.id_in_subsession&quot;              </span></span>
+<span id="cb35-18"><a href="#cb35-18" tabindex="-1"></a><span class="do">## [12] &quot;start.1.subsession.round_number&quot;             </span></span>
+<span id="cb35-19"><a href="#cb35-19" tabindex="-1"></a><span class="do">## [13] &quot;dictator.1.player.role&quot;                      </span></span>
+<span id="cb35-20"><a href="#cb35-20" tabindex="-1"></a><span class="do">## [14] &quot;dictator.1.group.id_in_subsession&quot;           </span></span>
+<span id="cb35-21"><a href="#cb35-21" tabindex="-1"></a><span class="do">## [15] &quot;dictator.1.subsession.round_number&quot;          </span></span>
+<span id="cb35-22"><a href="#cb35-22" tabindex="-1"></a><span class="do">## [16] &quot;dictator.2.player.role&quot;                      </span></span>
+<span id="cb35-23"><a href="#cb35-23" tabindex="-1"></a><span class="do">## [17] &quot;dictator.2.group.id_in_subsession&quot;           </span></span>
+<span id="cb35-24"><a href="#cb35-24" tabindex="-1"></a><span class="do">## [18] &quot;dictator.2.subsession.round_number&quot;          </span></span>
+<span id="cb35-25"><a href="#cb35-25" tabindex="-1"></a><span class="do">## [19] &quot;dictator.3.player.role&quot;                      </span></span>
+<span id="cb35-26"><a href="#cb35-26" tabindex="-1"></a><span class="do">## [20] &quot;dictator.3.group.id_in_subsession&quot;           </span></span>
+<span id="cb35-27"><a href="#cb35-27" tabindex="-1"></a><span class="do">## [21] &quot;dictator.3.subsession.round_number&quot;          </span></span>
+<span id="cb35-28"><a href="#cb35-28" tabindex="-1"></a><span class="do">## [22] &quot;chatapp.1.player.role&quot;                       </span></span>
+<span id="cb35-29"><a href="#cb35-29" tabindex="-1"></a><span class="do">## [23] &quot;chatapp.1.player.payoff&quot;                     </span></span>
+<span id="cb35-30"><a href="#cb35-30" tabindex="-1"></a><span class="do">## [24] &quot;chatapp.1.group.id_in_subsession&quot;            </span></span>
+<span id="cb35-31"><a href="#cb35-31" tabindex="-1"></a><span class="do">## [25] &quot;chatapp.1.subsession.round_number&quot;           </span></span>
+<span id="cb35-32"><a href="#cb35-32" tabindex="-1"></a><span class="do">## [26] &quot;survey.1.player.role&quot;                        </span></span>
+<span id="cb35-33"><a href="#cb35-33" tabindex="-1"></a><span class="do">## [27] &quot;survey.1.player.payoff&quot;                      </span></span>
+<span id="cb35-34"><a href="#cb35-34" tabindex="-1"></a><span class="do">## [28] &quot;survey.1.group.id_in_subsession&quot;             </span></span>
+<span id="cb35-35"><a href="#cb35-35" tabindex="-1"></a><span class="do">## [29] &quot;survey.1.subsession.round_number&quot;            </span></span>
+<span id="cb35-36"><a href="#cb35-36" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-37"><a href="#cb35-37" tabindex="-1"></a><span class="do">## $chatapp</span></span>
+<span id="cb35-38"><a href="#cb35-38" tabindex="-1"></a><span class="do">## [1] &quot;session.comment&quot;             &quot;participant._is_bot&quot;        </span></span>
+<span id="cb35-39"><a href="#cb35-39" tabindex="-1"></a><span class="do">## [3] &quot;participant._max_page_index&quot; &quot;participant.visited&quot;        </span></span>
+<span id="cb35-40"><a href="#cb35-40" tabindex="-1"></a><span class="do">## [5] &quot;player.role&quot;                 &quot;player.payoff&quot;              </span></span>
+<span id="cb35-41"><a href="#cb35-41" tabindex="-1"></a><span class="do">## [7] &quot;group.id_in_subsession&quot;      &quot;subsession.round_number&quot;    </span></span>
+<span id="cb35-42"><a href="#cb35-42" tabindex="-1"></a><span class="do">## [9] &quot;session.label&quot;              </span></span>
+<span id="cb35-43"><a href="#cb35-43" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-44"><a href="#cb35-44" tabindex="-1"></a><span class="do">## $dictator</span></span>
+<span id="cb35-45"><a href="#cb35-45" tabindex="-1"></a><span class="do">## [1] &quot;session.comment&quot;             &quot;participant._is_bot&quot;        </span></span>
+<span id="cb35-46"><a href="#cb35-46" tabindex="-1"></a><span class="do">## [3] &quot;participant._max_page_index&quot; &quot;participant.visited&quot;        </span></span>
+<span id="cb35-47"><a href="#cb35-47" tabindex="-1"></a><span class="do">## [5] &quot;player.role&quot;                 &quot;group.id_in_subsession&quot;     </span></span>
+<span id="cb35-48"><a href="#cb35-48" tabindex="-1"></a><span class="do">## [7] &quot;session.label&quot;               &quot;constant&quot;                   </span></span>
+<span id="cb35-49"><a href="#cb35-49" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-50"><a href="#cb35-50" tabindex="-1"></a><span class="do">## $start</span></span>
+<span id="cb35-51"><a href="#cb35-51" tabindex="-1"></a><span class="do">## [1] &quot;session.comment&quot;             &quot;participant._is_bot&quot;        </span></span>
+<span id="cb35-52"><a href="#cb35-52" tabindex="-1"></a><span class="do">## [3] &quot;participant._max_page_index&quot; &quot;participant.visited&quot;        </span></span>
+<span id="cb35-53"><a href="#cb35-53" tabindex="-1"></a><span class="do">## [5] &quot;player.role&quot;                 &quot;player.payoff&quot;              </span></span>
+<span id="cb35-54"><a href="#cb35-54" tabindex="-1"></a><span class="do">## [7] &quot;group.id_in_subsession&quot;      &quot;subsession.round_number&quot;    </span></span>
+<span id="cb35-55"><a href="#cb35-55" tabindex="-1"></a><span class="do">## [9] &quot;session.label&quot;              </span></span>
+<span id="cb35-56"><a href="#cb35-56" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-57"><a href="#cb35-57" tabindex="-1"></a><span class="do">## $survey</span></span>
+<span id="cb35-58"><a href="#cb35-58" tabindex="-1"></a><span class="do">## [1] &quot;session.comment&quot;             &quot;participant._is_bot&quot;        </span></span>
+<span id="cb35-59"><a href="#cb35-59" tabindex="-1"></a><span class="do">## [3] &quot;participant._max_page_index&quot; &quot;participant.visited&quot;        </span></span>
+<span id="cb35-60"><a href="#cb35-60" tabindex="-1"></a><span class="do">## [5] &quot;player.role&quot;                 &quot;player.payoff&quot;              </span></span>
+<span id="cb35-61"><a href="#cb35-61" tabindex="-1"></a><span class="do">## [7] &quot;group.id_in_subsession&quot;      &quot;subsession.round_number&quot;    </span></span>
+<span id="cb35-62"><a href="#cb35-62" tabindex="-1"></a><span class="do">## [9] &quot;session.label&quot;              </span></span>
+<span id="cb35-63"><a href="#cb35-63" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-64"><a href="#cb35-64" tabindex="-1"></a><span class="do">## $Time</span></span>
+<span id="cb35-65"><a href="#cb35-65" tabindex="-1"></a><span class="do">## character(0)</span></span>
+<span id="cb35-66"><a href="#cb35-66" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb35-67"><a href="#cb35-67" tabindex="-1"></a><span class="do">## $Chats</span></span>
+<span id="cb35-68"><a href="#cb35-68" tabindex="-1"></a><span class="do">## [1] &quot;group_id&quot;     &quot;session_id&quot;   &quot;session_code&quot; &quot;channel&quot;</span></span></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

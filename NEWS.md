@@ -1,6 +1,6 @@
 # gmoTree 0.0.2
 
-* Minor documentation improvement
+* Minor improvement of the documentation
 
 # gmoTree 0.0.1
 
