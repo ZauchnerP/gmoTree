@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gmoTree</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
 
 
 <dt>apps</dt>
-<dd><p>Name(s) of the app(s) for which the time
+<dd><p>Character. Name(s) of the app(s) for which the time
 should be calculated.</p></dd>
 
 
@@ -142,7 +142,7 @@ when data from multiple versions of oTree are used.</p></dd>
 information on the mean, the minimum, and maximum time the participants
 spent on the app, a data frame with information on the time
 each participant spent on the app, and eventually,
-vectors of background information on these numbers.</p>
+vectors of relevant background information on these numbers.</p>
 
 
 <p>If the experiment's duration is only calculated for one participant,
@@ -156,7 +156,7 @@ it to the app(s).</p>
 <span class="r-in"><span><span class="va">oTree</span> <span class="op">&lt;-</span> <span class="fu">gmoTree</span><span class="fu">::</span><span class="va"><a href="oTree.html">oTree</a></span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show how much time all participants spent on app "survey"</span></span></span>
-<span class="r-in"><span><span class="fu">apptime</span><span class="op">(</span><span class="va">oTree</span>, <span class="st">"survey"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">apptime</span><span class="op">(</span><span class="va">oTree</span>, apps <span class="op">=</span> <span class="st">"survey"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mean_duration</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -196,7 +196,7 @@ it to the app(s).</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show how much time the participant "y8rbzcju" spent on</span></span></span>
 <span class="r-in"><span><span class="co"># the app "survey"</span></span></span>
-<span class="r-in"><span><span class="fu">apptime</span><span class="op">(</span><span class="va">oTree</span>, pcode <span class="op">=</span> <span class="st">"y8rbzcju"</span>, <span class="st">"survey"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">apptime</span><span class="op">(</span><span class="va">oTree</span>, pcode <span class="op">=</span> <span class="st">"y8rbzcju"</span>, apps <span class="op">=</span> <span class="st">"survey"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show how much time the participants in group 4 spent on</span></span></span>
@@ -233,7 +233,7 @@ it to the app(s).</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Patricia F. Zauchner.</p>
+  <p></p><p><a href="impressum.html">Site notice</a></p>
 </div>
 
 <div class="pkgdown">

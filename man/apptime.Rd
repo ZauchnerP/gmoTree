@@ -20,7 +20,7 @@ apptime(
 \arguments{
 \item{oTree}{A list of data frames that were created by import_otree().}
 
-\item{apps}{Name(s) of the app(s) for which the time
+\item{apps}{Character. Name(s) of the app(s) for which the time
 should be calculated.}
 
 \item{pcode}{Character. The value of the participant.code variable if the
@@ -58,7 +58,7 @@ This function returns a list for each app containing
 information on the mean, the minimum, and maximum time the participants
 spent on the app, a data frame with information on the time
 each participant spent on the app, and eventually,
-vectors of background information on these numbers.
+vectors of relevant background information on these numbers.
 
 If the experiment's duration is only calculated for one participant,
 the output returns an NA (per app) if the person did not make
@@ -72,11 +72,11 @@ Calculate the time spent on one app or several apps.
 oTree <- gmoTree::oTree
 
 # Show how much time all participants spent on app "survey"
-apptime(oTree, "survey")
+apptime(oTree, apps = "survey")
 
 # Show how much time the participant "y8rbzcju" spent on
 # the app "survey"
-apptime(oTree, pcode = "y8rbzcju", "survey")
+apptime(oTree, pcode = "y8rbzcju", apps = "survey")
 
 # Show how much time the participants in group 4 spent on
 # the app "survey"
