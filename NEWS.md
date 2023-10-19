@@ -1,3 +1,7 @@
+# gmoTree 1.0.0
+
+* Makes file names of the examples portable. Changes import_otree() code to import those files as well.
+
 # gmoTree 0.0.3
 
 * Minor improvement of the documentation & website.

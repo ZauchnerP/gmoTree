@@ -15,7 +15,7 @@ vignette: >
 library(gmoTree)
 ```
 
-Handling data from online experiments made with oTree (https://www.otree.org/) can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. gmoTree is not an official package of the oTree team but is built to complement the oTree open-source platform. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
+Handling data from online experiments made with <a href="https://www.otree.org/" target="_blank">oTree</a> can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. gmoTree is not an official package of the oTree team but is built to complement the oTree open-source platform. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
 
 # Importing and cleaning up data
 

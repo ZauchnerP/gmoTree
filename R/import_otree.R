@@ -245,14 +245,21 @@ import_otree <- function(
   # Special all apps wide definer
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         "-[0-9]{4}-[0-9]{2}-[0-9]{2}")
+  
+  # Remove file name extension
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         ".xlsx")
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         ".csv")
+  
+  # Remove access information for Chats and Time
   app_filedf$app <-
     stringr::str_remove(app_filedf$app,
-                        "\\s*\\(accessed [0-9]{4}-[0-9]{2}-[0-9]{2}\\)")
+                        ".\\(accessed.[0-9]{4}-[0-9]{2}-[0-9]{2}\\)")
+  # Info: The dot is only there to ensure portable file names for the examples!
+  # Was \\s* before
 
+  # Remove final underscore
   app_filedf$app <- stringr::str_remove(app_filedf$app, "_$")
 
   app_filedf$app <- stringr::str_remove(app_filedf$app, "-$")
@@ -260,7 +267,8 @@ import_otree <- function(
   # Special handling of Time and Chats
   app_filedf$app <- gsub("ChatMessages.*", "Chats", app_filedf$app)
   app_filedf$app <- gsub("PageTimes.*", "Time", app_filedf$app)
-  app_filedf$app <- gsub("Chat messages.*", "Chats", app_filedf$app)
+  app_filedf$app <- gsub("Chat.messages.*", "Chats", app_filedf$app) 
+  # Info: The dot is only there to ensure portable file names for the examples!
   app_filedf$app <- gsub("TimeSpent.*", "Time", app_filedf$app)
 
   # Sort app-names

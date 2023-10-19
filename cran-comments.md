@@ -1,3 +1,48 @@
+# Version 1.0.0 (Resubmission)
+
+[x] Portable file names warning is now circumvented.
+
+Now, there are no ERRORs or WARNINGs. But there are some notes.
+
+
+## Notes 
+
+```
+Notes:
+
+* checking CRAN incoming feasibility ... [6s/16s] NOTE
+Maintainer: anonymized
+
+New submission
+
+Possibly misspelled words in DESCRIPTION:
+  oTree (2:23, 8:50)
+  
+```
+[x] oTree is not misspelled.
+
+[x] The feasibility-note can be ignored according to https://mailman.stat.ethz.ch/pipermail/r-devel/2014-March/068497.html.
+
+```
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+```
+[x] Can be ignored according to https://github.com/r-hub/rhub/issues/503. 
+
+```
+* checking for non-standard things in the check directory ... NOTE
+Found the following files/directories:
+  ''NULL''
+```
+[x] Can be ignored according to https://github.com/r-hub/rhub/issues/560.
+
+```
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found
+```
+[x] A bug in rhub? https://github.com/r-hub/rhub/issues/548
+
 # Version 0.0.1 
 
 ```

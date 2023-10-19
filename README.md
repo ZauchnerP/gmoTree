@@ -3,7 +3,7 @@
   [![R-CMD-check](https://github.com/ZauchnerP/gmoTree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZauchnerP/gmoTree/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
 
-gmoTree is an R package developed for importing, merging, and efficiently managing data obtained from running oTree (https://www.otree.org/) experiments. It's particularly valuable when dealing with complex experimental designs that span multiple sessions and generate a large number of files that need to be integrated.
+gmoTree is an R package developed for importing, merging, and efficiently managing data obtained from running <a href="https://www.otree.org/" target="_blank">oTree</a> experiments. It's particularly valuable when dealing with complex experimental designs that span multiple sessions and generate a large number of files that need to be integrated.
 
 gmoTree is not an official package of the oTree team, but it was created to complement the open-source platform.
 

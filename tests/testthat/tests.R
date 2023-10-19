@@ -510,8 +510,8 @@ testthat::test_that("Import - specific csv without all apps wide", {
 testthat::test_that("Import - without all apps wide xlsx", {
   file_names <- c(
     "dictator_2023-05-16.xlsx",
-    "Chat messages (accessed 2023-05-16).csv",
-    "TimeSpent (accessed 2023-05-16).csv")
+    "Chat-messages-(accessed-2023-05-16).csv",
+    "TimeSpent-(accessed-2023-05-16).csv")
 
   # Run function
   otree2 <- import_otree(
@@ -631,8 +631,8 @@ testthat::test_that("Import (e) - xlsx - some faulty file_names", {
                     "exp_data_2.1.0/dictator-2900-05-16.xlsx",
                     "exp_data_2.1.0/start-2900-05-16.xlsx",
                     "exp_data_2.1.0/ChatMessages-2900-05-16.csv",
-                    "exp_data_2.1.0/Chat messages (accessed 2023-05-16).csv",
-                    "exp_data_2.1.0/TimeSpent (accessed 2023-05-16).csv",
+                    "exp_data_2.1.0/Chat-messages-(accessed-2023-05-16).csv",
+                    "exp_data_2.1.0/TimeSpent-(accessed-2023-05-16).csv",
                     "exp_data_2.1.0/PageTimes-2900-05-16.csv"),
       onlybots = FALSE,
       csv = FALSE,
