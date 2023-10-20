@@ -166,13 +166,15 @@ See list of the additional ID variables in $info$additional_variables.</p>
 <span class="r-in"><span><span class="va">oTree2</span><span class="op">$</span><span class="va">all_apps_wide</span><span class="op">$</span><span class="va">session_id</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 1 2 2 2 2 3 3 3 3 3 3 4 4 4 4 5 5 6 6 6 6</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Make session IDs and group IDs #</span></span></span>
+<span class="r-in"><span><span class="co"># Make session IDs and group IDs</span></span></span>
 <span class="r-in"><span><span class="co"># Not working with this data set because group ID is not the same in all apps</span></span></span>
-<span class="r-in"><span><span class="co"># oTree2 &lt;- make_ids(oTree, gmake = TRUE)</span></span></span>
+<span class="r-in"><span><span class="co"># try({</span></span></span>
+<span class="r-in"><span><span class="co">#      oTree2 &lt;- make_ids(oTree, gmake = TRUE)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Show new variables</span></span></span>
-<span class="r-in"><span><span class="co"># oTree2$all_apps_wide$session_id</span></span></span>
-<span class="r-in"><span><span class="co"># oTree2$all_apps_wide$group_id</span></span></span>
+<span class="r-in"><span><span class="co">#       Show new variables</span></span></span>
+<span class="r-in"><span><span class="co">#       oTree2$all_apps_wide$session_id</span></span></span>
+<span class="r-in"><span><span class="co">#       oTree2$all_apps_wide$group_id</span></span></span>
+<span class="r-in"><span><span class="co"># })</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get IDs from variable "dictator.1.group.id_in_subsession"</span></span></span>
 <span class="r-in"><span><span class="co"># in the data frame "all_apps_wide"</span></span></span>

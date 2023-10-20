@@ -1,11 +1,17 @@
 Package: gmoTree
 Title: Get and Modify oTree Data
 Version: 1.0.0
-Date: 2023-10-19
+Date: 2023-10-20
 Authors@R: 
     person("Patricia F.", "Zauchner", , "patricia.zauchner@gmx.at", role = c("aut", "trl", "cre", "cph"),
            comment = c(ORCID = "https://orcid.org/0000-0002-5938-1683"))
-Description: Import, merge, and manage data from oTree experiments.
+Description: Manage data from oTree experiments.  Import oTree data and
+    clean them up by using functions to deal with messy data, dropouts, and
+    other problematic cases. Create IDs, calculate the time, transfer
+    variables between app data frames, and delete sensitive information.
+    You can also check your experimental data before running the
+    experiment. Information on oTree is found in Chen, D. L., Schonger, M., 
+    & Wickens, C. (2016) <doi: 10.1016/j.jbef.2015.12.001>.
 License: GPL (>= 3)
 URL: https://zauchnerp.github.io/gmoTree/,
     https://github.com/ZauchnerP/gmoTree/
