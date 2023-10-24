@@ -79,13 +79,13 @@ oTree2$all_apps_wide$session_id
 
 # Make session IDs and group IDs
 # Not working with this data set because group ID is not the same in all apps
-# try({
-#      oTree2 <- make_ids(oTree, gmake = TRUE)
+\dontrun{
+      oTree2 <- make_ids(oTree, gmake = TRUE)
 
-#       Show new variables
-#       oTree2$all_apps_wide$session_id
-#       oTree2$all_apps_wide$group_id
-# })
+      # Show new variables
+      oTree2$all_apps_wide$session_id
+      oTree2$all_apps_wide$group_id
+}
 
 # Get IDs from variable "dictator.1.group.id_in_subsession"
 # in the data frame "all_apps_wide"

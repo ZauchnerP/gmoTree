@@ -1,3 +1,13 @@
+# Version 1.0.1 (Resubmission)
+
+[x] make_ids() function accidentally left the # in the code although putting a try() around the functions. 
+Now the try() function is replaced by \dontrun{} and the # are removed. 
+
+[x] oTree in the title and description of the DESCRIPTION file is now in single quotations. 
+
+[] There should be examples in comments in oTree.Rd; however, there are no examples in this file. 
+
+
 # Version 1.0.0 (Resubmission)
 
 [x] Portable file names warning is now circumvented.
