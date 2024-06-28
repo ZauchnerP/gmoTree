@@ -7,7 +7,8 @@
 show_dropouts(oTree, final_apps = NULL, final_pages = NULL, saved_vars = NULL)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
 \item{final_apps}{Character.
 The name(s) of the app(s) at which the participants have to finish the
@@ -26,40 +27,44 @@ finish the experiment.
 
 In this list, you can find the following information:
 
-$full = A data frame that contains information
+- \code{$full} = A data frame that contains information
 on all participants who did not finish the study;
 it shows their participant codes, the names of the apps in which they
 left the experiment,
 the names of the pages in which they left the experiment,
 the names of the app data frames in which this information was found, and
-the dropout reason ("ENC," experiment not completed, combined
+the dropout reason (\code{"ENC"}, experiment not completed, combined
 with the name of the data frame in which the dropout was observed).
 Because participants usually appear in multiple app data frames,
-the $full data frame may contain several entries for
+the \code{$full} data frame may contain several entries for
 each person.
 
-$unique = A data frame that contains similar information as the $full data
-frame but with only one row per participant and no information on the data
-frame in which the dropout was observed.
+- \code{$unique} = A data frame that contains similar information as 
+the \code{$full} data frame but with only one row per participant and 
+no information on the data frame in which the dropout was observed.
 
-$all_end = A table that provides information on the app and page combinations
+- \code{$all_end} = A table that provides information 
+on the app and page combinations
 where participants ended the experiment. This table also includes
 information on participants who did not drop out of the experiment.
-The $all_end table is only shown if an all_apps_wide data frame exists.
+The \code{$all_end} table is only shown if an \code{$all_apps_wide} 
+data frame exists.
 
-$codes = A vector containing the participant codes of
+- \code{$codes} = A vector containing the participant codes of
 all participants who did not finish the experiment.
 
-$count = The number of all participants who did not finish the experiment.
+- \code{$count} = The number of all participants who did not 
+finish the experiment.
 
-It is important to note that if only the argument final_pages is set,
+It is important to note that if only the argument \code{final_pages} is set,
 this function does not distinguish between page names that reoccur in
 different apps.
 
-If the columns end_app and end_page in the output are empty,
+If the columns \code{end_app} and \code{end_page} in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
-by using the argument "del_empty = TRUE" when using import_otree().
+by using the argument \code{del_empty = TRUE}" when 
+using \code{\link{import_otree}}.
 }
 \description{
 Show information on the people who did not finish the experiment at (a)

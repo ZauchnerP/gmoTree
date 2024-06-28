@@ -13,38 +13,45 @@ messy_chat(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
-\item{combine}{Logical. TRUE if all variables referring to
+\item{combine}{Logical. \code{TRUE} if all variables referring to
 the session code should be merged and/or all variables referring
 to participant code should be merged in case data of several versions
 of oTree are used.}
 
-\item{session}{Logical. TRUE if all variables referring to the session code
-should be checked and merged. Merging only works if combine = TRUE.}
+\item{session}{Logical. \code{TRUE} if all variables referring to the session 
+code should be checked and merged. Merging only works 
+if \code{combine = TRUE}.}
 
-\item{participant}{Logical. TRUE if all variables referring to the
-participant code should be checked and merged. Merging only works if
-combine = TRUE.}
+\item{participant}{Logical. \code{TRUE} if all variables referring to the
+participant code should be checked and merged. Merging only works 
+if \code{combine = TRUE}.}
 
-\item{info}{Logical. TRUE if a brief information on the process should
+\item{info}{Logical. \code{TRUE} if a brief information on the process should
 be printed.}
 }
 \value{
-This function returns an oTree list of data frames that is
-an exact copy of the original oTree list of data frames but - if the user
-wishes to do so - combines the participant code and session code
-variables in the Chats data frame if several variables are referring to
-those because of the
-combination of different oTree versions. The final variables are called
-participant_code and session_code.
+This function searches for multiple variables related to the session code 
+or the participant code in the \code{$Chats} data frame.
+which can occur when data from both old and new oTree versions are used.
 
-If combine = FALSE, the function only checks for the existence of several
-variables referring to the participant code and session code and throws an
-error if yes.
+If \code{combine = FALSE}, the function will throw an error 
+if such variables are found.
+
+If \code{combine = TRUE}, the function will not throw an error
+if such variables are found.
+Instead, it automatically combines the variables into new variables 
+and adds them to the original \code{$Chats} data frame. 
+This function then returns a duplicate of the original oTree list but
+with the \code{$Chats} data frame modified.
+
+The new variables are called
+\code{participant_code} and \code{session_code}.
 }
 \description{
-Check if the Chats data frame includes both
+Check if the \code{$Chats} data frame includes both
 session-related variables and participant-related variables that
 appear multiple times. This may occur when data from different
 oTree versions, which use different variable names, are combined.

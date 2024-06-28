@@ -10,30 +10,32 @@ make_ids(
   pmake = TRUE,
   from_app = "all_apps_wide",
   from_var = NULL,
-  sstart = 1,
-  gstart = 1,
-  pstart = 1,
+  sstart = 1L,
+  gstart = 1L,
+  pstart = 1L,
   emptyrows = NULL,
   icw = FALSE
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
-\item{gmake}{Logical. TRUE if a variable called group_id should be made.
-If from_var is not NULL, gmake is automatically set to TRUE.}
+\item{gmake}{Logical. \code{TRUE} if a variable 
+called group_id should be made.
+If from_var is not \code{NULL}, gmake is automatically set to \code{TRUE}.}
 
-\item{pmake}{Logical. TRUE if a variable called participant_id
+\item{pmake}{Logical. \code{TRUE} if a variable called \code{participant_id}
 should be made.}
 
 \item{from_app}{Character. Name of the data frame from which the session,
 group, and participant information should be taken.
-All normal app data frames and all_apps_wide are allowed.}
+All normal app data frames and \code{$all_apps_wide} are allowed.}
 
 \item{from_var}{Character. Name of the variable from which the group
-information should be taken. This argument is only relevant when
-all_apps_wide is used as from_app and has group information that contradicts
-each other.}
+information should be taken. This argument is only relevant
+when \code{$all_apps_wide} is used as from_app and has group information 
+that contradicts each other.}
 
 \item{sstart}{Integer.
 The number that serves as a starting point for session IDs.}
@@ -44,25 +46,26 @@ The number that serves as a starting point for group IDs.}
 \item{pstart}{Integer.
 The number that serves as a starting point for participant IDs.}
 
-\item{emptyrows}{Character. "no" if the function should stop if there are
-empty rows in from_app. "yes" if the function should continue to make IDs.}
+\item{emptyrows}{Character. \code{"no"} if the function should stop if 
+there are empty rows in from_app. \code{"yes"} if the function should 
+continue to make IDs.}
 
-\item{icw}{Logical. TRUE if the warning message should be
+\item{icw}{Logical. \code{TRUE} if the warning message should be
 ignored that states that IDs cannot be made because of an oTree bug.}
 }
 \value{
-ID variables are made in all_apps_wide, all app data frames,
-the Time data frame, and the Chats data frame.
-See list of the additional ID variables in $info$additional_variables.
+ID variables are made in \code{$all_apps_wide}, all app data frames,
+the \code{$Time} data frame, and the \code{$Chats} data frame.
+See list of the additional ID variables in \code{$info$additional_variables}.
 }
 \description{
 Make session IDs and, optionally, group IDs and participant IDs
-that span across all data frames created by
-import_otree(). Information for these IDs is taken from all_apps_wide
+that span across all data frames created by \code{\link{import_otree}}. 
+Information for these IDs is taken from \code{$all_apps_wide}
 but can be defined otherwise.
 
 Note: Older versions of oTree may already contain a
-variable called session_id in their Time data frames.
+variable called session_id in their \code{$Time} data frames.
 This variable is overwritten by this function!
 
 Important: Combine duplicate data before running this function!

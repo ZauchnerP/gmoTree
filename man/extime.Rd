@@ -11,53 +11,55 @@ extime(
   group_id = NULL,
   seconds = FALSE,
   rounded = TRUE,
-  digits = 2,
-  startat = 1,
+  digits = 2L,
+  startat = 1L,
   tz = "UTC",
   sinfo = "session_code",
   combine = TRUE
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
-\item{pcode}{Character. The value of the participant.code variable if the
-time should only be calculated for one specified participant.}
+\item{pcode}{Character. The value of the \code{participant.code} 
+variable if the time should only be calculated for one specified participant.}
 
-\item{plabel}{Character. The value of the participant.label variable if the
-time should only be calculated for one specified participant.}
+\item{plabel}{Character. The value of the \code{participant.label} variable 
+if the time should only be calculated for one specified participant.}
 
 \item{group_id}{Integer. The value of the group_id variable if the
-time should only be calculated for one specified group. The group_id
-variable can be created with make_ids().}
+time should only be calculated for one specified group. The \code{group_id}
+variable can be created with \code{\link{make_ids}}.}
 
-\item{seconds}{Logical.
-TRUE if the output should be in seconds instead of minutes.}
+\item{seconds}{Logical. \code{TRUE} if the output should be in seconds 
+instead of minutes.}
 
-\item{rounded}{Logical. TRUE if the output should be rounded.}
+\item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
 
 \item{digits}{Integer. The number of digits to which the output
 should be rounded.
-This parameter has no effect unless rounded = TRUE.}
+This parameter has no effect unless \code{rounded = TRUE}.}
 
-\item{startat}{Integer or character string "real".
+\item{startat}{Integer or character string \code{"real"}
 Whether the start of the experiment should be taken from the time at
-a certain index of each person's vector of page_indexes in the
-Time data frame or from the "time_started"
-variable in all_apps_wide ("real"). Important: If integer,
+a certain index of each person's vector of page_indexes in
+the \code{$Time} data frame or from the \code{time_started}
+variable in \code{$all_apps_wide} (\code{"real"}). Important: If integer,
 it represents the position within the page index sequence,
-not the numeric value of the page_index variable.}
+not the numeric value of the \code{page_index} variable.}
 
 \item{tz}{Character. Time zone.}
 
-\item{sinfo}{Character.
-"session_id" to use session ID for additional information in the data frame
-of single durations, "session_code" to use session codes, or NULL if no
-session column should be shown.}
+\item{sinfo}{Character. \code{"session_id"} to use session ID for
+additional information in the data frame
+of single durations, \code{"session_code"} to use session codes,
+or \code{NULL} if no session column should be shown.}
 
-\item{combine}{Logical. TRUE if all variables referring to epoch time should
-be merged, and all variables referring to participant code should
-be merged in case data of several versions of oTree are used. If FALSE,
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+should be merged, and all variables referring to participant code should
+be merged in case data of several versions of oTree are used. 
+If \code{FALSE},
 the function returns an error if several oTree versions' data are present.}
 }
 \value{
@@ -67,23 +69,30 @@ spent on the experiment.
 
 In this list, you can find the following information:
 
-$mean_duration = The experiment's average duration.
+- \code{$mean_duration} = The experiment's average duration.
 
-$min_duration = The experiment's minimum duration.
+- \code{$min_duration} = The experiment's minimum duration.
 
-$max_duration = The experiment's maximum duration.
+- \code{$max_duration} = The experiment's maximum duration.
 
-$single_durations = A data frame of all durations that
+- \code{$single_durations} = A data frame of all durations that
 are used for calculating the min, max, and mean duration.
 
-$messages = All important notes to the calculations.
+- \code{$messages} = All important notes to the calculations.
 
-$only_one_page = A vector of all individuals who only have one time stamp.
+- \code{$only_one_page} = A vector of all individuals who 
+only have one time stamp.
 }
 \description{
 Calculate the time spent on the experiment.
 If not stated otherwise, the calculation only starts at the end of
 the first page!
+}
+\details{
+This functions calculates the time spent on the experiment by using
+the variable that refers to the time stamp. If that variable is not
+present, the function alternatively uses \code{seconds_on_page2}, 
+which can be created with the \code{\link{pagesec}} function.
 }
 \examples{
 # Use package-internal list of oTree data frames

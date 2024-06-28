@@ -7,23 +7,25 @@
 delete_duplicate(oTree)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 }
 \value{
 This function returns a duplicate of the original oTree
 list of data frames but without duplicate rows in all app data
-frames and all_apps_wide. This function has no effect on the data
-frames Time and Chats.
+frames and \code{$all_apps_wide}. This function has no effect on the data
+frames \code{$Time} and \code{$Chats}.
 
-This function does NOT add information to $info$deleted_cases,
+This function does NOT add information to \code{$info$deleted_cases},
 because it does not delete any important information but only
 cleans up a messy data import.
 
-However, the function adjusts info$initial_n, if an all_apps_wide
-data frame exists.
+However, the function adjusts \code{$info$initial_n}, if 
+an \code{$all_apps_wide} data frame exists.
 }
 \description{
-Delete duplicate rows from all oTree app data frames and all_apps_wide.
+Delete duplicate rows from all oTree app data frames 
+and \code{$all_apps_wide}.
 }
 \examples{
 \dontshow{if (rlang::is_installed("withr")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

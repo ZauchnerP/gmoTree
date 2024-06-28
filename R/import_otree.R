@@ -5,68 +5,72 @@
 #' of their file names are considered oTree files.
 #' Bot outputs are saved by oTree without the date included. Hence, to
 #' import bot data, you must either rename the original bot files
-#' using the YYYY-MM-DD format or use the argument "onlybots = TRUE."
+#' using the YYYY-MM-DD format or use the argument \code{onlybots = TRUE}.
 #' By using the second option, only data of bot files are imported.
 #'
 #' Caution! Data can be downloaded from within the
 #' session and globally at the same time. If both files are downloaded,
-#' this can lead to the all_apps_wide data being there twice! You can remove
-#' duplicate data by using delete_duplicate().
+#' this can lead to the \code{$all_apps_wide} data being there twice! You can 
+#' remove duplicate data by using \code{\link{delete_duplicate}}.
 #'
-#' Caution! When importing Excel files, this function does not check 
+#' Caution! When importing Excel files, this function does not check
 #' for erroneous data structures
 #' and will combine all data frames with the same file name patterns.
-#' Before using the "CSV = FALSE" argument, clean up your data appropriately.
+#' Before using the \code{CSV = FALSE} argument, 
+#' clean up your data appropriately.
 #' @keywords oTree
 #' @param final_apps Character.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment. If the argument final_apps is left empty, you can still call
-#' for deleting the participants who did not finish the experiment with
-#' delete_dropouts().
+#' for deleting the participants who did not finish the experiment
+#' with \code{\link{delete_dropouts}}.
 #' @param final_pages Character.
 #' The name(s) of the page(s) at which the participants have to finish the
 #' experiment. If the argument final_pages is left empty, you can still
 #' call for deleting the participants who did not finish the experiment
-#' with delete_dropouts().
+#' with \code{\link{delete_dropouts}}.
 #' @param encoding Character. Encoding of the CSV files that are imported.
-#' Default is "UTF-8".
+#' Default is \code{"UTF-8"}.
 #' @param path Character. The path to the files (default is the
 #' working directory).
-#' @param recursive Logical. TRUE if the files in the path's
+#' @param recursive Logical. \code{TRUE} if the files in the path's
 #' subfolders should also be imported.
 #' @param file_names Character. The name(s) of the file(s) to be imported.
 #' If not specified, all files in the path and subfolders are imported.
-#' @param csv Logical.
-#' TRUE if only CSV files should be imported.
-#' FALSE if only Excel files should be imported.
-#' @param onlybots Logical. TRUE if only bot-created files should be imported.
-#' @param del_empty Logical. TRUE if all empty cases should be deleted from the
-#' all_apps_wide or normal app data frames (not Time or Chats).
-#' @param info Logical. TRUE if a brief information on the data import should be
-#' printed.
+#' @param csv Logical. \code{TRUE} if only CSV files should be 
+#' imported. \code{FALSE} if only Excel files should be imported.
+#' @param onlybots Logical. \code{TRUE} if only bot-created files 
+#' should be imported.
+#' @param del_empty Logical. \code{TRUE} if all empty cases should be deleted 
+#' from the \code{$all_apps_wide} or normal app data frames (not Time or Chats).
+#' @param info Logical. \code{TRUE} if a brief information on the data 
+#' import should be printed.
 #' @returns
-#' Returns a list of data frames (one data frame for each app and
-#' all_apps_wide) and a list of information on this list of data frames
-#' in $info.
+#' Returns a list of data frames (one data frame for each app 
+#' and \code{$all_apps_wide}) and a list of information on this list 
+#' of data frames in \code{$info}.
 #'
-#' See detailed information on the imported files in $info$imported_files.
+#' See detailed information on the imported files 
+#' in \code{$info$imported_files}.
 #'
-#' If all_apps_wide is imported, see the number of imported cases
-#' in $info$initial_n. In this number, empty rows are
-#' already considered. So, if empty rows are deleted with del_empty=TRUE,
-#' initial_n counts all rows that are not empty.
+#' If \code{$all_apps_wide} is imported, see the number of imported cases
+#' in \code{$info$initial_n}. In this number, empty rows are
+#' already considered. So, if empty rows are deleted 
+#' with \code{del_empty=TRUE}, \code{initial_n} 
+#' counts all rows that are not empty.
 #' Cases that are deleted because the participants did not make it to the
 #' last page and/or app are not subtracted from this number.
 #'
-#' Information: Empty rows are rows without the "participant._current_app_name"
-#' variable set. Empty rows are deleted from all app data frames and
-#' all_apps_wide when using del_empty=TRUE. Empty rows in the Chats and Time
-#' data frames are not deleted.
+#' Information: Empty rows are rows without 
+#' the \code{participant._current_app_name}
+#' variable set. Empty rows are deleted from all app data frames
+#' and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in 
+#' the \code{$Chats} and \code{$Time} data frames are not deleted.
 #'
-#' If old and new oTree versions are combined, the Time data frame contains
-#' variables called "participant_code" and "participant__code"
-#' (the difference is in the underscores).
-#' Caution! If there is an unusual amount of NAs,
+#' If old and new oTree versions are combined, the \code{$Time} data frame 
+#' contains variables called \code{participant_code} 
+#' and \code{participant__code} (the difference is in the underscores).
+#' Caution! If there is an unusual amount of \code{NA}s,
 #' check if everything got imported correctly.
 #' Sometimes, the CSV or Excel file may be corrupted, and all information is
 #' only found in one column.
@@ -116,7 +120,7 @@
 #'
 #' # Show the structure of the import
 #' str(oTree, max.level = 1)
-#' 
+#'
 #' # Import with file names (without path separately)
 #' oTree2 <- import_otree(
 #'      del_empty = TRUE,
@@ -157,16 +161,18 @@ import_otree <- function(
   oTree <- list()
 
   # Specify type of files
-  if (onlybots == TRUE) {
+  if (onlybots) {
     csv <- TRUE
   }
 
   # Make messages
-  errorfiles <- data.frame(file = character(0), content = character(0))
-  warningfiles <- data.frame(file = character(0), content = character(0))
-  time_message <- c()
-  chat_message <- c()
-  other_messages <- c()
+  errorfiles <- data.frame(file = character(0L), 
+                           content = character(0L))
+  warningfiles <- data.frame(file = character(0L), 
+                             content = character(0L))
+  time_message <- character(0L)
+  chat_message <- character(0L)
+  other_messages <- character(0L)
 
   # Define path
   if (!is.null(path)) {
@@ -185,15 +191,15 @@ import_otree <- function(
   # Check if path(s) exist(s)
   for (i in path2) {
     if (!dir.exists(i)) {
-      stop(paste0("This path does not exist: ", i))
+      stop("This path does not exist: ", i)
     }
   }
 
   # oTree pattern handling
-  if (onlybots == TRUE) {
+  if (onlybots) {
     pattern_definer <- ""  # For regex search later
   } else {
-    if (csv == TRUE) {
+    if (csv) {
       # For regex search later
       # The second part refers to Chat and Time and is always csv
       pattern_definer <-
@@ -220,12 +226,13 @@ import_otree <- function(
   }
 
   # Stop if there are no files  ####
-  if (length(all_file_names) == 0 || is.null(all_file_names)) {
-    stop(paste0("No files to import! ",
+  if (length(all_file_names) == 0L || 
+      is.null(all_file_names)) {
+    stop("No files to import! ",
                 "Did you specify the CSV argument correctly? ",
                 "Is the directory correctly specified? ?\n",
                 "The directory is: ", path2
-    ))
+    )
   }
 
   # Make app-names to file names (= all file names without path and time)  ####
@@ -245,13 +252,13 @@ import_otree <- function(
   # Special all apps wide definer
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         "-[0-9]{4}-[0-9]{2}-[0-9]{2}")
-  
+
   # Remove file name extension
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         ".xlsx")
   app_filedf$app <- stringr::str_remove(app_filedf$app,
                                         ".csv")
-  
+
   # Remove access information for Chats and Time
   app_filedf$app <-
     stringr::str_remove(app_filedf$app,
@@ -267,7 +274,7 @@ import_otree <- function(
   # Special handling of Time and Chats
   app_filedf$app <- gsub("ChatMessages.*", "Chats", app_filedf$app)
   app_filedf$app <- gsub("PageTimes.*", "Time", app_filedf$app)
-  app_filedf$app <- gsub("Chat.messages.*", "Chats", app_filedf$app) 
+  app_filedf$app <- gsub("Chat.messages.*", "Chats", app_filedf$app)
   # Info: The dot is only there to ensure portable file names for the examples!
   app_filedf$app <- gsub("TimeSpent.*", "Time", app_filedf$app)
 
@@ -292,7 +299,7 @@ import_otree <- function(
       allAppsFilesWP <- app_filedf$file[app_filedf$app == App]
 
       # Import files  ####
-      if (csv == FALSE) {
+      if (!csv) {
 
         # Import all Excel files for the App  ####
 
@@ -309,11 +316,11 @@ import_otree <- function(
 
                 # Read data
                 new <- openxlsx::read.xlsx(file.path(allAppsFilesWP[i]),
-                                           sheet = 1)
+                                           sheet = 1L)
 
                 # If data is there: Add data to data frame + info about it
 
-                if (!is.null(new) & nrow(new) > 0) {
+                if (!is.null(new) & nrow(new) > 0L) {
 
                   oTree[[App]] <- plyr::rbind.fill(new, oTree[[App]])
 
@@ -347,7 +354,7 @@ import_otree <- function(
           # Info: That's so complicated, because tryCatch does not
           # continue after warnings and withCallingHandlers throws errors
 
-        } else if (csv == TRUE) {
+        } else if (csv) {
 
         # Import all CSV files for the App  ####
         for (i in seq_along(allAppsFilesWP)) {
@@ -364,7 +371,7 @@ import_otree <- function(
 
                 # If data is there: Add data to data frame + info about it
 
-                if (!is.null(new) && nrow(new) > 0) {
+                if (!is.null(new) && nrow(new) > 0L) {
 
                   oTree[[App]] <- plyr::rbind.fill(new, oTree[[App]])
 
@@ -392,7 +399,7 @@ import_otree <- function(
       }
 
       # Delete empty  ####
-      if (del_empty == TRUE) {
+      if (del_empty) {
           oTree[[App]] <- oTree[[App]][
             !(is.na(oTree[[App]]$participant._current_app_name) |
                 oTree[[App]]$participant._current_app_name == "<NA>" |
@@ -409,7 +416,7 @@ import_otree <- function(
        any(grepl("all_apps_wide_", oTree[["info"]][["imported_files"]]))
       )) {
 
-    warning(paste0(
+    warning(
       "You have stored all_apps_wide ",
       "globally but also room-specific. ",
       "This function will import both of them. ",
@@ -420,7 +427,7 @@ import_otree <- function(
       "make sure nothing is there twice! ",
       "(Advice: You may use delete_duplicate() to ",
       "remove duplicate rows of all oTree data frames."
-    ))
+    )
   }
 
   # Combine possible AAWs (will be NULL if none are there)
@@ -439,7 +446,7 @@ import_otree <- function(
   time_files <- sort(time_files)
 
   # Import time data
-  if (length(time_files) != 0) {
+  if (length(time_files) != 0L) {
 
     for (i in seq_along(time_files)) {
       new <- NULL  # Future file data frame
@@ -454,8 +461,7 @@ import_otree <- function(
                                  encoding = encoding)
 
           # If data is there: Add data to data frame + info about it
-
-          if (!is.null(new) && nrow(new) > 0) {
+          if (!is.null(new) && nrow(new) > 0L) {
             oTree[["Time"]] <- plyr::rbind.fill(new, oTree[["Time"]])
 
             oTree[["info"]][["imported_files"]] <- c(
@@ -491,7 +497,7 @@ import_otree <- function(
     chat_files <- sort(chat_files)
 
     # Import/reading data: "Chats"
-    if (length(chat_files) != 0) {
+    if (length(chat_files) != 0L) {
 
       for (i in seq_along(chat_files)) {
         new <- NULL  # Future file data frame
@@ -506,9 +512,8 @@ import_otree <- function(
                                    encoding = encoding)
 
             # If data is there: Add data to data frame + info about it
-            if (!is.null(new) & nrow(new) > 0) {
+            if (!is.null(new) & nrow(new) > 0L) {
               oTree[["Chats"]] <- plyr::rbind.fill(new, oTree[["Chats"]])
-
 
               oTree[["info"]][["imported_files"]] <- c(
                 toString(chat_files[i]),
@@ -559,31 +564,31 @@ import_otree <- function(
   }
 
   # Messages  ####
-  if (info == TRUE) {
+  if (info) {
 
       numapps <- length(oTree)
-      numapps <- ifelse("Time" %in% names(oTree), numapps - 1, numapps)
-      numapps <- ifelse("Chats" %in% names(oTree), numapps - 1, numapps)
-      numapps <- ifelse("info" %in% names(oTree), numapps - 1, numapps)
+      numapps <- ifelse("Time" %in% names(oTree), numapps - 1L, numapps)
+      numapps <- ifelse("Chats" %in% names(oTree), numapps - 1L, numapps)
+      numapps <- ifelse("info" %in% names(oTree), numapps - 1L, numapps)
 
       my_messages <- c(paste0("Imported: ",
                               numapps,
                               " app(s) and/or all_apps_wide"))
 
-
-      if (!is.null(errorfiles) && !nrow(errorfiles) == 0) {
+      if (!is.null(errorfiles) && 
+          !nrow(errorfiles) == 0L) {
 
         # Make error messages
         errorfiles$pasteresult <- paste0("File: ",
-                              errorfiles$file,
-                              ": ",
-                              errorfiles$content)
+                                         errorfiles$file,
+                                         ": ",
+                                         errorfiles$content)
 
         errormessages <- paste0("Errors when importing these files:\n",
                                 paste(collapse = "\n", errorfiles$pasteresult))
 
         # Throw an error if there is nothing else in the oTree list
-        if (length(oTree) == 0) {
+        if (length(oTree) == 0L) {
           stop(errormessages)
         }
 
@@ -594,7 +599,7 @@ import_otree <- function(
       # First check if the file is not already in errorfiles
       warningfiles <- warningfiles[!(warningfiles$file %in% errorfiles$file), ]
 
-      if (!is.null(warningfiles) && !(nrow(warningfiles) == 0)) {
+      if (!is.null(warningfiles) && !(nrow(warningfiles) == 0L)) {
         # Make warning message
         warningfiles$pasteresult <- paste0("File: ", warningfiles$file,
                                            ": ", warningfiles$content)

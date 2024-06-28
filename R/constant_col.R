@@ -1,8 +1,8 @@
 #' Show columns that have no variation
 #' @description
-#' This function is called by show_constant(). The app in question is already
-#' specified there. I must admit that I found the idea to this code somewhere
-#' on stackoverflow but cannot remember where.
+#' This function is called by \code{\link{show_constant}}. The app in question 
+#' is already specified there. I must admit that I found the idea to this 
+#' code somewhere on Stack Overflow but cannot remember where.
 #' @param df Data frame.
 #' @param value The value that should be constant within a column.
 #' @returns This function returns a vector of names of variables

@@ -18,38 +18,39 @@ apptime(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}}
 
 \item{apps}{Character. Name(s) of the app(s) for which the time
 should be calculated.}
 
-\item{pcode}{Character. The value of the participant.code variable if the
-time should only be calculated for one specified participant.}
+\item{pcode}{Character. The value of the \code{participant.code} 
+variable if the time should only be calculated for one specified participant.}
 
-\item{plabel}{Character. The value of the participant.label variable if the
-time should only be calculated for one specified participant.}
+\item{plabel}{Character. The value of the \code{participant.label} 
+variable if the time should only be calculated for one specified participant.}
 
-\item{group_id}{Integer. The value of the group_id variable if the
-time should only be calculated for one specified group. The group_id
-variable can be created with make_ids().}
+\item{group_id}{Integer. The value of the \code{group_id} variable if the
+time should only be calculated for one specified group. The \code{group_id}
+variable can be created with \code{\link{make_ids}}.}
 
-\item{seconds}{Logical.
-TRUE if the output should be in seconds instead of minutes.}
+\item{seconds}{Logical. \code{TRUE} if the output should be 
+in seconds instead of minutes.}
 
-\item{rounded}{Logical.
-TRUE if the output should be rounded.}
+\item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
 
 \item{digits}{Integer.
 The number of digits to which the output should be rounded.
-This parameter has no effect unless rounded = TRUE.}
+This parameter has no effect unless \code{rounded = TRUE}.}
 
-\item{sinfo}{Character.
-"session_id" to use session ID for additional information in the data frame
-of single durations, "session_code" to use session codes, or NULL if no
+\item{sinfo}{Character. \code{"session_id"} to use session ID 
+for additional information in the data frame
+of single durations, \code{"session_code"} to use session codes, 
+or \code{NULL} if no
 session column should be shown.}
 
-\item{combine}{Logical.
-TRUE if all variables relating to epoch time should be merged, and
+\item{combine}{Logical. \code{TRUE} if all variables relating to epoch time 
+should be merged, and
 all variables relating to participant code should be merged
 when data from multiple versions of oTree are used.}
 }
@@ -61,7 +62,7 @@ each participant spent on the app, and eventually,
 vectors of relevant background information on these numbers.
 
 If the experiment's duration is only calculated for one participant,
-the output returns an NA (per app) if the person did not make
+the output returns an \code{NA} (per app) if the person did not make
 it to the app(s).
 }
 \description{
@@ -74,14 +75,19 @@ oTree <- gmoTree::oTree
 # Show how much time all participants spent on app "survey"
 apptime(oTree, apps = "survey")
 
-# Show how much time the participant "y8rbzcju" spent on
+# Show how much time the participant "a7dppel1" spent on
 # the app "survey"
-apptime(oTree, pcode = "y8rbzcju", apps = "survey")
+apptime(oTree, pcode = "a7dppel1", apps = "survey")
 
 # Show how much time the participants in group 4 spent on
 # the app "survey"
-oTree <- make_ids(oTree, gmake = TRUE,
-                  from_var = "dictator.1.group.id_in_subsession")
+oTree <- make_ids(oTree,
+    gmake = TRUE,
+    from_var = "dictator.1.group.id_in_subsession"
+)
 apptime(oTree, group_id = 4, apps = "survey")
+
+# Show how much time all participants spent on all apps
+apptime(oTree)
 }
 \keyword{oTree}

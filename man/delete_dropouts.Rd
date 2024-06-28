@@ -15,7 +15,8 @@ delete_dropouts(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}}
 
 \item{final_apps}{Character.
 The name(s) of the app(s) at which the participants have to finish the
@@ -26,62 +27,66 @@ The name(s) of the page(s) at which the participants have to finish the
 experiment.}
 
 \item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
-stored in the list of information on deleted cases in $info$deleted_cases.}
+stored in the list of information on deleted cases 
+in \code{$info$deleted_cases}.}
 
 \item{inconsistent}{Character. Should the function continue or be stopped if
 at least one participant has inconsistent end_pages, inconsistent end_apps,
-or both? To continue, type "yes,"
-to stop the function, type "no."}
+or both? To continue, type \code{"yes"},
+to stop the function, type \code{"no"}.}
 
 \item{reason}{Character. The reason for deletion that should be stored in
-the list of information on deleted cases in $info$deleted_cases.}
+the list of information on deleted cases in \code{$info$deleted_cases}.}
 
-\item{info}{Logical. TRUE if a brief information on the dropout deletion
-process should be printed.}
+\item{info}{Logical. \code{TRUE} if a brief information on the dropout 
+deletion process should be printed.}
 }
 \value{
 This function returns a duplicate of the original oTree list of data frames
 but without the deleted cases.
 
-It adds information on the deleted cases to $info$deleted_cases. (This
+It adds information on the deleted cases to \code{$info$deleted_cases}. (This
 list is also filled by other functions.)
 
 In this list, you can find the following information:
 
-$full = A data frame that contains information
+- \code{$full} = A data frame that contains information
 on all participants who did not finish the study;
 it shows their participant codes, the names of the apps in which they
 left the experiment,
 the names of the pages in which they left the experiment,
 the names of the app data frames in which this information was found, and
-the dropout reason ("ENC," experiment not completed, combined
+the dropout reason (\code{"ENC"}, experiment not completed, combined
 with the name of the data frame in which the dropout was observed).
 Because participants usually appear in multiple app data frames,
-the $info$deleted_cases$full data frame may contain several entries for
-each person.
+the \code{$info$deleted_cases$full} data frame may contain several entries
+for each person.
 
-$unique = A data frame that contains similar information as the $full data
-frame but with only one row per participant and no information on the data
-frame in which the dropout was observed.
+- \code{$unique} = A data frame that contains similar information as
+the \code{$full} data frame but with only one row per participant and 
+no information on the data frame in which the dropout was observed.
 
-$all_end = A table that provides information on the app and page combinations
-where participants ended the experiment. This table also includes
-information for participants who did not drop out of the experiment.
-The $all_end table is only shown if an all_apps_wide data frame exists.
+- \code{$all_end} = A table that provides information on the app and page
+combinations where participants ended the experiment. 
+This table also includes information for participants who did not drop out 
+of the experiment.
+The \code{$all_end} table is only shown if an \code{$all_apps_wide} data 
+frame exists.
 
-$codes = A vector containing the participant codes of
+- \code{$codes} = A vector containing the participant codes of
 all deleted participants.
 
-$count = The number of all deleted participants.
+- \code{$count} = The number of all deleted participants.
 
-It is important to note that if only the argument final_pages is set,
+It is important to note that if only the argument \code{final_pages} is set,
 this function does not distinguish between page names that reoccur in
 different apps.
 
-If the columns end_app and end_page in the output are empty,
+If the columns \code{end_app} and \code{end_page} in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
-by using the argument "del_empty = TRUE" when using import_otree().
+by using the argument \code{del_empty = TRUE} when 
+using \code{\link{import_otree}}.
 }
 \description{
 Delete the data of all participants who did not end the experiment at (a)
@@ -91,10 +96,11 @@ Caution 1: This function does not delete cases from the original CSV and
 Excel files!
 
 Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named participant.code and a variable
-named session.code!
+custom exports do not have a variable named \code{participant.code} and 
+a variable named \code{session.code}!
 
-Caution 3: This function does not delete any data from the Chats data frame!
+Caution 3: This function does not delete any data from 
+the \code{$Chats} data frame!
 (As the interpretation of chat data depends on how participants engage with
 each other, the data must be deleted with more care than deleting data in
 other apps. Hence, this function does not delete data in this data frame.

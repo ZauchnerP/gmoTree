@@ -13,36 +13,43 @@ messy_time(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
-\item{combine}{Logical. TRUE if all variables referring to epoch time should
-be merged and/or all variables referring to participant code should be merged
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+should be merged and/or all variables referring to participant code should be merged
 in case data of several versions of oTree are used.}
 
-\item{epoch_time}{Logical. TRUE if all variables referring to the time stamp
-should be checked and merged. Only works if combine = TRUE.}
+\item{epoch_time}{Logical. \code{TRUE} if all variables referring to the time
+stamp should be checked and merged. Only works if \code{combine = TRUE}.}
 
-\item{participant}{Logical. TRUE if all variables referring to the
-participant code should be checked and merged. Only works if combine = TRUE.}
+\item{participant}{Logical. \code{TRUE} if all variables referring to the
+participant code should be checked and merged. 
+Only works if \code{combine = TRUE}.}
 
-\item{info}{Logical. TRUE if a brief information on the process should
+\item{info}{Logical. \code{TRUE} if a brief information on the process should
 be printed.}
 }
 \value{
-This function returns an oTree list of data frames that is
-an exact copy of the original oTree list of data frames but - if the user
-wishes to do so - combines the
-time tamps and participant codes in the Time data frame if several variables
-are referring to those because of the
-combination of different oTree versions. The final variables are called
-epoch_time_completed and participant_code.
+This function searches for multiple variables related to the time stamp 
+or the participant code in the \code{$Time} data frame,
+which can occur when data from both old and new oTree versions are used.
 
-If combine = FALSE, the function only checks for the existence of several
-variables referring to the time stamp or the participant code and throws an
-error if yes.
+If \code{combine = FALSE}, the function will throw an error 
+if such variables are found.
+
+If \code{combine = TRUE}, the function will not throw an error
+if such variables are found.
+Instead, it automatically combines the variables into new variables 
+and adds them to the original \code{$Time} data frame. 
+This function then returns a duplicate of the original oTree list but
+with the \code{$Time} data frame modified.
+
+The new variables are
+called \code{epoch_time_completed} and \code{participant_code}.
 }
 \description{
-Check if the Time data frame includes both participant-related variables
+Checks if the Time data frame includes both participant-related variables
 and time stamp variables that appear multiple times. This may occur when
 data from different oTree versions, which use different variable names,
 are combined.

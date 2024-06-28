@@ -1,6 +1,6 @@
 #' Check if the Time data frame is messy
 #' @description
-#' Check if the Time data frame includes both participant-related variables
+#' Checks if the Time data frame includes both participant-related variables
 #' and time stamp variables that appear multiple times. This may occur when
 #' data from different oTree versions, which use different variable names,
 #' are combined.
@@ -8,30 +8,36 @@
 #' If desired, the function can merge these variables,
 #' storing the data using the newer oTree version's variable names
 #' and removing the outdated variables.
-#'
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
-#' @param combine Logical. TRUE if all variables referring to epoch time should
-#' be merged and/or all variables referring to participant code should be merged
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
+#' @param combine Logical. \code{TRUE} if all variables referring to epoch time 
+#' should be merged and/or all variables referring to participant code should be merged
 #' in case data of several versions of oTree are used.
-#' @param epoch_time Logical. TRUE if all variables referring to the time stamp
-#' should be checked and merged. Only works if combine = TRUE.
-#' @param participant Logical. TRUE if all variables referring to the
-#' participant code should be checked and merged. Only works if combine = TRUE.
-#' @param info Logical. TRUE if a brief information on the process should
+#' @param epoch_time Logical. \code{TRUE} if all variables referring to the time
+#' stamp should be checked and merged. Only works if \code{combine = TRUE}.
+#' @param participant Logical. \code{TRUE} if all variables referring to the
+#' participant code should be checked and merged. 
+#' Only works if \code{combine = TRUE}.
+#' @param info Logical. \code{TRUE} if a brief information on the process should
 #' be printed.
 #' @returns
-#' This function returns an oTree list of data frames that is
-#' an exact copy of the original oTree list of data frames but - if the user
-#' wishes to do so - combines the
-#' time tamps and participant codes in the Time data frame if several variables
-#' are referring to those because of the
-#' combination of different oTree versions. The final variables are called
-#' epoch_time_completed and participant_code.
-#'
-#' If combine = FALSE, the function only checks for the existence of several
-#' variables referring to the time stamp or the participant code and throws an
-#' error if yes.
+#' This function searches for multiple variables related to the time stamp 
+#' or the participant code in the \code{$Time} data frame,
+#' which can occur when data from both old and new oTree versions are used.
+#' 
+#' If \code{combine = FALSE}, the function will throw an error 
+#' if such variables are found.
+#' 
+#' If \code{combine = TRUE}, the function will not throw an error
+#' if such variables are found.
+#' Instead, it automatically combines the variables into new variables 
+#' and adds them to the original \code{$Time} data frame. 
+#' This function then returns a duplicate of the original oTree list but
+#' with the \code{$Time} data frame modified.
+#' 
+#' The new variables are
+#' called \code{epoch_time_completed} and \code{participant_code}.
 #' @examplesIf rlang::is_installed("withr")
 #' # Set data folder first
 #' withr::with_dir(system.file("extdata", package = "gmoTree"), {
@@ -57,10 +63,9 @@ messy_time <- function(oTree,
                        info = FALSE) {
 
   # Error messages
-  stop_messages <- c()
-  warning_messages <- c()
+  stop_messages <- character(0L)
+  warning_messages <- character(0L)
 
-  participant_stop <- FALSE
   participant_stopmessage <-
     paste0("More than one variable referred to the participant ",
             "code in your Time data frame. ",
@@ -72,7 +77,6 @@ messy_time <- function(oTree,
             "You can do this by using the combine-argument of this ",
             "function.")
 
-  time_stop <- FALSE
   time_stopmessage <-
     paste0("More than one variable referred to the time stamp ",
            "in your Time data frame. This could be because you ",
@@ -84,7 +88,7 @@ messy_time <- function(oTree,
 
 
   # Set epoch times first with error messages  ####
-  if (epoch_time == TRUE) {
+  if (epoch_time) {
     time_names <- c("epoch_time", "epoch_time_completed", "time_stamp")
     time_names_in_otree <-
       time_names[time_names %in% colnames(oTree$Time)]
@@ -93,11 +97,10 @@ messy_time <- function(oTree,
       time_names_in_otree != "epoch_time_completed"]
 
     if (length_epoch_times > 1) {
-      if (combine == FALSE) {
-        time_stop <- TRUE
+      if (!combine) {
         stop_messages <- c(stop_messages, time_stopmessage)
 
-      } else if (combine == TRUE) {
+      } else if (combine) {
 
         # Merge epoch time codes
         if ("epoch_time" %in% colnames(oTree$Time)) {
@@ -133,16 +136,16 @@ messy_time <- function(oTree,
   }
 
   # Set participant code variable first with error messages  ####
-  if (participant == TRUE) {
+  if (participant) {
     length_part_codes <- sum(
       c("participant_code",
         "participant__code") %in% colnames(oTree$Time))
 
-    if (length_part_codes > 1) {
-      if (combine == FALSE) {
-        participant_stop <- TRUE
+    if (length_part_codes > 1L) {
+      if (!combine) {
         stop_messages <- c(stop_messages, participant_stopmessage)
-      } else if (combine == TRUE) {
+        
+      } else if (combine) {
         # Combine participant codes
         oTree$Time$participant_code[is.na(oTree$Time$participant_code)] <-
           oTree$Time$participant__code[is.na(oTree$Time$participant_code)]
@@ -159,11 +162,11 @@ messy_time <- function(oTree,
   }
 
   # Return all error messages and warning messages  ####
-  if (participant_stop == TRUE || time_stop == TRUE) {
+  if (length(stop_messages) > 0) {
     stop(paste(stop_messages, collapse  = "\n"))
   }
 
-  if (info == TRUE && !is.null(warning_messages)) {
+  if (info && length(warning_messages) > 0L) {
     # This is printed as a warning for other functions to catch the message
     warning(paste(warning_messages, collapse = "\n"))
   }

@@ -1,4 +1,4 @@
-url: https://zauchnerp.github.io/gmoTree/
+# This is the file that should be modified!
 
 # Create a footer for the impressum
 footer:
@@ -10,3 +10,13 @@ footer:
 # Make site searchable
 development:
   mode: release
+  
+url: https://zauchnerp.github.io/gmoTree/
+template:
+  bootstrap: 5
+
+
+# # Add logo
+# template:
+#   includes:
+#     in_header: <img src="man/figures/logo.png" align="right" height="138" />

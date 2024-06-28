@@ -7,28 +7,29 @@
 pagesec(oTree, rounded = TRUE, digits = 2, minutes = FALSE, combine = FALSE)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
-\item{rounded}{Logical. TRUE if the output should be rounded.}
+\item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
 
 \item{digits}{Integer. The number of digits to which the
 output should be rounded.
-This parameter has no effect unless rounded = TRUE.}
+This parameter has no effect unless \code{rounded = TRUE}.}
 
-\item{minutes}{Logical. TRUE if the output should be
+\item{minutes}{Logical. \code{TRUE} if the output should be
 minutes instead of seconds.}
 
-\item{combine}{Logical. TRUE if all variables referring to epoch time should
-be merged, and all variables referring to participant code should be
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+should be merged, and all variables referring to participant code should be
 merged in case data of several versions of oTree are used.}
 }
 \value{
 This function returns a duplicate of the original oTree list of
-data frames that also contains a column in the Time data frame named
-seconds_on_page2 or minutes_on_page.
+data frames that also contains a column in the \code{$Time} data frame
+ named \code{seconds_on_page2} or \code{minutes_on_page}.
 }
 \description{
-Create a new variable in the Time data frame that contains the time
+Create a new variable in the \code{$Time} data frame that contains the time
 spent on each page.
 }
 \examples{

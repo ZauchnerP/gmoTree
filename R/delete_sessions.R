@@ -7,37 +7,43 @@
 #' original CSV and Excel files!
 #'
 #' Caution 2: This function does not delete cases from custom exports if the
-#' custom exports do not have a variable named participant.code and a variable
-#' named session.code!
+#' custom exports do not have a variable named \code{participant.code} 
+#' and a variable named \code{session.code}!
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
 #' @param scodes Character. The session.code(s) of the
 #' session(s) whose data should be removed.
 #' @param saved_vars Character. The name(s) of variable(s) that need(s) to be
-#' stored in the list of information on deleted cases in $info$deleted_cases.
+#' stored in the list of information on deleted cases 
+#' in \code{$info$deleted_cases}.
 #' @param reason Character. The reason for deletion that should be stored in
-#' the list of information on deleted cases in $info$deleted_cases.
-#' @param info Logical. TRUE if a brief information on the session
+#' the list of information on deleted cases in \code{$info$deleted_cases}.
+#' @param info Logical. \code{TRUE} if a brief information on the session
 #' deletion process should be printed.
 #' @returns This function returns a duplicate of the original oTree list of
 #' data frames that do not include the deleted sessions.
 #'
-#' It adds information on the deleted cases to $info$deleted_cases. (This
-#' list is also filled by other functions.)
+#' It adds information on the deleted cases to \code{$info$deleted_cases}. 
+#' (This list is also filled by other functions.)
 #'
 #' In this list, you can find the following information:
 #'
-#' $full and $unique = The data frames $full and $unique contain
+#' - \code{$full} and \code{$unique} = The data frames \code{$full} 
+#' and \code{$unique} contain
 #' information on all participants
-#' whose data were deleted. The entries to the $full and the $unique data
-#' frames in this list are the same. Columns "end_app" and "end_page" are left
-#' empty intentionally because they are only filled by the delete_dropouts()
-#' function. Columns "participant.code" and "reason" are filled.
+#' whose data were deleted. The entries to the \code{$full} 
+#' and the \code{$unique} data
+#' frames in this list are the same. Columns \code{end_app} 
+#' and \code{end_page} are left
+#' empty intentionally because they are only filled by 
+#' the \code{\link{delete_dropouts}}
+#' function. Columns \code{participant.code} and \code{reason} are filled.
 #'
-#' $codes = A vector containing the participant codes of
+#' - \code{$codes} = A vector containing the participant codes of
 #' all deleted participants.
 #'
-#' $count = The number of all deleted participants.
+#' - \code{$count} = The number of all deleted participants.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
@@ -71,12 +77,12 @@ delete_sessions <- function(oTree,
                             reason,
                             info = FALSE) {
 
-  messages <- c()
-  deleted_participants <- c()
+  messages <- character(0L)
+  deleted_participants <- character(0L)
   deletion_frame <- data.frame()
   time_messed <- FALSE
   chat_messed <- FALSE
-  messed_message <- c()
+  messed_message <- character(0L)
 
   # Create list of apps  ####
   appnames <- names(oTree)
@@ -84,7 +90,7 @@ delete_sessions <- function(oTree,
 
   # Check if oTree is a list of data frames
   if (!is.list(oTree) ||
-      !(length(oTree) > 1)) {
+      !(length(oTree) > 1L)) {
     stop("Your oTree is not a list of oTree data frames.")
   }
 
@@ -109,7 +115,7 @@ delete_sessions <- function(oTree,
   }, error = function(e) {
     chat_messed <<- TRUE
 
-    if (time_messed == TRUE) {
+    if (time_messed) {
       messed_message <<-
         paste0(messed_message,
                " AND: Please run messy_chat() with the argument ",
@@ -121,9 +127,9 @@ delete_sessions <- function(oTree,
     }
   })
 
-  if (time_messed == TRUE || chat_messed == TRUE) {
-    stop(paste0("You combined data from old and new oTree versions. ",
-                        messed_message))
+  if (time_messed || chat_messed) {
+    stop("You combined data from old and new oTree versions. ",
+                        messed_message)
   }
 
   # Set background function: chat function   ####
@@ -196,11 +202,11 @@ delete_sessions <- function(oTree,
             oTree[["Time"]]$participant_code[
               (oTree[["Time"]]$session_code %in% scodes)])
       } else {
-        warning(paste0("No variable called \"session code\" in ",
+        warning("No variable called \"session code\" in ",
                        "the \"Time\" data frame. ",
                        "Session information is taken from the ",
                        "data frames of the ",
-                       "other apps and/or \"all_apps_wide\"."))
+                       "other apps and/or \"all_apps_wide\".")
       }
 
     } else if (app == "Chats") {
@@ -226,18 +232,18 @@ delete_sessions <- function(oTree,
 
       } else {
         warning(
-          paste0("No variable called \"session code\" ",
+          "No variable called \"session code\" ",
                  "in the Chats data frame. ",
                  "Session information is taken from the ",
                  "data frames of the ",
-                 "other apps and/or \"all_apps_wide\"."))
+                 "other apps and/or \"all_apps_wide\".")
       }
     }
   }
 
   ####################################
-  if (length(deleted_participants) == 0) {
-    warning(paste0("The session can not be found in any of the data frames."))
+  if (length(deleted_participants) == 0L) {
+    warning("The session can not be found in any of the data frames.")
     return(oTree)
   }
 
@@ -269,9 +275,8 @@ delete_sessions <- function(oTree,
     # session code and the participant code
 
     for (app_name in appnames) {
-      if (!(app_name %in% c("Chats", "Time", "info"))) {
-
-        if (all(c("participant.code", "session.code") %in%
+      if (!(app_name %in% c("Chats", "Time", "info")) &&
+          all(c("participant.code", "session.code") %in%
             colnames(oTree[[app_name]]))) {  # Exclude custom exports
 
           deletion_frame <- plyr::rbind.fill(
@@ -280,7 +285,6 @@ delete_sessions <- function(oTree,
               oTree[[app_name]]$participant.code %in% deleted_participants,
               c("participant.code", "session.code")]))
         }
-      }
     }
 
     # Add reason
@@ -336,7 +340,7 @@ delete_sessions <- function(oTree,
     oTree[["info"]][["deleted_cases"]][["codes"]]))
 
   # Return and print messages  ####
-  if (info == TRUE) {
+  if (info) {
     message(messages)
   }
 

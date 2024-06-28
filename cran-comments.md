@@ -1,11 +1,25 @@
+# Version 1.1.0
+
+[x] oTree is not misspelled.
+
+```
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+```
+[x] Can be ignored according to https://github.com/r-hub/rhub/issues/503.
+
+
+
+
 # Version 1.0.1 (Resubmission)
 
-[x] make_ids() function accidentally left the # in the code although putting a try() around the functions. 
-Now the try() function is replaced by \dontrun{} and the # are removed. 
+[x] make_ids() function accidentally left the # in the code although putting a try() around the functions.
+Now the try() function is replaced by \dontrun{} and the # are removed.
 
-[x] oTree in the title and description of the DESCRIPTION file is now in single quotations. 
+[x] oTree in the title and description of the DESCRIPTION file is now in single quotations.
 
-[] There should be examples in comments in oTree.Rd; however, there are no examples in this file. 
+[] There should be examples in comments in oTree.Rd; however, there are no examples in this file.
 
 
 # Version 1.0.0 (Resubmission)
@@ -15,7 +29,7 @@ Now the try() function is replaced by \dontrun{} and the # are removed.
 Now, there are no ERRORs or WARNINGs. But there are some notes.
 
 
-## Notes 
+## Notes
 
 ```
 Notes:
@@ -27,7 +41,7 @@ New submission
 
 Possibly misspelled words in DESCRIPTION:
   oTree (2:23, 8:50)
-  
+
 ```
 [x] oTree is not misspelled.
 
@@ -38,7 +52,7 @@ Possibly misspelled words in DESCRIPTION:
 Found the following files/directories:
   'lastMiKTeXException'
 ```
-[x] Can be ignored according to https://github.com/r-hub/rhub/issues/503. 
+[x] Can be ignored according to https://github.com/r-hub/rhub/issues/503.
 
 ```
 * checking for non-standard things in the check directory ... NOTE
@@ -53,7 +67,7 @@ Skipping checking HTML validation: no command 'tidy' found
 ```
 [x] A bug in rhub? https://github.com/r-hub/rhub/issues/548
 
-# Version 0.0.1 
+# Version 0.0.1
 
 ```
 ❯ checking for portable file names ... WARNING

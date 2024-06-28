@@ -1,6 +1,6 @@
 #' Check if the Chats data frame is messy
 #' @description
-#' Check if the Chats data frame includes both
+#' Check if the \code{$Chats} data frame includes both
 #' session-related variables and participant-related variables that
 #' appear multiple times. This may occur when data from different
 #' oTree versions, which use different variable names, are combined.
@@ -10,30 +10,37 @@
 #' and removing the outdated variables.
 #'
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
-#' @param combine Logical. TRUE if all variables referring to
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
+#' @param combine Logical. \code{TRUE} if all variables referring to
 #' the session code should be merged and/or all variables referring
 #' to participant code should be merged in case data of several versions
 #' of oTree are used.
-#' @param session Logical. TRUE if all variables referring to the session code
-#' should be checked and merged. Merging only works if combine = TRUE.
-#' @param participant Logical. TRUE if all variables referring to the
-#' participant code should be checked and merged. Merging only works if
-#' combine = TRUE.
-#' @param info Logical. TRUE if a brief information on the process should
+#' @param session Logical. \code{TRUE} if all variables referring to the session 
+#' code should be checked and merged. Merging only works 
+#' if \code{combine = TRUE}.
+#' @param participant Logical. \code{TRUE} if all variables referring to the
+#' participant code should be checked and merged. Merging only works 
+#' if \code{combine = TRUE}.
+#' @param info Logical. \code{TRUE} if a brief information on the process should
 #' be printed.
 #' @returns
-#' This function returns an oTree list of data frames that is
-#' an exact copy of the original oTree list of data frames but - if the user
-#' wishes to do so - combines the participant code and session code
-#' variables in the Chats data frame if several variables are referring to
-#' those because of the
-#' combination of different oTree versions. The final variables are called
-#' participant_code and session_code.
-#'
-#' If combine = FALSE, the function only checks for the existence of several
-#' variables referring to the participant code and session code and throws an
-#' error if yes.
+#' This function searches for multiple variables related to the session code 
+#' or the participant code in the \code{$Chats} data frame.
+#' which can occur when data from both old and new oTree versions are used.
+#' 
+#' If \code{combine = FALSE}, the function will throw an error 
+#' if such variables are found.
+#' 
+#' If \code{combine = TRUE}, the function will not throw an error
+#' if such variables are found.
+#' Instead, it automatically combines the variables into new variables 
+#' and adds them to the original \code{$Chats} data frame. 
+#' This function then returns a duplicate of the original oTree list but
+#' with the \code{$Chats} data frame modified.
+#' 
+#' The new variables are called
+#' \code{participant_code} and \code{session_code}.
 #' @examplesIf rlang::is_installed("withr")
 #' # Set data folder first
 #' withr::with_dir(system.file("extdata", package = "gmoTree"), {
@@ -59,16 +66,16 @@ messy_chat <- function(oTree,
                        participant = TRUE,
                        info = FALSE) {
 
-  stop_messages <- c()
-  warning_messages <- c()
+  stop_messages <- character(0L)
+  warning_messages <- character(0L)
 
   # Background calculations plus error and warning messages
-  if (session == TRUE) {
+  if (session) {
     length_chat_vars <- sum(
       c("session_code",
         "participant__session__code") %in% colnames(oTree$Chats))
 
-    if (length_chat_vars > 1 && combine == FALSE) {
+    if (length_chat_vars > 1 && !combine) {
         stop_messages <-
           c(stop_messages,
              paste0(
@@ -81,7 +88,8 @@ messy_chat <- function(oTree,
              "You can do this by using the combine-argument in this ",
              "function."))
 
-    } else if (length_chat_vars > 1 && combine == TRUE) {
+    } else if (length_chat_vars > 1 && 
+               combine) {
       oTree$Chats$session_code[is.na(oTree$Chats$session_code)] <-
         oTree$Chats$participant__session__code[is.na(oTree$Chats$session_code)]
 
@@ -101,12 +109,12 @@ messy_chat <- function(oTree,
     }
   }
 
-  if (participant == TRUE) {
+  if (participant) {
     length_participant_vars <- sum(
       c("participant_code",
         "participant__code") %in% colnames(oTree$Chats))
 
-    if (length_participant_vars > 1 && combine == FALSE) {
+    if (length_participant_vars > 1 && !combine) {
         stop_messages <-
           c(stop_messages,
             paste0("More than one variable referred to ",
@@ -119,7 +127,7 @@ messy_chat <- function(oTree,
                     "\"participant__code\". You can do this by using the ",
                     "combine-argument in this ",
                     "function."))
-    } else if (length_participant_vars > 1 && combine == TRUE) {
+    } else if (length_participant_vars > 1 && combine) {
       oTree$Chats$participant_code[is.na(oTree$Chats$participant_code)] <-
         oTree$Chats$participant__code[is.na(oTree$Chats$participant_code)]
       oTree$Chats$participant__code <- NULL
@@ -135,11 +143,11 @@ messy_chat <- function(oTree,
     }
   }
 
-  if (!is.null(stop_messages)) {
+  if (length(stop_messages) > 0) {
     stop(paste(stop_messages, collapse  = "\n"))
   }
 
-  if (info == TRUE && !is.null(warning_messages)) {
+  if (info == TRUE && length(warning_messages) > 0) {
     # This is printed as a warning because other functions catch the message
     warning(paste(warning_messages, collapse = "\n"))
   }

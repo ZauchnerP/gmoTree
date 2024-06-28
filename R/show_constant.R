@@ -7,12 +7,13 @@
 #' You can check for columns that have any unchanging possible value
 #' or for columns containing only a specific value.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
 #' @param value The value that is controlled to be the same within a column.
-#' The default is NA. If the value is set to "any," the function checks for
+#' If the value is set to \code{"any"}, the function checks for
 #' columns where any possible values are identical.
 #' @returns This function returns a list of vectors, one for each app,
-#' all_apps_wide, the Time and/or the Chats data frame.
+#' \code{$all_apps_wide}, the \code{$Time} and/or the \code{$Chats} data frame.
 #' Each vector contains the names of all variables with constant values.
 #' If there are no variables with constant values, the vector is empty.
 #' @examples
@@ -32,7 +33,7 @@ show_constant <- function(oTree,
                           value = "any") {
 
   # Error messages  ####
-  if (length(value) > 1) {
+  if (length(value) > 1L) {
     stop("Please only enter only one value!")
   }
 
@@ -51,7 +52,7 @@ show_constant <- function(oTree,
     for (i in seq_along(oTree)) {
 
       # Only use the data frames (i.e. Apps and Time and Chats)
-      if (inherits(oTree[[i]], "data.frame") == TRUE) {
+      if (inherits(oTree[[i]], "data.frame")) {
 
         # Get name of the app/Time/Chats
         df_name <- rlist::list.names(oTree[i])
@@ -67,13 +68,13 @@ show_constant <- function(oTree,
   } else {
     # Check for any constant columns background function  ####
     get_constant_cols <- function(df) {
-      constant_cols <- sapply(df, function(col) length(unique(col)) == 1)
+      constant_cols <- sapply(df, function(col) length(unique(col)) == 1L)
       names(df)[constant_cols]
     }
 
     # Check all apps for empty columns  ####
     for (i in seq_along(oTree)) {
-      if (inherits(oTree[[i]], "data.frame") == TRUE) {
+      if (inherits(oTree[[i]], "data.frame")) {
 
         # Get name of the app/Time/Chats
         df_name <- rlist::list.names(oTree[i])

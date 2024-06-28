@@ -7,15 +7,16 @@
 show_constant(oTree, value = "any")
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
 \item{value}{The value that is controlled to be the same within a column.
-The default is NA. If the value is set to "any," the function checks for
+If the value is set to \code{"any"}, the function checks for
 columns where any possible values are identical.}
 }
 \value{
 This function returns a list of vectors, one for each app,
-all_apps_wide, the Time and/or the Chats data frame.
+\code{$all_apps_wide}, the \code{$Time} and/or the \code{$Chats} data frame.
 Each vector contains the names of all variables with constant values.
 If there are no variables with constant values, the vector is empty.
 }

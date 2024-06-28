@@ -15,7 +15,8 @@ delete_cases(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were created 
+by \code{\link{import_otree}}.}
 
 \item{pcodes}{Character. The value(s) of the participant.code variable of
 the participants whose data should be removed.}
@@ -24,35 +25,38 @@ the participants whose data should be removed.}
 the participants whose data should be removed.}
 
 \item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
-stored in the list of information on deleted cases in $info$deleted_cases.}
+stored in the list of information on deleted cases 
+in \code{$info$deleted_cases}.}
 
 \item{reason}{Character. The reason for deletion that should be stored in
-the list of information on deleted cases in $info$deleted_cases.}
+the list of information on deleted cases in \code{$info$deleted_cases}.}
 
-\item{omit}{Logical. TRUE if the deleted cases should not be added to
-the information on deleted cases in $info$deleted_cases.}
+\item{omit}{Logical. \code{TRUE} if the deleted cases should not be added to
+the information on deleted cases in \code{$info$deleted_cases}.}
 
-\item{info}{Logical. TRUE if a brief information on the case deletion
+\item{info}{Logical. \code{TRUE} if a brief information on the case deletion
 process should be printed.}
 }
 \value{
 This function returns a duplicate of the original oTree list
 of data frames that do not include the deleted cases.
 
-It adds information on the deleted cases to $info$deleted_cases. (This
+It adds information on the deleted cases to \code{$info$deleted_cases}. (This
 list is also filled by other functions.)
 
 In this list, you can find the following information:
 
-$codes = A vector with the participant codes of all deleted cases.
+- \code{$codes} = A vector with the participant codes of all deleted cases.
 
-$count = The number of participants in $codes.
+- \code{$count} = The number of participants in \code{$codes}.
 
-$full and $unique = The data frames $full and $unique contain information
+- \code{$full} and \code{$unique} = The data frames \code{$full} 
+and \code{$unique} contain information
 on each deleted participant and the reason why they were
-deleted. The entries to the $full and the $unique data frames are the same.
-Columns "end_app" and "end_page" are left empty intentionally
-because they are only filled by the delete_dropouts() function.
+deleted. The entries to the \code{$full} and the \code{$unique} 
+data frames are the same.
+Columns \code{"end_app"} and \code{"end_page"} are left empty intentionally
+because they are only filled by the \code{\link{delete_dropouts}} function.
 }
 \description{
 Delete specific cases from all data frames in the oTree list.
@@ -64,7 +68,8 @@ Caution 2: This function does not delete cases from custom exports
 and custom data frames if these data frames do not have a variable
 named participant.code!
 
-Caution 3: This function does not delete any data from the Chats data frame!
+Caution 3: This function does not delete any data from 
+the \code{$Chats} data frame!
 (As the interpretation of chat data depends on how participants
 engage with each other, the data must be deleted
 with more care than deleting data in other apps.

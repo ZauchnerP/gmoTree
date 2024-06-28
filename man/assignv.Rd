@@ -7,10 +7,11 @@
 assignv(oTree, variable, newvar)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created by import_otree().}
+\item{oTree}{A list of data frames that were 
+created by \code{\link{import_otree}}}
 
-\item{variable}{Character. The variable in the all_apps_wide data frame that
-should be assigned to all other apps.}
+\item{variable}{Character. The variable in the \code{$all_apps_wide} 
+data frame that should be assigned to all other apps.}
 
 \item{newvar}{Character. The name of the newly created variable.}
 }
@@ -18,10 +19,10 @@ should be assigned to all other apps.}
 This function returns a duplicate of the
 original oTree list of data frames
 but with an additional column in all data frames. The additional column
-contains data from the specified variable found in all_apps_wide.
+contains data from the specified variable found in \code{$all_apps_wide}.
 }
 \description{
-Assign a variable from all_apps_wide to the other app data frames.
+Assign a variable from \code{$all_apps_wide} to the other app data frames.
 }
 \examples{
 # Use package-internal list of oTree data frames

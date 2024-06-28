@@ -7,16 +7,18 @@
 #' Excel files!
 #'
 #' Caution 2: This function does not delete cases from custom exports if the
-#' custom exports do not have a variable named participant.code and a variable
-#' named session.code!
+#' custom exports do not have a variable named \code{participant.code} and 
+#' a variable named \code{session.code}!
 #'
-#' Caution 3: This function does not delete any data from the Chats data frame!
+#' Caution 3: This function does not delete any data from 
+#' the \code{$Chats} data frame!
 #' (As the interpretation of chat data depends on how participants engage with
 #' each other, the data must be deleted with more care than deleting data in
 #' other apps. Hence, this function does not delete data in this data frame.
 #' Please do this manually if necessary!)
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}
 #' @param final_apps Character.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment.
@@ -24,58 +26,62 @@
 #' The name(s) of the page(s) at which the participants have to finish the
 #' experiment.
 #' @param saved_vars Character. The name(s) of variable(s) that need(s) to be
-#' stored in the list of information on deleted cases in $info$deleted_cases.
+#' stored in the list of information on deleted cases 
+#' in \code{$info$deleted_cases}.
 #' @param reason Character. The reason for deletion that should be stored in
-#' the list of information on deleted cases in $info$deleted_cases.
+#' the list of information on deleted cases in \code{$info$deleted_cases}.
 #' @param inconsistent Character. Should the function continue or be stopped if
 #' at least one participant has inconsistent end_pages, inconsistent end_apps,
-#' or both? To continue, type "yes,"
-#' to stop the function, type "no."
-#' @param info Logical. TRUE if a brief information on the dropout deletion
-#' process should be printed.
+#' or both? To continue, type \code{"yes"},
+#' to stop the function, type \code{"no"}.
+#' @param info Logical. \code{TRUE} if a brief information on the dropout 
+#' deletion process should be printed.
 #' @returns
 #' This function returns a duplicate of the original oTree list of data frames
 #' but without the deleted cases.
 #'
-#' It adds information on the deleted cases to $info$deleted_cases. (This
+#' It adds information on the deleted cases to \code{$info$deleted_cases}. (This
 #' list is also filled by other functions.)
 #'
 #' In this list, you can find the following information:
 #'
-#' $full = A data frame that contains information
+#' - \code{$full} = A data frame that contains information
 #' on all participants who did not finish the study;
 #' it shows their participant codes, the names of the apps in which they
 #' left the experiment,
 #' the names of the pages in which they left the experiment,
 #' the names of the app data frames in which this information was found, and
-#' the dropout reason ("ENC," experiment not completed, combined
+#' the dropout reason (\code{"ENC"}, experiment not completed, combined
 #' with the name of the data frame in which the dropout was observed).
 #' Because participants usually appear in multiple app data frames,
-#' the $info$deleted_cases$full data frame may contain several entries for
-#' each person.
+#' the \code{$info$deleted_cases$full} data frame may contain several entries
+#' for each person.
 #'
-#' $unique = A data frame that contains similar information as the $full data
-#' frame but with only one row per participant and no information on the data
-#' frame in which the dropout was observed.
+#' - \code{$unique} = A data frame that contains similar information as
+#' the \code{$full} data frame but with only one row per participant and 
+#' no information on the data frame in which the dropout was observed.
 #'
-#' $all_end = A table that provides information on the app and page combinations
-#' where participants ended the experiment. This table also includes
-#' information for participants who did not drop out of the experiment.
-#' The $all_end table is only shown if an all_apps_wide data frame exists.
+#' - \code{$all_end} = A table that provides information on the app and page
+#' combinations where participants ended the experiment. 
+#' This table also includes information for participants who did not drop out 
+#' of the experiment.
+#' The \code{$all_end} table is only shown if an \code{$all_apps_wide} data 
+#' frame exists.
 #'
-#' $codes = A vector containing the participant codes of
+#' - \code{$codes} = A vector containing the participant codes of
 #' all deleted participants.
 #'
-#' $count = The number of all deleted participants.
+#' - \code{$count} = The number of all deleted participants.
 #'
-#' It is important to note that if only the argument final_pages is set,
+#' It is important to note that if only the argument \code{final_pages} is set,
 #' this function does not distinguish between page names that reoccur in
 #' different apps.
 #'
-#' If the columns end_app and end_page in the output are empty,
+#' If the columns \code{end_app} and \code{end_page} in the output are empty,
 #' these variables were not saved by oTree for the specific participants.
 #' This could be because empty rows were not deleted. This can be done
-#' by using the argument "del_empty = TRUE" when using import_otree().
+#' by using the argument \code{del_empty = TRUE} when 
+#' using \code{\link{import_otree}}.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
@@ -122,10 +128,11 @@ delete_dropouts <- function(oTree,
                             inconsistent = NULL,
                             reason = "ENC",
                             info = FALSE) {
-  keep_these_participants <- c()
-  delete_these_participants <- c()
+  
+  keep_these_participants <- character(0L)
+  delete_these_participants <- character(0L)
   dropout_data <- data.frame()
-  messages <- c()
+  messages <- character(0L)
 
   # Making sure the arguments are not empty   ####
   if (is.null(final_apps) && is.null(final_pages)) {
@@ -140,11 +147,12 @@ delete_dropouts <- function(oTree,
     stop("The argument \"saved_vars\" only works when you ",
          "have \"all_apps_wide\" in your ",
          "oTree list of data frames.")
-  } else if ("all_apps_wide" %in% names(oTree) && !is.null(saved_vars)) {
-    # Check if saved_vars is in all_apps_wide
-    if (!(all(saved_vars %in% colnames(oTree$all_apps_wide)))) {
-      stop("\"saved_vars\" not in all_apps_wide.")
-    }
+  } else if ("all_apps_wide" %in% names(oTree) && 
+             !is.null(saved_vars) &&
+             !(all(saved_vars %in% colnames(oTree$all_apps_wide)))) {
+    # If saved_vars is not in all_apps_wide
+    stop("\"saved_vars\" not in all_apps_wide.")
+ 
   }
 
   # Inconsistency action  ####
@@ -169,12 +177,12 @@ delete_dropouts <- function(oTree,
 
     # Stop if user requests it
     if (inconsistent == "no") {
-      stop(paste0(
+      stop(
         "At least one participant in the dropout list has ",
         "inconsistent end pages,\n",
         "inconsistent end apps, or both.\n",
         "The user requested termination, hence no cases were deleted."
-      ))
+      )
     } else if (inconsistent == "yes") {
       messages <- c(paste0(
         "At least one participant in the dropout list has ",
@@ -210,11 +218,13 @@ delete_dropouts <- function(oTree,
         }
 
         # Add to the list of "keep" and "delete" people
-        keep_these_participants <- c(oTree[[i]]$participant.code[
-          appif & pageif], keep_these_participants)
+        keep_these_participants <- 
+          c(oTree[[i]]$participant.code[appif & pageif], 
+            keep_these_participants)
 
-        delete_these_participants <- c(oTree[[i]]$participant.code[
-          !(appif) | !(pageif)], delete_these_participants)
+        delete_these_participants <- 
+          c(oTree[[i]]$participant.code[!(appif) | !(pageif)], 
+            delete_these_participants)
 
         # Make data frame of people who were excluded
         dropout_data_app <- data.frame(
@@ -229,7 +239,7 @@ delete_dropouts <- function(oTree,
         )
 
         # Add reason
-        if (nrow(dropout_data_app) >= 1) {
+        if (nrow(dropout_data_app) >= 1L) {
           for (j in seq_len(nrow(dropout_data_app))) {
             dropout_data_app$reason[j] <-
               paste0("ENC. ",
@@ -247,19 +257,19 @@ delete_dropouts <- function(oTree,
   delete_these_participants <- unique(delete_these_participants)
 
   # Test if no one in "keep" is in "delete"  ####
-  newlist <- c()
+  newlist <- character(0L)
   for (element in keep_these_participants) {
     if (element %in% delete_these_participants) {
       newlist <- append(element, newlist)
     }
   }
 
-  if (length(newlist) > 0) {
+  if (length(newlist) > 0L) {
     messages <- incons_function(inconsistent)
   }
 
   # Make output data frames of people deleted ####
-  if (nrow(dropout_data) >= 1) {
+  if (nrow(dropout_data) >= 1L) {
     # Save variables for people who were excluded
     if ("all_apps_wide" %in% names(oTree)) {
       saved_vars_frame <- oTree$all_apps_wide[
@@ -276,7 +286,7 @@ delete_dropouts <- function(oTree,
       dropout_data <- unique(dropout_data)
 
       # Add saved variables
-      if (ncol(saved_vars_frame) > 0) {
+      if (ncol(saved_vars_frame) > 0L) {
         dropout_data <- merge(
           x = dropout_data,
           y = saved_vars_frame,
@@ -301,7 +311,7 @@ delete_dropouts <- function(oTree,
                       "end_page"),
                     saved_vars)
     dropout_data2 <- cbind(unique(dropout_data[uniquelist]),
-                           "reason" = reason
+                           reason = reason
     )
 
     oTree[["info"]][["deleted_cases"]][["unique"]] <- plyr::rbind.fill(
@@ -325,17 +335,15 @@ delete_dropouts <- function(oTree,
   # Delete excluded participants from data frames  ####
   for (i in seq_along(oTree)) {
 
-    # Every app except ...
-    if (!(rlist::list.names(oTree[i]) %in% nonappelements)) {
-
-      # Except user defined data frames
-      if ("participant._current_app_name" %in% colnames(oTree[[i]])) {
+    # Every app except user defined data frames
+    if (!(rlist::list.names(oTree[i]) %in% nonappelements) && 
+        "participant._current_app_name" %in% colnames(oTree[[i]])) {
 
         # Delete participants
         oTree[[i]] <-
           oTree[[i]][
             !(oTree[[i]]$participant.code %in% delete_these_participants), ]
-      }
+  
     }
   }
 
@@ -392,7 +400,7 @@ delete_dropouts <- function(oTree,
     nrow(oTree[["info"]][["deleted_cases"]][["unique"]])
 
   # Return and messages  ####
-  if (info == TRUE) {
+  if (info) {
     message(messages)
   }
 

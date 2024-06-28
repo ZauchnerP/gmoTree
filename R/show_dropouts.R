@@ -3,7 +3,8 @@
 #' Show information on the people who did not finish the experiment at (a)
 #' certain page(s) and/or app(s).
 #' @keywords oTree
-#' @param oTree A list of data frames that were created by import_otree().
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
 #' @param final_apps Character.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment.
@@ -18,40 +19,44 @@
 #'
 #' In this list, you can find the following information:
 #'
-#' $full = A data frame that contains information
+#' - \code{$full} = A data frame that contains information
 #' on all participants who did not finish the study;
 #' it shows their participant codes, the names of the apps in which they
 #' left the experiment,
 #' the names of the pages in which they left the experiment,
 #' the names of the app data frames in which this information was found, and
-#' the dropout reason ("ENC," experiment not completed, combined
+#' the dropout reason (\code{"ENC"}, experiment not completed, combined
 #' with the name of the data frame in which the dropout was observed).
 #' Because participants usually appear in multiple app data frames,
-#' the $full data frame may contain several entries for
+#' the \code{$full} data frame may contain several entries for
 #' each person.
 #'
-#' $unique = A data frame that contains similar information as the $full data
-#' frame but with only one row per participant and no information on the data
-#' frame in which the dropout was observed.
+#' - \code{$unique} = A data frame that contains similar information as 
+#' the \code{$full} data frame but with only one row per participant and 
+#' no information on the data frame in which the dropout was observed.
 #'
-#' $all_end = A table that provides information on the app and page combinations
+#' - \code{$all_end} = A table that provides information 
+#' on the app and page combinations
 #' where participants ended the experiment. This table also includes
 #' information on participants who did not drop out of the experiment.
-#' The $all_end table is only shown if an all_apps_wide data frame exists.
+#' The \code{$all_end} table is only shown if an \code{$all_apps_wide} 
+#' data frame exists.
 #'
-#' $codes = A vector containing the participant codes of
+#' - \code{$codes} = A vector containing the participant codes of
 #' all participants who did not finish the experiment.
 #'
-#' $count = The number of all participants who did not finish the experiment.
+#' - \code{$count} = The number of all participants who did not 
+#' finish the experiment.
 #'
-#' It is important to note that if only the argument final_pages is set,
+#' It is important to note that if only the argument \code{final_pages} is set,
 #' this function does not distinguish between page names that reoccur in
 #' different apps.
 #'
-#' If the columns end_app and end_page in the output are empty,
+#' If the columns \code{end_app} and \code{end_page} in the output are empty,
 #' these variables were not saved by oTree for the specific participants.
 #' This could be because empty rows were not deleted. This can be done
-#' by using the argument "del_empty = TRUE" when using import_otree().
+#' by using the argument \code{del_empty = TRUE}" when 
+#' using \code{\link{import_otree}}.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
@@ -144,7 +149,7 @@ show_dropouts <- function(oTree,
         end_page = oTree[[i]]$participant._current_page_name[!appif | !pageif])
 
       # Add reason
-      if (nrow(dropout_app_data) >= 1) {
+      if (nrow(dropout_app_data) >= 1L) {
         for (j in seq_len(nrow(dropout_app_data))) {
           dropout_app_data$reason[j] <- paste0(
             "Experiment not completed. Noticed at: ",
@@ -165,14 +170,14 @@ show_dropouts <- function(oTree,
     }
   }
 
-  if (length(newlist) > 0) {
+  if (length(newlist) > 0L) {
     my_warnings <- c(my_warnings, paste0(
       "At least one participant in the dropout list has inconsistent end ",
       "pages, inconsistent end apps, or both."))
   }
 
   # Make output data frames of people who did not finish the experiment  ####
-  if (nrow(dropout_data) >= 1) {
+  if (nrow(dropout_data) >= 1L) {
     dropout_data <- unique(dropout_data)
 
     # Save variables for people who did not finish the experiment
@@ -185,7 +190,7 @@ show_dropouts <- function(oTree,
       colnames(saved_vars_frame) <- c("participant.code", saved_vars)
 
       # Add saved variables
-      if (ncol(saved_vars_frame) > 0) {
+      if (ncol(saved_vars_frame) > 0L) {
         dropout_data <- merge(
           x = dropout_data,
           y = saved_vars_frame,
@@ -225,7 +230,7 @@ show_dropouts <- function(oTree,
   output[["count"]] <- nrow(output[["unique"]])
 
   # Warnings
-  if (length(my_warnings) > 0) {
+  if (length(my_warnings) > 0L) {
     warning(paste(my_warnings, collapse = "\n\n"))
   }
 

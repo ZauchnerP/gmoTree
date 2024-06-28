@@ -2,14 +2,19 @@
 #' @description
 #' If you work with MTurk, the MTurk IDs will be stored in the
 #' participant labels variable.
-#' This function deletes this variable in all_apps_wide and every app data frame
-#' in the list of data frames that was created by import_otree() and/or all
-#' variables referring to MTurk, such as participant.mturk_worker_id.
-#' @param oTree A list of data frames that were created by import_otree().
-#' @param del_plabel Logical.
-#' TRUE if all participant labels should be deleted.
-#' @param del_mturk Logical.
-#' TRUE if all MTurk variables should be deleted.
+#' This function deletes this variable in \code{$all_apps_wide} 
+#' and every app data frame in the list of data frames that was created 
+#' by \code{\link{import_otree}} and/or all
+#' variables referring to MTurk, such as \code{participant.mturk_worker_id}.
+#' 
+#' Caution: This function does not delete the variables from the original
+#' CSV and Excel files!
+#' @param oTree A list of data frames that were created 
+#' by \code{\link{import_otree}}.
+#' @param del_plabel Logical. \code{TRUE} if all participant labels
+#' should be deleted.
+#' @param del_mturk Logical. \code{TRUE} if all MTurk variables 
+#' should be deleted.
 #' @returns This function returns a duplicate of the original oTree list of
 #' data frames that do not include the participant labels and/or the MTurk
 #' variables.
@@ -38,13 +43,13 @@ delete_plabels <- function(oTree,
   appnames <- appnames[appnames != "info"]
 
   # Delete variable  ####
-  if (del_plabel == TRUE) {
+  if (del_plabel) {
       for (app in appnames) {
         oTree[[app]][["participant.label"]] <- NULL
       }
   }
 
-  if (del_mturk == TRUE) {
+  if (del_mturk) {
     for (app in appnames) {
       oTree[[app]][["participant.mturk_worker_id"]] <- NULL
       oTree[[app]][["participant.mturk_assignment_id"]] <- NULL
