@@ -1,11 +1,11 @@
-# gmoTree – Get and Modify oTree Data <img src="man/figures/logo.png" align="right" >
+# gmoTree – Get and Modify oTree Data 
 
 <!-- badges: start -->
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/gmoTree)](https://cran.r-project.org/package=gmoTree)
 [![R-CMD-check](https://github.com/ZauchnerP/gmoTree/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ZauchnerP/gmoTree/actions/workflows/R-CMD-check.yaml)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/gmoTree?color=blue)](https://r-pkg.org/pkg/gmoTree)]
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/gmoTree?color=blue)](https://r-pkg.org/pkg/gmoTree)
 
 <!-- badges: end -->
 
