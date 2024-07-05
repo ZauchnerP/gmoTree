@@ -1,4 +1,4 @@
-# gmoTree – Get and Modify oTree Data 
+# gmoTree – Get and Modify oTree Data
 
 <!-- badges: start -->
 
