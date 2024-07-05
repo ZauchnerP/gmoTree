@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   intro_to_gmoTree: intro_to_gmoTree.html
-last_built: 2024-07-05T09:06Z
+last_built: 2024-07-05T09:17Z
 urls:
   reference: https://zauchnerp.github.io/gmoTree/reference
   article: https://zauchnerp.github.io/gmoTree/articles

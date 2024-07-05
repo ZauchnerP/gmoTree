@@ -1,7 +1,7 @@
 ---
 title: "Introduction to gmoTree"
 author: "Patricia F. Zauchner"
-date: "2023-08-24 (updated: `r Sys.Date()`)"
+date: "2023-08-24 (updated: 2024-07-04)"
 output:
   rmarkdown::html_vignette:
     toc: yes

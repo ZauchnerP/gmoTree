@@ -6404,7 +6404,6 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_output(str(output), "List of 4")
       })
       
-      
       testthat::test_that("App time - all apps, seconds = FALSE", {
         # Prepare data
         otree2 <- otree_5_4_0
