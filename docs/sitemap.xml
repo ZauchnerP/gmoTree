@@ -1,81 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/404.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/articles/impressum.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/articles/intro_to_gmoTree.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/impressum.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/index.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/apptime.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/assignv.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/assignv_to_aaw.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/delete_cases.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/delete_dropouts.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/delete_duplicate.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/delete_plabels.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/delete_sessions.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/extime.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/import_otree.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/make_ids.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/messy_chat.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/messy_time.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/oTree.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/pagesec.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/show_constant.html</loc>
-  </url>
-  <url>
-    <loc>https://zauchnerp.github.io/gmoTree/reference/show_dropouts.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://zauchnerp.github.io/gmoTree/404.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/articles/codebook.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/articles/impressum.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/articles/index.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/articles/intro_to_gmoTree.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/authors.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/impressum.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/index.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/news/index.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/apptime.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/assignv.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/assignv_to_aaw.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/codebook.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/delete_cases.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/delete_dropouts.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/delete_duplicate.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/delete_plabels.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/delete_sessions.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/extime.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/import_otree.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/index.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/make_ids.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/messy_chat.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/messy_time.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/oTree.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/pagesec.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/show_constant.html</loc></url>
+<url><loc>https://zauchnerp.github.io/gmoTree/reference/show_dropouts.html</loc></url>
 </urlset>
+

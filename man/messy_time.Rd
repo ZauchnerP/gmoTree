@@ -13,10 +13,10 @@ messy_time(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
-\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time
 should be merged and/or all variables referring to participant code should be merged
 in case data of several versions of oTree are used.}
 
@@ -24,24 +24,24 @@ in case data of several versions of oTree are used.}
 stamp should be checked and merged. Only works if \code{combine = TRUE}.}
 
 \item{participant}{Logical. \code{TRUE} if all variables referring to the
-participant code should be checked and merged. 
+participant code should be checked and merged.
 Only works if \code{combine = TRUE}.}
 
 \item{info}{Logical. \code{TRUE} if a brief information on the process should
 be printed.}
 }
 \value{
-This function searches for multiple variables related to the time stamp 
+This function searches for multiple variables related to the time stamp
 or the participant code in the \code{$Time} data frame,
 which can occur when data from both old and new oTree versions are used.
 
-If \code{combine = FALSE}, the function will throw an error 
+If \code{combine = FALSE}, the function will throw an error
 if such variables are found.
 
 If \code{combine = TRUE}, the function will not throw an error
 if such variables are found.
-Instead, it automatically combines the variables into new variables 
-and adds them to the original \code{$Time} data frame. 
+Instead, it automatically combines the variables into new variables
+and adds them to the original \code{$Time} data frame.
 This function then returns a duplicate of the original oTree list but
 with the \code{$Time} data frame modified.
 

@@ -7,7 +7,7 @@
 pagesec(oTree, rounded = TRUE, digits = 2, minutes = FALSE, combine = FALSE)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
 \item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
@@ -19,7 +19,7 @@ This parameter has no effect unless \code{rounded = TRUE}.}
 \item{minutes}{Logical. \code{TRUE} if the output should be
 minutes instead of seconds.}
 
-\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time
 should be merged, and all variables referring to participant code should be
 merged in case data of several versions of oTree are used.}
 }

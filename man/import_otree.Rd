@@ -39,45 +39,45 @@ with \code{\link{delete_dropouts}}.}
 \item{recursive}{Logical. \code{TRUE} if the files in the path's
 subfolders should also be imported.}
 
-\item{csv}{Logical. \code{TRUE} if only CSV files should be 
+\item{csv}{Logical. \code{TRUE} if only CSV files should be
 imported. \code{FALSE} if only Excel files should be imported.}
 
-\item{onlybots}{Logical. \code{TRUE} if only bot-created files 
+\item{onlybots}{Logical. \code{TRUE} if only bot-created files
 should be imported.}
 
-\item{del_empty}{Logical. \code{TRUE} if all empty cases should be deleted 
+\item{del_empty}{Logical. \code{TRUE} if all empty cases should be deleted
 from the \code{$all_apps_wide} or normal app data frames (not Time or Chats).}
 
-\item{info}{Logical. \code{TRUE} if a brief information on the data 
+\item{info}{Logical. \code{TRUE} if a brief information on the data
 import should be printed.}
 
 \item{encoding}{Character. Encoding of the CSV files that are imported.
 Default is \code{"UTF-8"}.}
 }
 \value{
-Returns a list of data frames (one data frame for each app 
-and \code{$all_apps_wide}) and a list of information on this list 
+Returns a list of data frames (one data frame for each app
+and \code{$all_apps_wide}) and a list of information on this list
 of data frames in \code{$info}.
 
-See detailed information on the imported files 
+See detailed information on the imported files
 in \code{$info$imported_files}.
 
 If \code{$all_apps_wide} is imported, see the number of imported cases
 in \code{$info$initial_n}. In this number, empty rows are
-already considered. So, if empty rows are deleted 
-with \code{del_empty=TRUE}, \code{initial_n} 
+already considered. So, if empty rows are deleted
+with \code{del_empty=TRUE}, \code{initial_n}
 counts all rows that are not empty.
 Cases that are deleted because the participants did not make it to the
 last page and/or app are not subtracted from this number.
 
-Information: Empty rows are rows without 
+Information: Empty rows are rows without
 the \code{participant._current_app_name}
 variable set. Empty rows are deleted from all app data frames
-and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in 
+and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in
 the \code{$Chats} and \code{$Time} data frames are not deleted.
 
-If old and new oTree versions are combined, the \code{$Time} data frame 
-contains variables called \code{participant_code} 
+If old and new oTree versions are combined, the \code{$Time} data frame
+contains variables called \code{participant_code}
 and \code{participant__code} (the difference is in the underscores).
 Caution! If there is an unusual amount of \code{NA}s,
 check if everything got imported correctly.
@@ -95,13 +95,13 @@ By using the second option, only data of bot files are imported.
 
 Caution! Data can be downloaded from within the
 session and globally at the same time. If both files are downloaded,
-this can lead to the \code{$all_apps_wide} data being there twice! You can 
+this can lead to the \code{$all_apps_wide} data being there twice! You can
 remove duplicate data by using \code{\link{delete_duplicate}}.
 
 Caution! When importing Excel files, this function does not check
 for erroneous data structures
 and will combine all data frames with the same file name patterns.
-Before using the \code{CSV = FALSE} argument, 
+Before using the \code{CSV = FALSE} argument,
 clean up your data appropriately.
 }
 \examples{

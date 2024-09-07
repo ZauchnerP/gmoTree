@@ -1,0 +1,247 @@
+{{ extends "global/Page.html" }}
+
+{{ block scripts }}
+
+    <script>
+
+        /**
+         * First number for addition task. Is initially part of the vars for template and not transmitted via the
+         * live pages feature.
+         * @type {int}
+         */
+        let number1 = {{ int1|json }};
+
+        /**
+         * Second number for addition task. Is transmitted the same way s number1.
+         * @type {int}
+         */
+        let number2 = {{ int2|json }};
+
+        // Reference to the input box on the template page.
+        const inputBox = document.getElementById("inputbox");
+
+        // Reference to the send button on the template page.
+        const sendbutton = document.getElementById("sendbutton");
+
+        {{ if debug }}
+
+            // Realizes the pre-fill functionality of the "Cheater Mode"
+            document.getElementById('prefill').addEventListener("click", () => {
+                const solution = number1 + number2;
+                inputBox.value = solution;
+            });
+
+        {{ endif }}
+
+        // Correct last answer
+        let last_answer_correct = {{ player.last_answer_correct|json }};
+
+         // TODO ist ja jetzt nicht mehr null. Deswgen lieber mit index oder rundeninfo arbeiten
+        if (last_answer_correct !== null) {
+            showFeedback(last_answer_correct, {{ player.number_of_attempts|json }});
+        }
+
+        // Event listener for sending via button
+        sendbutton.addEventListener("click", () => {
+            sendRequest();
+        });
+
+        // Event listener for sending via enter
+        inputBox.addEventListener("keypress", (event) => {
+            if (event.which === 13) {
+                sendRequest();
+                return false;
+            }
+        });
+
+        // Gets the participant's answer from the template and sends it to the server
+        function sendRequest() {
+            // Get value
+            let inputValue = (inputBox.value);
+            console.log(inputValue);
+
+            // Replace all spaces with an empty string
+            inputValue = inputValue.replace(/ /g, '');
+            console.log(inputValue);
+
+            // To integer
+            inputValue = Number(inputBox.value); // letters etc. will become NaN
+            console.log((inputValue));
+
+            // Check if NaN (empty or letters, etc.)
+            if (Number.isNaN(inputValue) || inputValue > 9223372036854775807) {
+              $(function () {
+                    $("#validentryeffort").dialog("open");
+              });
+            }
+
+            // If not Nan and not large integer: Submit
+            if (typeof inputValue === 'number' && !Number.isNaN(inputValue) && inputValue < 9223372036854775800) {
+                liveSend({
+                    "type": "request",
+                    "answer": inputValue
+                });
+                inputBox.value = '';
+            }
+        }
+
+        /**
+         * Receive feedback and new numbers from server
+         * @param {object} data - A dictionary that contains data from the server: new numbers and feedback on the answer
+         */
+        function liveRecv(data) {
+            number1 = data.number_1;
+            number2 = data.number_2;
+
+            const attemptNumber = data.number_of_attempts;
+
+            document.getElementById("number-1").innerText = number1;
+            document.getElementById("number-2").innerText = number2;
+
+            document.getElementById("attempts").innerText = attemptNumber;
+            document.getElementById("correct-answers").innerText = data.number_of_correct_answers;
+
+            showFeedback(data.answer_correct, attemptNumber);
+
+        }
+
+        /**
+         * Display either positive (the answer given before was correct) or negative feedback (answer was incorrect).
+         * @param {boolean} answerCorrect - Whether the given answer turned out to be correct or not
+         */
+        function showFeedback(answerCorrect, attemptNumber) {
+            console.log("Show Feedback function");
+            const correctnessField = document.querySelector('.answer-correctness');
+
+            if (attemptNumber === 0) {
+                return; // Leave field empty before first attempt
+            }
+
+            // Popup if all questions answered
+            if (attemptNumber == {{ C.NUM_TASKS | json}}-1) {
+                  $(function () {
+                        $("#no-one-left").dialog("open");
+                  });
+                  document.getElementById("tasks").style.display = "none";
+                  return;
+            }
+
+            if (answerCorrect) {
+                correctnessField.innerHTML = 'Ihre letzte Summe war <span class="text-success">richtig</span>.';
+            } else {
+                correctnessField.innerHTML = 'Ihre letzte Summe war <span class="text-danger">nicht richtig</span>.';
+            }
+
+        }
+
+
+    </script>
+
+{{ endblock }}
+
+{{ block content }}
+
+    <style>
+        body{
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        .taskInput {
+            font-size: 1.5em;;
+        }
+        p {
+            margin: 0;
+        }
+        .success {
+            margin-top: 3em;
+            margin-left: 25%;
+            font-weight: bold !important;
+        }
+    </style>
+
+    <div id = "all">
+
+        <div id = "tasks">
+            <!-- Intro text -->
+            <p class="text-center">
+
+                Bitte lösen Sie auf dieser und den folgenden Seiten so viele Rechnungen wie möglich.
+                <br>
+                Für jede richtige Antwort erhalten Sie
+
+                {{ if C.POINTS_PER_CORRECT_ANSWER == 1 }}
+                    1 Punkt.
+                {{ else }}
+                    {{ C.POINTS_PER_CORRECT_ANSWER|json }} Punkte.
+                {{ endif }}
+
+                <br>
+                Klicken Sie nach der Eingabe des Ergebnisses auf den "WEITER"-Button, damit Ihre Eingabe gespeichert wird.
+                <br><br>
+            </p>
+
+            <!-- Task and Input -->
+            <p class="text-center ">
+                <form action="">
+
+                    <!-- Task -->
+                    <label for="inputbox" class="taskInput">
+                        <span id="number-1">{{ int1 }}</span>
+                        +
+                        <span id="number-2">{{ int2 }}</span>
+                        =
+                    </label>
+
+                    <!-- Answer -->
+                    <!-- Deal with input per Javascript, because Firefox cannot handle settings -->
+                    <input style="display: inline" min="1" class="form-control taskInput" id="inputbox"/>
+
+                    <!-- Button -->
+                    <input style="margin-left: 2rem; margin-bottom: 0.25rem;" id="sendbutton" class="btn btn-primary"
+                           value="Weiter" type="button"/>
+                </form>
+            </p>
+        </div>
+
+        <!-- Feedback -->
+        <div class="success">
+
+            <!-- Was last answer correct? -->
+            <p class="answer-correctness">
+                &nbsp;
+            </p>
+
+            <!-- no. of correct answers -->
+            <p>Richtige Antworten: <span id="correct-answers">{{ player.number_of_correct_answers }}</span></p>
+
+            <!-- no. of trials -->
+            <p>Versuche: <span id="attempts">{{ player.number_of_attempts }}</span></p>
+
+        </div>
+
+        <!-- Cheater mode for testing the app. Debug can be set in vars_for_template -->
+        {{ if debug }}
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4><br>Cheater Mode Activated (Debug Mode Only) - <a href="#" id="prefill">Click Here to Autofill
+                        Summation</a></h4>
+                </div>
+            </div>
+        {{ endif }}
+
+
+
+        <!-- Alertboxes  -->
+        <div id="no-one-left" style="display:none; text-align: center;">
+            Sie haben alle möglichen Fragen beantwortet.<br>
+            Bitte warten Sie, bis das Experiment weitergeht.
+        </div>
+        <div id="validentryeffort" style="display:none; text-align: center;">
+            Bitte geben Sie eine gültige Zahl ein!
+        </div>
+
+    </div>
+
+
+{{ endblock }}
+

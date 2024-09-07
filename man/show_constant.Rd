@@ -7,7 +7,7 @@
 show_constant(oTree, value = "any")
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
 \item{value}{The value that is controlled to be the same within a column.

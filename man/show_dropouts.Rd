@@ -7,7 +7,7 @@
 show_dropouts(oTree, final_apps = NULL, final_pages = NULL, saved_vars = NULL)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
 \item{final_apps}{Character.
@@ -39,21 +39,21 @@ Because participants usually appear in multiple app data frames,
 the \code{$full} data frame may contain several entries for
 each person.
 
-- \code{$unique} = A data frame that contains similar information as 
-the \code{$full} data frame but with only one row per participant and 
+- \code{$unique} = A data frame that contains similar information as
+the \code{$full} data frame but with only one row per participant and
 no information on the data frame in which the dropout was observed.
 
-- \code{$all_end} = A table that provides information 
+- \code{$all_end} = A table that provides information
 on the app and page combinations
 where participants ended the experiment. This table also includes
 information on participants who did not drop out of the experiment.
-The \code{$all_end} table is only shown if an \code{$all_apps_wide} 
+The \code{$all_end} table is only shown if an \code{$all_apps_wide}
 data frame exists.
 
 - \code{$codes} = A vector containing the participant codes of
 all participants who did not finish the experiment.
 
-- \code{$count} = The number of all participants who did not 
+- \code{$count} = The number of all participants who did not
 finish the experiment.
 
 It is important to note that if only the argument \code{final_pages} is set,
@@ -63,7 +63,7 @@ different apps.
 If the columns \code{end_app} and \code{end_page} in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
-by using the argument \code{del_empty = TRUE}" when 
+by using the argument \code{del_empty = TRUE}" when
 using \code{\link{import_otree}}.
 }
 \description{

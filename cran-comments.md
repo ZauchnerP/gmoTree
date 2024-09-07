@@ -1,3 +1,12 @@
+# Version 1.2.0
+
+```
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+```
+[x] Can be ignored according to https://github.com/r-hub/rhub/issues/503.
+
 # Version 1.1.0
 
 [x] oTree is not misspelled.
@@ -8,8 +17,6 @@ Found the following files/directories:
   'lastMiKTeXException'
 ```
 [x] Can be ignored according to https://github.com/r-hub/rhub/issues/503.
-
-
 
 
 # Version 1.0.1 (Resubmission)

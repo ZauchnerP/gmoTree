@@ -1,0 +1,17 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Contribute{{ endblock }}
+{{ block content }}
+
+    <p>
+        This is a public goods game with
+        {{ C.PLAYERS_PER_GROUP }} players per group,
+        an endowment of {{ C.ENDOWMENT }},
+        and an efficiency factor of {{ C.MULTIPLIER }}.
+    </p>
+
+
+    {{ formfields }}
+
+    {{ next_button }}
+
+{{ endblock }}

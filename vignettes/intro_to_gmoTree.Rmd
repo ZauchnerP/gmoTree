@@ -100,7 +100,6 @@ length(unique(otree$all_apps_wide$participant.code))
 otree$info$initial_n
 ```
 
-
 ## Dealing with messy Chats and Time data frames
 
 If we combine data from experiments that ran on different versions of oTree,
@@ -143,7 +142,6 @@ names(otree_all$Time)
 names(otree_all$Chats)
 ```
 
-
 # Dealing with dropouts and deleting cases
 
 ## show_dropouts()
@@ -172,7 +170,6 @@ Third, the function `show_dropouts()` furthermore creates a table ```$all_end```
 ```{r, collapse=TRUE}
 dropout_list$all_end
 ```
-
 
 ## delete_dropouts()
 
@@ -216,13 +213,11 @@ head(otree2$info$deleted_cases$full)
 
 otree2$info$deleted_cases$unique
 
-
 otree2$info$deleted_cases$all_end
 ```
 
 Caution: This function does not delete any data from the original
 CSV and Excel files!
-
 
 ## delete_cases()
 
@@ -262,7 +257,6 @@ This function adds the information of all these deleted cases to the previously 
 tail(otree2$info$deleted_cases$full)
 ```
 
-
 Caution: This function does not delete any data from the original
 CSV and Excel files!
 
@@ -297,7 +291,6 @@ nrow(otree2$Time)
 nrow(otree2$Chats)
 ```
 
-
 # Deleting sensitive information
 
 ## delete_pabels()
@@ -330,14 +323,12 @@ original CSV and Excel files!
 
 When working with oTree, participant codes, session codes, and group IDs are used to identify the cases. However, often, researchers prefer a streamlined, consecutive numbering system that spans all sessions, beginning with the first participant, session, or group and concluding with the last. The `make_ids()` function provides a way to achieve this goal. Before using the function, let us inspect the underlying variables first.
 
-
 ```{r, collapse=TRUE}
 # Check variables first
 otree2$all_apps_wide$participant.code
 otree2$all_apps_wide$session.code
 otree2$all_apps_wide$dictator.1.group.id_in_subsession
 ```
-
 
 ```{r, collapse=TRUE}
 # Make session IDs only
@@ -444,7 +435,7 @@ The function `assignv_to_aaw()` copies a variable from one of the data frames to
 
 ```{r assignv_to_aaw,  collapse=TRUE}
 # Create a new variable
-otree2$survey$younger30 <- ifelse(otree2$survey$player.age < 30, 0, 1)
+otree2$survey$younger30 <- ifelse(otree2$survey$player.age < 30, 1, 0)
 
 # Get variable younger30 from survey to all_apps_wide
 # and put the new variable right behind the old age variable
@@ -475,3 +466,7 @@ otree2$dictator$constant <- 3
 # Show all columns that contain columns containing only one specified value
 show_constant(oTree = otree2)
 ```
+
+# Literature
+
+Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88–97. https://doi.org/10.1016/j.jbef.2015.12.001

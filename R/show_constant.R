@@ -7,7 +7,7 @@
 #' You can check for columns that have any unchanging possible value
 #' or for columns containing only a specific value.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created 
+#' @param oTree A list of data frames that were created
 #' by \code{\link{import_otree}}.
 #' @param value The value that is controlled to be the same within a column.
 #' If the value is set to \code{"any"}, the function checks for
@@ -26,7 +26,6 @@
 #'
 #' # Show all columns that contain only -99
 #' show_constant(oTree = oTree, value = -99)
-
 
 #' @export
 show_constant <- function(oTree,

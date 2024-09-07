@@ -18,10 +18,10 @@ make_ids(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
-\item{gmake}{Logical. \code{TRUE} if a variable 
+\item{gmake}{Logical. \code{TRUE} if a variable
 called group_id should be made.
 If from_var is not \code{NULL}, gmake is automatically set to \code{TRUE}.}
 
@@ -34,7 +34,7 @@ All normal app data frames and \code{$all_apps_wide} are allowed.}
 
 \item{from_var}{Character. Name of the variable from which the group
 information should be taken. This argument is only relevant
-when \code{$all_apps_wide} is used as from_app and has group information 
+when \code{$all_apps_wide} is used as from_app and has group information
 that contradicts each other.}
 
 \item{sstart}{Integer.
@@ -46,8 +46,8 @@ The number that serves as a starting point for group IDs.}
 \item{pstart}{Integer.
 The number that serves as a starting point for participant IDs.}
 
-\item{emptyrows}{Character. \code{"no"} if the function should stop if 
-there are empty rows in from_app. \code{"yes"} if the function should 
+\item{emptyrows}{Character. \code{"no"} if the function should stop if
+there are empty rows in from_app. \code{"yes"} if the function should
 continue to make IDs.}
 
 \item{icw}{Logical. \code{TRUE} if the warning message should be
@@ -60,7 +60,7 @@ See list of the additional ID variables in \code{$info$additional_variables}.
 }
 \description{
 Make session IDs and, optionally, group IDs and participant IDs
-that span across all data frames created by \code{\link{import_otree}}. 
+that span across all data frames created by \code{\link{import_otree}}.
 Information for these IDs is taken from \code{$all_apps_wide}
 but can be defined otherwise.
 

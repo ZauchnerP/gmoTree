@@ -1,7 +1,7 @@
 #' Make IDs
 #' @description
 #' Make session IDs and, optionally, group IDs and participant IDs
-#' that span across all data frames created by \code{\link{import_otree}}. 
+#' that span across all data frames created by \code{\link{import_otree}}.
 #' Information for these IDs is taken from \code{$all_apps_wide}
 #' but can be defined otherwise.
 #'
@@ -11,9 +11,9 @@
 #'
 #' Important: Combine duplicate data before running this function!
 #' @keywords oTree
-#' @param oTree A list of data frames that were created 
+#' @param oTree A list of data frames that were created
 #' by \code{\link{import_otree}}.
-#' @param gmake Logical. \code{TRUE} if a variable 
+#' @param gmake Logical. \code{TRUE} if a variable
 #' called group_id should be made.
 #' If from_var is not \code{NULL}, gmake is automatically set to \code{TRUE}.
 #' @param pmake Logical. \code{TRUE} if a variable called \code{participant_id}
@@ -23,7 +23,7 @@
 #' All normal app data frames and \code{$all_apps_wide} are allowed.
 #' @param from_var Character. Name of the variable from which the group
 #' information should be taken. This argument is only relevant
-#' when \code{$all_apps_wide} is used as from_app and has group information 
+#' when \code{$all_apps_wide} is used as from_app and has group information
 #' that contradicts each other.
 #' @param sstart Integer.
 #' The number that serves as a starting point for session IDs.
@@ -31,8 +31,8 @@
 #' The number that serves as a starting point for group IDs.
 #' @param pstart Integer.
 #' The number that serves as a starting point for participant IDs.
-#' @param emptyrows Character. \code{"no"} if the function should stop if 
-#' there are empty rows in from_app. \code{"yes"} if the function should 
+#' @param emptyrows Character. \code{"no"} if the function should stop if
+#' there are empty rows in from_app. \code{"yes"} if the function should
 #' continue to make IDs.
 #' @param icw Logical. \code{TRUE} if the warning message should be
 #' ignored that states that IDs cannot be made because of an oTree bug.
@@ -106,7 +106,6 @@ make_ids <- function(oTree,
                 "\" not found. Please select another from_app.")
   }
 
-
   if (!(is.data.frame(oTree[[from_app]]))) {
     stop("Your from_app is not a data frame!")
   }
@@ -135,11 +134,11 @@ make_ids <- function(oTree,
     gmake <- TRUE
   }
 
-  if (inherits(oTree[[from_app]], "data.frame") == FALSE) {
+  if (!inherits(oTree[[from_app]], "data.frame")) {
     stop("from_app \"", from_app, "\" is not a data frame.")
   }
 
-  if (inherits(oTree[[from_app]], "data.frame") == TRUE &&
+  if (inherits(oTree[[from_app]], "data.frame") &&
       nrow(oTree[[from_app]]) == 0L) {
     stop("from_app \"", from_app, "\" data frame has no entries.")
   }
@@ -282,8 +281,8 @@ make_ids <- function(oTree,
       stop("No variable that ends with \"group.id_in_subsession\"")
     }
 
-    if (inherits(checkdata, "data.frame")) {
-      if (!(all(checkdata == checkdata[, 1]))) {
+    if (inherits(checkdata, "data.frame") &&
+        !(all(checkdata == checkdata[, 1]))) {
         # Not all the same
         stop(
           "group_id can not be calculated. ",
@@ -293,7 +292,7 @@ make_ids <- function(oTree,
           "group numbers in all apps wide (from_var) or the app from ",
           "which the group numbers should be taken (from_app)."
         )
-      }
+
     }
   }
 
@@ -321,7 +320,6 @@ make_ids <- function(oTree,
 
         oTree[[from_app]]$group_id <-
           oTree[[from_app]]$group_id + (gstart - 1)
-
 
         if (length(unique(oTree[[from_app]][[from_var]])) == 1) {
           my_warnings <<- c(my_warnings, paste0(
@@ -532,11 +530,11 @@ make_ids <- function(oTree,
 
     emptyrows <- emptyrows_dealing()
     if (emptyrows == "no") {
-      stop(paste0(
+      stop(
         "Your from_app contains empty rows. This might lead to faulty ",
         "IDs. You chose to stop this function. You can either import data ",
         "using the del_empty = TRUE or rerun this function with the argument ",
-        "emptyrows=\"yes\" (not advised)."))
+        "emptyrows=\"yes\" (not advised).")
     }
   }
 
@@ -712,7 +710,6 @@ make_ids <- function(oTree,
             !(oTree[[i]]$participant__code %in%
                 oTree[[from_app]]$participant.code)]
 
-
           participants_more <- unique(participants_more)
 
           if (length(participants_more) > 0L) {
@@ -730,7 +727,7 @@ make_ids <- function(oTree,
         my_warnings <-
           c(my_warnings,
             paste0("Participant code variable couldn't be found in \"",
-                   name_of_app, 
+                   name_of_app,
                    "\"! No IDs are calculated for this data frame."))
       }
 

@@ -1,0 +1,10 @@
+{{ block title }}Your Choice{{ endblock }}
+{{ block content }}
+
+    {{ formfields }}
+    <p>{{ next_button }}</p>
+
+    {{ include_sibling 'instructions.html' }}
+
+{{ endblock }}
+

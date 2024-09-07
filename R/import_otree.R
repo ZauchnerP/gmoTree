@@ -10,13 +10,13 @@
 #'
 #' Caution! Data can be downloaded from within the
 #' session and globally at the same time. If both files are downloaded,
-#' this can lead to the \code{$all_apps_wide} data being there twice! You can 
+#' this can lead to the \code{$all_apps_wide} data being there twice! You can
 #' remove duplicate data by using \code{\link{delete_duplicate}}.
 #'
 #' Caution! When importing Excel files, this function does not check
 #' for erroneous data structures
 #' and will combine all data frames with the same file name patterns.
-#' Before using the \code{CSV = FALSE} argument, 
+#' Before using the \code{CSV = FALSE} argument,
 #' clean up your data appropriately.
 #' @keywords oTree
 #' @param final_apps Character.
@@ -37,38 +37,38 @@
 #' subfolders should also be imported.
 #' @param file_names Character. The name(s) of the file(s) to be imported.
 #' If not specified, all files in the path and subfolders are imported.
-#' @param csv Logical. \code{TRUE} if only CSV files should be 
+#' @param csv Logical. \code{TRUE} if only CSV files should be
 #' imported. \code{FALSE} if only Excel files should be imported.
-#' @param onlybots Logical. \code{TRUE} if only bot-created files 
+#' @param onlybots Logical. \code{TRUE} if only bot-created files
 #' should be imported.
-#' @param del_empty Logical. \code{TRUE} if all empty cases should be deleted 
+#' @param del_empty Logical. \code{TRUE} if all empty cases should be deleted
 #' from the \code{$all_apps_wide} or normal app data frames (not Time or Chats).
-#' @param info Logical. \code{TRUE} if a brief information on the data 
+#' @param info Logical. \code{TRUE} if a brief information on the data
 #' import should be printed.
 #' @returns
-#' Returns a list of data frames (one data frame for each app 
-#' and \code{$all_apps_wide}) and a list of information on this list 
+#' Returns a list of data frames (one data frame for each app
+#' and \code{$all_apps_wide}) and a list of information on this list
 #' of data frames in \code{$info}.
 #'
-#' See detailed information on the imported files 
+#' See detailed information on the imported files
 #' in \code{$info$imported_files}.
 #'
 #' If \code{$all_apps_wide} is imported, see the number of imported cases
 #' in \code{$info$initial_n}. In this number, empty rows are
-#' already considered. So, if empty rows are deleted 
-#' with \code{del_empty=TRUE}, \code{initial_n} 
+#' already considered. So, if empty rows are deleted
+#' with \code{del_empty=TRUE}, \code{initial_n}
 #' counts all rows that are not empty.
 #' Cases that are deleted because the participants did not make it to the
 #' last page and/or app are not subtracted from this number.
 #'
-#' Information: Empty rows are rows without 
+#' Information: Empty rows are rows without
 #' the \code{participant._current_app_name}
 #' variable set. Empty rows are deleted from all app data frames
-#' and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in 
+#' and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in
 #' the \code{$Chats} and \code{$Time} data frames are not deleted.
 #'
-#' If old and new oTree versions are combined, the \code{$Time} data frame 
-#' contains variables called \code{participant_code} 
+#' If old and new oTree versions are combined, the \code{$Time} data frame
+#' contains variables called \code{participant_code}
 #' and \code{participant__code} (the difference is in the underscores).
 #' Caution! If there is an unusual amount of \code{NA}s,
 #' check if everything got imported correctly.
@@ -156,7 +156,6 @@ import_otree <- function(
     encoding = "UTF-8"
     ) {
 
-
   # Make oTree list
   oTree <- list()
 
@@ -166,9 +165,9 @@ import_otree <- function(
   }
 
   # Make messages
-  errorfiles <- data.frame(file = character(0L), 
+  errorfiles <- data.frame(file = character(0L),
                            content = character(0L))
-  warningfiles <- data.frame(file = character(0L), 
+  warningfiles <- data.frame(file = character(0L),
                              content = character(0L))
   time_message <- character(0L)
   chat_message <- character(0L)
@@ -226,7 +225,7 @@ import_otree <- function(
   }
 
   # Stop if there are no files  ####
-  if (length(all_file_names) == 0L || 
+  if (length(all_file_names) == 0L ||
       is.null(all_file_names)) {
     stop("No files to import! ",
                 "Did you specify the CSV argument correctly? ",
@@ -575,7 +574,7 @@ import_otree <- function(
                               numapps,
                               " app(s) and/or all_apps_wide"))
 
-      if (!is.null(errorfiles) && 
+      if (!is.null(errorfiles) &&
           !nrow(errorfiles) == 0L) {
 
         # Make error messages

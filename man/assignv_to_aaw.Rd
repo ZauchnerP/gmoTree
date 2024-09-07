@@ -7,7 +7,7 @@
 assignv_to_aaw(oTree, app, variable, newvar, resafter = NULL)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
 \item{app}{Character. The data frame from which the variable is taken.}
@@ -16,7 +16,7 @@ by \code{\link{import_otree}}.}
 The name of the variable that should be assigned to \code{$all_apps_wide}.}
 
 \item{newvar}{Character.
-The name of the newly created variable in the \code{$all_apps_wide} data 
+The name of the newly created variable in the \code{$all_apps_wide} data
 frame.}
 
 \item{resafter}{Character.
@@ -25,7 +25,7 @@ If \code{NULL}, the new variable will be placed at the end of the data frame.}
 }
 \value{
 This function returns a duplicate of the original oTree list of
-data frames but with an additional column in the \code{$all_apps_wide} data 
+data frames but with an additional column in the \code{$all_apps_wide} data
 frame that contains the variable in question.
 }
 \description{
@@ -35,8 +35,11 @@ Assign a variable from one of the app data frames to \code{$all_apps_wide}.
 # Use package-internal list of oTree data frames
 oTree <- gmoTree::oTree
 
+# Check out the old variable 
+oTree$survey$player.age
+
 # Create a new variable
-oTree$survey$younger30 <- ifelse(oTree$survey$player.age < 30, 0, 1)
+oTree$survey$younger30 <- ifelse(oTree$survey$player.age < 30, 1, 0)
 
 # Assign the variable younger30 to all_apps_wide
 oTree2 <- assignv_to_aaw(

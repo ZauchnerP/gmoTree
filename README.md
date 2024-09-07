@@ -25,7 +25,7 @@ To install the CRAN version of this package, use the following command:
 
 `install.packages("gmoTree")`
 
-To install the development versions:
+To install the development version:
 
 `devtools::install_github("ZauchnerP/gmoTree")`
 
@@ -44,10 +44,10 @@ gmoTree website</a>.
 
 ## Cleaning up data
 
-- `messy_chat()`: Checks for a messy Chats data frame and combines variables that refer to
+- `messy_chat()`: Checks for a messy `Chats` data frame and combines variables that refer to
 the same concept.
 
-- `messy_chat()`: Checks for a messy Time data frame and combines variables that refer to
+- `messy_chat()`: Checks for a messy `Time` data frame and combines variables that refer to
 the same concept.
 
 - `delete_duplicate()`: Deletes duplicate rows from all data frames in the oTree list.
@@ -95,9 +95,10 @@ apps.
 - `assignv()`: Copies a variable from the all_apps_wide data frame to the data frames
 of all other apps.
 
-- `assignv_to_aaw()`: Copies a variable from one of your data frames to the all_apps_wide data
+- `assignv_to_aaw()`: Copies a variable from one of your data frames to the `all_apps_wide` data
 frame.
 
 # Before running the experiment
 
 - `show_constant()`: Shows constant variables.
+- `codebook()`: Creates a codebook based on the oTree code.

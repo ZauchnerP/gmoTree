@@ -7,7 +7,7 @@
 delete_duplicate(oTree)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 }
 \value{
@@ -20,11 +20,11 @@ This function does NOT add information to \code{$info$deleted_cases},
 because it does not delete any important information but only
 cleans up a messy data import.
 
-However, the function adjusts \code{$info$initial_n}, if 
+However, the function adjusts \code{$info$initial_n}, if
 an \code{$all_apps_wide} data frame exists.
 }
 \description{
-Delete duplicate rows from all oTree app data frames 
+Delete duplicate rows from all oTree app data frames
 and \code{$all_apps_wide}.
 }
 \examples{

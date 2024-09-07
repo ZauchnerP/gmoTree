@@ -7,15 +7,15 @@
 #' original CSV and Excel files!
 #'
 #' Caution 2: This function does not delete cases from custom exports if the
-#' custom exports do not have a variable named \code{participant.code} 
+#' custom exports do not have a variable named \code{participant.code}
 #' and a variable named \code{session.code}!
 #' @keywords oTree
-#' @param oTree A list of data frames that were created 
+#' @param oTree A list of data frames that were created
 #' by \code{\link{import_otree}}.
 #' @param scodes Character. The session.code(s) of the
 #' session(s) whose data should be removed.
 #' @param saved_vars Character. The name(s) of variable(s) that need(s) to be
-#' stored in the list of information on deleted cases 
+#' stored in the list of information on deleted cases
 #' in \code{$info$deleted_cases}.
 #' @param reason Character. The reason for deletion that should be stored in
 #' the list of information on deleted cases in \code{$info$deleted_cases}.
@@ -24,19 +24,19 @@
 #' @returns This function returns a duplicate of the original oTree list of
 #' data frames that do not include the deleted sessions.
 #'
-#' It adds information on the deleted cases to \code{$info$deleted_cases}. 
+#' It adds information on the deleted cases to \code{$info$deleted_cases}.
 #' (This list is also filled by other functions.)
 #'
 #' In this list, you can find the following information:
 #'
-#' - \code{$full} and \code{$unique} = The data frames \code{$full} 
+#' - \code{$full} and \code{$unique} = The data frames \code{$full}
 #' and \code{$unique} contain
 #' information on all participants
-#' whose data were deleted. The entries to the \code{$full} 
+#' whose data were deleted. The entries to the \code{$full}
 #' and the \code{$unique} data
-#' frames in this list are the same. Columns \code{end_app} 
+#' frames in this list are the same. Columns \code{end_app}
 #' and \code{end_page} are left
-#' empty intentionally because they are only filled by 
+#' empty intentionally because they are only filled by
 #' the \code{\link{delete_dropouts}}
 #' function. Columns \code{participant.code} and \code{reason} are filled.
 #'
@@ -48,27 +48,60 @@
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
 #'
-#' # First, show some row numbers
-#' print(paste(nrow(oTree$all_apps_wide), nrow(oTree$survey),
-#' nrow(oTree$Time), nrow(oTree$Chats)))
-#'
 #' # Delete one session
 #' oTree2 <- delete_sessions(oTree,
 #'   scodes = "7bfqtokx",
 #'   reason = "Only tests")
 #'
-#' # Show row numbers
-#' print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
+#' # Show changes in row numbers
+#' print(paste("Row numbers before deletion: ", nrow(oTree$all_apps_wide), nrow(oTree$survey),
+#' nrow(oTree$Time), nrow(oTree$Chats)))
+#'
+#' print(paste("Row numbers after deletion: ", nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
 #' nrow(oTree2$Time), nrow(oTree2$Chats)))
 #'
-#' # Delete two sessions
+#' # Delete two sessions and show deletion message
 #' oTree2 <- delete_sessions(oTree,
 #'   scodes = c("7bfqtokx", "vd1h01iv"),
-#'   reason = "Only tests")
+#'   reason = "Only tests",
+#'   info = TRUE)
 #'
 #' # Show row numbers again
 #' print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
 #' nrow(oTree2$Time), nrow(oTree2$Chats)))
+#'
+#' # Delete session and save variable to the info list
+#' oTree2 <- delete_sessions(oTree,
+#'   scodes = c("7bfqtokx", "vd1h01iv"),
+#'   reason = "Server Crash",
+#'   saved_vars = "dictator.1.group.id_in_subsession")
+#'
+#' # Check the "full" deletion information
+#' oTree2$info$deleted_cases$full
+#'
+#' # See codes of deleted variables
+#' oTree2$info$deleted_cases$codes
+#'
+#' # See number of deleted variables
+#' oTree2$info$deleted_cases$count
+#'
+#' # Delete a single case and then delete a session
+#' oTree2 <- delete_cases(oTree,
+#'                        pcodes = "4zhzdmzo",
+#'                        reason = "requested")
+#' oTree2 <- delete_sessions(oTree2,
+#'   scodes = c("vd1h01iv"),
+#'   reason = "Server Crash",
+#'   saved_vars = "dictator.1.group.id_in_subsession")
+#'
+#' # Check the "full" deletion information
+#' oTree2$info$deleted_cases$full
+#'
+#' # See codes of deleted variables
+#' oTree2$info$deleted_cases$codes
+#'
+#' # See number of deleted variables
+#' oTree2$info$deleted_cases$count
 
 #' @export
 delete_sessions <- function(oTree,
@@ -298,10 +331,12 @@ delete_sessions <- function(oTree,
     oTree[["info"]][["deleted_cases"]][["full"]] <- plyr::rbind.fill(
       oTree[["info"]][["deleted_cases"]][["full"]],
       deletion_frame)
+    rownames(oTree[["info"]][["deleted_cases"]][["full"]]) <- NULL
 
     oTree[["info"]][["deleted_cases"]][["unique"]] <- plyr::rbind.fill(
       oTree[["info"]][["deleted_cases"]][["unique"]],
       deletion_frame)
+    rownames(oTree[["info"]][["deleted_cases"]][["unique"]]) <- NULL
   }
 
   # Delete participant in all apps  ####

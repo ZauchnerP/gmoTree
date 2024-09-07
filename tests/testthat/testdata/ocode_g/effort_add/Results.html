@@ -1,0 +1,26 @@
+{{ extends "global/Page.html" }}
+
+{{ block content }}
+
+<div id = "all">
+    <div style="text-align: center;">
+        Sie haben mit den Additionen
+
+        {{ if player.number_of_correct_answers == 0 }}
+            keinen Punkt
+        {{ elif player.number_of_correct_answers == 1 }}
+            1 Punkt
+        {{ else }}
+            {{ player.number_of_correct_answers }} Punkte
+        {{ endif }}
+
+        verdient.
+        <br><br>
+
+        {{ next_button }}
+    </div>
+
+</div>
+
+
+{{ endblock }}

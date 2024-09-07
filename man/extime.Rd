@@ -19,20 +19,20 @@ extime(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
-\item{pcode}{Character. The value of the \code{participant.code} 
+\item{pcode}{Character. The value of the \code{participant.code}
 variable if the time should only be calculated for one specified participant.}
 
-\item{plabel}{Character. The value of the \code{participant.label} variable 
+\item{plabel}{Character. The value of the \code{participant.label} variable
 if the time should only be calculated for one specified participant.}
 
 \item{group_id}{Integer. The value of the group_id variable if the
 time should only be calculated for one specified group. The \code{group_id}
 variable can be created with \code{\link{make_ids}}.}
 
-\item{seconds}{Logical. \code{TRUE} if the output should be in seconds 
+\item{seconds}{Logical. \code{TRUE} if the output should be in seconds
 instead of minutes.}
 
 \item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
@@ -56,9 +56,9 @@ additional information in the data frame
 of single durations, \code{"session_code"} to use session codes,
 or \code{NULL} if no session column should be shown.}
 
-\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time 
+\item{combine}{Logical. \code{TRUE} if all variables referring to epoch time
 should be merged, and all variables referring to participant code should
-be merged in case data of several versions of oTree are used. 
+be merged in case data of several versions of oTree are used.
 If \code{FALSE},
 the function returns an error if several oTree versions' data are present.}
 }
@@ -80,7 +80,7 @@ are used for calculating the min, max, and mean duration.
 
 - \code{$messages} = All important notes to the calculations.
 
-- \code{$only_one_page} = A vector of all individuals who 
+- \code{$only_one_page} = A vector of all individuals who
 only have one time stamp.
 }
 \description{
@@ -91,7 +91,7 @@ the first page!
 \details{
 This functions calculates the time spent on the experiment by using
 the variable that refers to the time stamp. If that variable is not
-present, the function alternatively uses \code{seconds_on_page2}, 
+present, the function alternatively uses \code{seconds_on_page2},
 which can be created with the \code{\link{pagesec}} function.
 }
 \examples{

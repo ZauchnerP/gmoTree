@@ -1,0 +1,321 @@
+---
+title: "`r params$title`"
+subtitle: "`r params$subtitle`"
+date: "`r params$date`"
+author: "`r params$author`"
+institute: "`r unlist(lapply(params$authors, function(x) x$inst))`"
+header-includes:
+- \usepackage[margins=raggedright]{floatrow}
+---
+
+```{r options, include = FALSE}
+# Global options  ####
+    knitr::opts_chunk$set(echo = FALSE,
+                          message = FALSE,
+                          results = "asis",
+                          error = FALSE,
+                          warning = FALSE,
+                          dpi = 300L,
+                          st_options = "rmarkdown")
+
+# Pander  ####
+    pander::panderOptions("knitr.auto.asis", FALSE)
+    pander::panderOptions("table.split.table", Inf)
+    pander::panderOptions("table.alignment.rownames", "left")
+    pander::panderOptions("table.split.cells", 80L)
+    pander::panderOptions("table.alignment.default", "left")
+    pander::panderOptions("table.style", "multiline")
+    pander::panderOptions("keep.line.breaks", TRUE)
+```
+
+```{r preamb}
+if (preamb) {
+  cat("# Introduction to oTree data\n\n")
+  cat(sep = "", "In an oTree list of data frames, each application (app) is represented by its own data frame. Additionally, there is an `all_apps_wide` data frame that aggregates information from all apps.
+\n\n
+Variables within the `all_apps_wide` data frame follow the naming convention:  \n\n",
+"`oTree$all_apps_wide$appname.1.player.variablename`\n\n",
+"The naming convention shows how the data is structured hierarchically, like a tree. In this case, the variable `variablename` is part of the class `Player`, which occurs in round `1,` of app `appname`, which is in the data frame `all_apps_wide` which is part of the list `oTree`.
+\n\n
+There are three different types of classes.\n",
+
+"Player variables are individual-specific but may vary across apps and rounds, such as points earned in an effort task. Group variables are common to all members of a group and may also vary. Participant variables are individual-specific and although they can be accessed and manipulated in all apps, only their last value is saved in this global variable. Participant variables are not reported in this codebook. ",
+
+"See https://otree.readthedocs.io/en/latest/conceptual_overview.html for more information on the concepts in oTree. ",
+
+"\n\nIn `all_apps_wide`, the data is stored in a wide format, meaning that there is one row of data for every participant. Conversely, the app data frames contain variables with the following format: `oTree$app$player.variablename`.
+They don't have a round number in their name since the data is stored in a long format.
+Thus, there is one row for each participant in each round. Additionally, it shows the class (Participant, Player, or Group) in which the variables are saved.
+\n\n
+Although the variables in `all_apps_wide` contain information on the app, the class, and the round, the subsequent presentation of that information is organized in a distinct manner through the use of headings and tables. The headings on the first level contain information on the apps. The following heading level denotes the class. ",
+
+"On the last level, a table contains the variable names as they were given in the oTree code and their values. Round numbers are self-explanatory and won't be discussed for each variable. ")
+
+if (params$include_cons) {
+  cat(sep = "", "How often an app is played can be seen in the Constants variable `num_rounds`.")
+}
+
+cat(sep = "",
+"\n\nThe standard oTree variables, such as `player.payoff`, are not reported in this codebook."
+)
+
+}
+```
+
+```{r get app info}
+get_app <- function(params,
+                    data, folder) {
+
+  output <- paste0("\n\n# App: ", folder, "\n\n")
+
+  if (!is.null(params$app_doc) &&
+      params$app_doc &&
+      !is.null(data[[folder]]$doc)) {
+
+    
+     # Replace \\ with \n
+     data[[folder]]$doc <- gsub("\\\\", 
+                               "\n\n",
+                               data[[folder]]$doc)
+     output <-  paste(output,
+          "\n\n Documentation: ",
+              data[[folder]]$doc, "\n\n")
+  }
+  return(output)
+}
+```
+
+```{r group player}
+values_group_player <- function(subdata, variable) {
+
+  # Values  ####
+    varval <- ""
+
+    # Doc
+    if ("doc" %in% names(subdata[[variable]])) {
+       varval <-
+         paste0(varval,
+                "  Doc: ", subdata[[variable]][["doc"]],
+                "\\\n")
+    }
+
+    # Field type
+    varval <- paste0(varval,
+                  "  Field type: ",
+                  subdata[[variable]][["field"]],
+                  "\\\n")
+
+    # Widget
+    if ("widget" %in% names(subdata[[variable]])) {
+        varval <-
+          paste0(varval, "  Widget: ", subdata[[variable]]$widget, "\\\n")
+    }
+    
+    # Label
+    if ("label" %in% names(subdata[[variable]]) &&
+        subdata[[variable]][["label"]] != "") {
+          varval <- paste0(varval, "  Label: ",
+                        subdata[[variable]][["label"]], "\\\n")
+
+    }
+
+    # Verbose name
+    if ("verbose_name" %in% names(subdata[[variable]]) &&
+        subdata[[variable]][["verbose_name"]] != "") {
+          varval <- paste0(varval,
+                        "  Verbose_name: ",
+                        subdata[[variable]][["verbose_name"]],
+                        "\\\n")
+        }
+
+    # Choices
+    if ("choices" %in% names(subdata[[variable]])) {
+
+        if ("key" %in% names(subdata[[variable]][["choices"]])) {
+          varval <- paste0(varval, "  Options:\\\n")
+          varval <- paste0(varval,
+                        paste("&nbsp;&nbsp;&nbsp;",
+                          subdata[[variable]][["choices"]][["key"]],
+                          "=",
+                          subdata[[variable]][["choices"]][["value"]],
+                          collapse = "\\\n"),
+                        "\\\n")
+        } else if ("value" %in% names(subdata[[variable]][["choices"]])) {
+          varval <- paste0(varval, "  Options:\\\n")
+          varval <- paste0(varval,
+                        paste(
+                          sapply(
+                            unlist(subdata[[variable]][["choices"]][["value"]]),
+                            function(x) paste0("&nbsp;&nbsp;&nbsp;", x)),
+                          collapse = "\\\n"),
+                        "\\\n")
+        } else {
+          varval <- paste0(varval, "  Options:\\\n")
+          varval <- paste0(varval,
+                        paste(
+                          sapply(
+                            unlist(subdata[[variable]][["choices"]]),
+                            function(x) paste0("&nbsp;&nbsp;&nbsp;", x)),
+                          collapse = "\\\n"),
+                        "\\\n")
+        }
+    }
+
+    # Max length
+    if ("max_length" %in% names(subdata[[variable]])) {
+        varval <- paste0(varval,
+                         "  Maximal length: ",
+                          subdata[[variable]]$max_length,
+                          "\\\n")
+    }
+
+    # Min value
+    if ("min" %in% names(subdata[[variable]])) {
+        varval <- paste0(varval,
+                         "  Minimum: ",
+                         subdata[[variable]]$min, "\\\n")
+    }
+
+    # Max value
+    if ("max" %in% names(subdata[[variable]])) {
+        varval <- paste0(varval,
+                         "  Maximum: ",
+                         subdata[[variable]]$max, "\\\n")
+    }
+
+    # Remove last carriage return  ####
+    sub("\\\\\\n$", "", varval)
+    
+    # Return  ####
+    return(varval)
+}
+
+```
+
+```{r constants}
+values_constants <- function(subdata, variable) {
+  if (is.null(subdata)) {
+
+    stop("subdata not there")
+  }
+  if (!is.list(subdata)) {
+    stop("Subdata not list")
+  }
+  if (is.null(variable)) {
+    stop("Variable is not there!")
+  }
+
+  # Values
+  varval <- ""
+  
+  if (!is.null(subdata) && !is.null(variable) && variable %in% names(subdata)) {
+
+    if (length(subdata[[variable]]) == 1L) {
+      
+        varval <- subdata[[variable]][[1L]]
+        
+    } else if (length(subdata[[variable]]) > 1L) {
+      
+        for (i in seq_along(subdata[[variable]])) {
+          
+          if (i == 1L) {
+            varval <- paste(subdata[[variable]][[i]], 
+                                   collapse = ", ")
+            
+          } else {
+            varval <- paste(varval, 
+                             sep = ", ",  # Or new line: "\\\n"
+                             paste(subdata[[variable]][[i]],
+                                   collapse = ", "), collapse = ", ")
+          } # check again for lists 
+        }
+    }
+
+  } 
+  
+  return(varval)
+
+}
+```
+
+```{r run functions}
+# Codebook data
+data <- combined_codebook
+data$settings <- NULL
+
+# Data
+for (folder in names(data)) {
+  if (folder != "settings") {  # Unnecessary but important for later code changes
+
+    # App documentation and header
+    cat(get_app(params, data, folder))
+
+    # Variable information
+    for (class in names(data[[folder]])) {
+
+      # Get all the variables of a class and their information
+      subdata <- data[[folder]][[class]]
+
+      if (class != "Constants" &&
+          class != "doc")  {
+
+        cat("\n\n## Class: ", class, "\n\n")
+
+        if (length(subdata) != 0L) {
+
+          # If pass
+          if (is.null(names(subdata))) {
+              cat("\n\nEmpty class\n")
+          } else {
+
+              # For variables
+              table_var <- data.frame(Variable = names(subdata))
+              table_var$Value <-
+                sapply(table_var$Variable,
+                       FUN = function(x) values_group_player(subdata, x))
+
+              # Remove last \n
+              table_var[nrow(table_var), ] <- 
+                sub(pattern = "\\\\\\n$", 
+                    replacement = "", 
+                    x = table_var[nrow(table_var), ])
+              
+              # Show table
+              pander::pander(table_var)
+              cat("\n\n")
+          }
+        } else {
+              cat("\n\nEmpty class\n")
+        }
+      } else if (class == "Constants" &&
+                 params$include_cons) {
+
+          cat("\n\n## Class: ", class, "\n\n")
+
+          if (length(subdata) != 0L) {
+            # If pass
+            if (is.null(names(subdata))) {
+              cat("\n\nEmpty class\n\n")
+            } else {
+
+              # For variables
+              table_var <- data.frame(Variable = names(subdata))
+
+              table_var$Value <-
+                sapply(X = table_var$Variable,
+                       FUN = function(x) values_constants(subdata, x))
+
+              pander::pander(table_var)
+              cat("\n\n")
+
+            }
+          }
+      }
+    }
+  }
+}
+```
+
+
+
+

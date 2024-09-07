@@ -1,5 +1,13 @@
 **Changes in CITATION file and NEWS file are not documented.**
 
+# gmoTree 1.2.0
+
+* New function
+  * ```codebook()```: Create a codebook for the oTree code
+* Linted code (more readable)
+* Minor changes in warning messages
+* More tests and examples
+
 # gmoTree 1.1.0
 
 * Changes in functions
@@ -18,7 +26,7 @@
 
 File names of the examples are now portable.
 
-* Changes in functions: 
+* Changes in functions
   * ```import_otree()```: Minor changes. Can also import portable file names now.
 
 # gmoTree 0.0.3

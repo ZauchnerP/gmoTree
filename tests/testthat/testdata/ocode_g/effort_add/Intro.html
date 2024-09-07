@@ -1,0 +1,29 @@
+{{ extends "global/Page.html" }}
+
+{{ block content }}
+    <div id = "all" style = "text-align: center;">
+        <h1>Auf dem folgenden Bildschirm können Sie Punkte verdienen.</h1>
+        <br><br>
+        Dazu müssen Sie die am Bildschirm angezeigten Rechenbeispiele lösen.
+        <br><br>
+        Sie haben {{ C.TASK_TIMER }} Sekunden Zeit, um so viele <u>Additionen</u> wie möglich durchzuführen.
+        <br><br>
+        Sobald Sie das Ergebnis in das Feld eingetragen haben,
+        können Sie durch Drücken des "Weiter"-Buttons die nächste Frage anzeigen lassen.
+        <br><br>
+        Für jede richtig beantwortete Frage erhalten Sie
+            {{ if C.POINTS_PER_CORRECT_ANSWER == 1 }}
+                1 Punkt.
+            {{ else }}
+                {{ C.POINTS_PER_CORRECT_ANSWER|json }} Punkte.
+            {{ endif }}
+        <br><br><br>
+        <button class = "btn-primary" type="submit">START</button>
+    </div>
+
+
+{{ endblock }}
+
+
+
+

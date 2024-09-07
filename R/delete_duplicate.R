@@ -1,9 +1,9 @@
 #' Delete duplicate data
 #' @description
-#' Delete duplicate rows from all oTree app data frames 
+#' Delete duplicate rows from all oTree app data frames
 #' and \code{$all_apps_wide}.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created 
+#' @param oTree A list of data frames that were created
 #' by \code{\link{import_otree}}.
 #' @returns This function returns a duplicate of the original oTree
 #' list of data frames but without duplicate rows in all app data
@@ -14,7 +14,7 @@
 #' because it does not delete any important information but only
 #' cleans up a messy data import.
 #'
-#' However, the function adjusts \code{$info$initial_n}, if 
+#' However, the function adjusts \code{$info$initial_n}, if
 #' an \code{$all_apps_wide} data frame exists.
 #' @examplesIf rlang::is_installed("withr")
 #' # Set data folder first
@@ -34,7 +34,6 @@
 #' # Show row numbers again
 #' print(paste(nrow(oTree$all_apps_wide), nrow(oTree$survey),
 #' nrow(oTree$Time), nrow(oTree$Chats)))
-
 
 #' @export
 delete_duplicate <- function(oTree) {

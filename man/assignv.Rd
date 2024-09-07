@@ -7,10 +7,10 @@
 assignv(oTree, variable, newvar)
 }
 \arguments{
-\item{oTree}{A list of data frames that were 
+\item{oTree}{A list of data frames that were
 created by \code{\link{import_otree}}}
 
-\item{variable}{Character. The variable in the \code{$all_apps_wide} 
+\item{variable}{Character. The variable in the \code{$all_apps_wide}
 data frame that should be assigned to all other apps.}
 
 \item{newvar}{Character. The name of the newly created variable.}

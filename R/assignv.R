@@ -1,9 +1,9 @@
 #' Assign a variable from all_apps_wide
 #' @description
 #' Assign a variable from \code{$all_apps_wide} to the other app data frames.
-#' @param oTree A list of data frames that were 
+#' @param oTree A list of data frames that were
 #' created by \code{\link{import_otree}}
-#' @param variable Character. The variable in the \code{$all_apps_wide} 
+#' @param variable Character. The variable in the \code{$all_apps_wide}
 #' data frame that should be assigned to all other apps.
 #' @param newvar Character. The name of the newly created variable.
 #' @returns This function returns a duplicate of the

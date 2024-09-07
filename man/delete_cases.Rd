@@ -15,7 +15,7 @@ delete_cases(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}.}
 
 \item{pcodes}{Character. The value(s) of the participant.code variable of
@@ -25,7 +25,7 @@ the participants whose data should be removed.}
 the participants whose data should be removed.}
 
 \item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
-stored in the list of information on deleted cases 
+stored in the list of information on deleted cases
 in \code{$info$deleted_cases}.}
 
 \item{reason}{Character. The reason for deletion that should be stored in
@@ -50,13 +50,7 @@ In this list, you can find the following information:
 
 - \code{$count} = The number of participants in \code{$codes}.
 
-- \code{$full} and \code{$unique} = The data frames \code{$full} 
-and \code{$unique} contain information
-on each deleted participant and the reason why they were
-deleted. The entries to the \code{$full} and the \code{$unique} 
-data frames are the same.
-Columns \code{"end_app"} and \code{"end_page"} are left empty intentionally
-because they are only filled by the \code{\link{delete_dropouts}} function.
+- \code{$full} and \code{$unique} = The data frames \code{$full} and \code{$unique} contain information on each deleted participant and the reason why they were deleted. The entries to the \code{$full} and the \code{$unique} data frames are the same. Columns \code{"end_app"} and \code{"end_page"} are left empty intentionally because they are only filled by the \code{\link{delete_dropouts}} function.
 }
 \description{
 Delete specific cases from all data frames in the oTree list.
@@ -68,7 +62,7 @@ Caution 2: This function does not delete cases from custom exports
 and custom data frames if these data frames do not have a variable
 named participant.code!
 
-Caution 3: This function does not delete any data from 
+Caution 3: This function does not delete any data from
 the \code{$Chats} data frame!
 (As the interpretation of chat data depends on how participants
 engage with each other, the data must be deleted
@@ -80,17 +74,16 @@ Please do this manually if necessary!)
 # Use package-internal list of oTree data frames
 oTree <- gmoTree::oTree
 
-# First, show some row numbers
-print(paste(nrow(oTree$all_apps_wide), nrow(oTree$survey),
-nrow(oTree$Time), nrow(oTree$Chats)))
-
 # Delete only one case
 oTree2 <- delete_cases(oTree,
                        pcodes = "xmxl46rm",
                        reason = "requested")
 
-# Show row numbers again
-print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
+# Show changes in row numbers
+print(paste("Row numbers before deletion: ", nrow(oTree$all_apps_wide), nrow(oTree$survey),
+nrow(oTree$Time), nrow(oTree$Chats)))
+
+print(paste("Row numbers after deletion: ", nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
 nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Delete several cases
@@ -116,6 +109,9 @@ oTree2 <- delete_cases(oTree,
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
 nrow(oTree2$Time), nrow(oTree2$Chats)))
 
+# Check the "full" deletion information
+oTree2$info$deleted_cases$full
+
 # Save some variables
 oTree2 <- delete_cases(oTree,
   pcodes = deletionlist,
@@ -128,12 +124,33 @@ oTree2 <- delete_cases(oTree,
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
 nrow(oTree2$Time), nrow(oTree2$Chats)))
 
+# Check the "full" deletion information
+oTree2$info$deleted_cases$full
+
 # Get a list of all deleted cases
 # (If there is already a list, the new list is added to it)
 oTree2$info$deleted_cases$codes
 
 # Show number of all deleted cases
 length(oTree2$info$deleted_cases$codes)
+oTree2$info$deleted_cases$count
+
+# Delete a session and delete a single case from another session
+oTree2 <- delete_sessions(oTree,
+  scodes = c("vd1h01iv"),
+  reason = "Server Crash", 
+  saved_vars = "dictator.1.group.id_in_subsession")
+oTree2 <- delete_cases(oTree2,
+                       pcodes = "4zhzdmzo",
+                       reason = "requested")
+                       
+# Check the "full" deletion information
+oTree2$info$deleted_cases$full
+
+# See codes of deleted variables
+oTree2$info$deleted_cases$codes
+
+# See number of deleted variables
 oTree2$info$deleted_cases$count
 }
 \keyword{oTree}

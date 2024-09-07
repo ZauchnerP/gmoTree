@@ -15,7 +15,7 @@ delete_dropouts(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created 
+\item{oTree}{A list of data frames that were created
 by \code{\link{import_otree}}}
 
 \item{final_apps}{Character.
@@ -27,7 +27,7 @@ The name(s) of the page(s) at which the participants have to finish the
 experiment.}
 
 \item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
-stored in the list of information on deleted cases 
+stored in the list of information on deleted cases
 in \code{$info$deleted_cases}.}
 
 \item{inconsistent}{Character. Should the function continue or be stopped if
@@ -38,7 +38,7 @@ to stop the function, type \code{"no"}.}
 \item{reason}{Character. The reason for deletion that should be stored in
 the list of information on deleted cases in \code{$info$deleted_cases}.}
 
-\item{info}{Logical. \code{TRUE} if a brief information on the dropout 
+\item{info}{Logical. \code{TRUE} if a brief information on the dropout
 deletion process should be printed.}
 }
 \value{
@@ -63,14 +63,14 @@ the \code{$info$deleted_cases$full} data frame may contain several entries
 for each person.
 
 - \code{$unique} = A data frame that contains similar information as
-the \code{$full} data frame but with only one row per participant and 
+the \code{$full} data frame but with only one row per participant and
 no information on the data frame in which the dropout was observed.
 
 - \code{$all_end} = A table that provides information on the app and page
-combinations where participants ended the experiment. 
-This table also includes information for participants who did not drop out 
+combinations where participants ended the experiment.
+This table also includes information for participants who did not drop out
 of the experiment.
-The \code{$all_end} table is only shown if an \code{$all_apps_wide} data 
+The \code{$all_end} table is only shown if an \code{$all_apps_wide} data
 frame exists.
 
 - \code{$codes} = A vector containing the participant codes of
@@ -85,7 +85,7 @@ different apps.
 If the columns \code{end_app} and \code{end_page} in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
-by using the argument \code{del_empty = TRUE} when 
+by using the argument \code{del_empty = TRUE} when
 using \code{\link{import_otree}}.
 }
 \description{
@@ -96,10 +96,10 @@ Caution 1: This function does not delete cases from the original CSV and
 Excel files!
 
 Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named \code{participant.code} and 
+custom exports do not have a variable named \code{participant.code} and
 a variable named \code{session.code}!
 
-Caution 3: This function does not delete any data from 
+Caution 3: This function does not delete any data from
 the \code{$Chats} data frame!
 (As the interpretation of chat data depends on how participants engage with
 each other, the data must be deleted with more care than deleting data in

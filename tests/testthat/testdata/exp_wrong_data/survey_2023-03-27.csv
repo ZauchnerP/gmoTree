@@ -1,0 +1,31 @@
+﻿participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.time_started_utc,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.role,player.payoff,player.age,player.gender,player.crt_bat,player.crt_widget,player.crt_lake,group.id_in_subsession,subsession.round_number,session.code,session.label,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,46kxib6w,Person1,0,17,16,survey,Demographics,2023-03-27 14:09:04.640153,1,,,80.0,1,,0.0,22,Male,1,1,47,1,1,7bfqtokx,,,,,0
+2,iay3dhkn,Person2,0,17,16,survey,Demographics,2023-03-27 14:09:05.096409,1,,,220.0,2,,0.0,22,Female,1,1,2,1,1,7bfqtokx,,,,,0
+3,4zhzdmzo,Person4,0,17,16,survey,Demographics,2023-03-27 14:09:06.305467,1,,,144.0,3,,0.0,23,Male,2,4,23,1,1,7bfqtokx,,,,,0
+4,3ttf7yix,Person5,0,17,16,survey,Demographics,2023-03-27 14:09:06.993953,1,,,156.0,4,,0.0,23,Female,2,5,47,1,1,7bfqtokx,,,,,0
+5,2d72mfgh,Person6,0,17,16,survey,Demographics,2023-03-27 14:09:07.592067,1,,,188.0,5,,0.0,33,Female,1,1,33,1,1,7bfqtokx,,,,,0
+6,rvce7958,Person7,0,17,16,survey,Demographics,2023-03-27 14:09:07.984583,1,,,112.0,6,,0.0,45,Male,2,5,77,1,1,7bfqtokx,,,,,0
+7,164r1hs4,Person8,0,13,16,chatapp,chat,2023-03-27 14:09:08.412382,1,,,166.0,7,,0.0,,,,,,1,1,7bfqtokx,,,,,0
+8,lsl3vbij,Person9,0,17,16,survey,Demographics,2023-03-27 14:09:08.942393,1,,,134.0,8,,0.0,44,Male,1,1,2,1,1,7bfqtokx,,,,,0
+9,ktjz5jli,Person10,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:09:09.570515,1,,,0.0,9,,0.0,,,,,,1,1,7bfqtokx,,,,,0
+10,x0mrpuux,,0,0,16,,,,0,,,0.0,10,,0.0,,,,,,1,1,7bfqtokx,,,,,0
+1,xx78b3x0,Person1,0,17,16,survey,Demographics,2023-03-27 14:16:27.265131,1,,,162.0,1,,0.0,33,Female,5,2,47,1,1,vd1h01iv,,,,,0
+2,xmxl46rm,Person2,0,17,16,survey,Demographics,2023-03-27 14:16:27.736155,1,,,138.0,2,,0.0,23,Female,1,1,47,1,1,vd1h01iv,,,,,0
+3,vbhvhozv,Person3,0,3,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.285839,1,,,67.0,3,,0.0,,,,,,1,1,vd1h01iv,,,,,0
+4,2scvem7a,Person4,0,7,16,dictator,ResultsWaitPage,2023-03-27 14:16:28.673152,1,,,33.0,4,,0.0,,,,,,1,1,vd1h01iv,,,,,0
+1,iagvtslv,Person1,0,17,16,survey,Demographics,2023-03-27 14:18:04.608853,1,,,179.0,1,,0.0,23,Male,1,1,47,1,1,t0rog7nz,,,,,0
+2,jxh15obl,Person2,0,15,16,survey,Offer,2023-03-27 14:18:04.992824,1,,,121.0,2,,0.0,,,1,1,47,1,1,t0rog7nz,,,,,0
+3,a7dppel1,Person3,0,17,16,survey,Demographics,2023-03-27 14:18:05.456749,1,,,129.0,3,,0.0,44,Female,4,2,7,1,1,t0rog7nz,,,,,0
+4,wk247s9w,Person4,0,17,16,survey,Demographics,2023-03-27 14:18:08.192504,1,,,171.0,4,,0.0,21,Female,1,23,56,1,1,t0rog7nz,,,,,0
+5,xkobdvuh,Person5,0,17,16,survey,Demographics,2023-03-27 14:18:08.930555,1,,,150.0,5,,0.0,23,Female,1,1,34,1,1,t0rog7nz,,,,,0
+6,1l5kal0r,Person6,0,17,16,survey,Demographics,2023-03-27 14:18:09.598918,1,,,150.0,6,,0.0,23,Male,1,23,34,1,1,t0rog7nz,,,,,0
+1,7wa8kk3d,Person1,0,1,16,dictator,Introduction,2023-03-27 14:21:11.807202,1,,,0.0,1,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+2,znri6myc,Person2,0,1,16,dictator,Introduction,2023-03-27 14:21:12.340856,1,,,0.0,2,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+3,ao9kqvqn,Person3,0,1,16,dictator,Introduction,2023-03-27 14:21:12.797378,1,,,0.0,3,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+4,d4sq7zio,Person4,0,1,16,dictator,Introduction,2023-03-27 14:21:13.126738,1,,,0.0,4,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+5,n38k7owj,,0,0,16,,,,0,,,0.0,5,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+6,ft1whkoy,,0,0,16,,,,0,,,0.0,6,,0.0,,,,,,1,1,l8ecm1uh,,,,,0
+1,7l0hmpcq,Person2,0,17,16,survey,Demographics,2023-03-27 14:22:03.278253,1,,,201.0,1,,0.0,34,Female,1,1,47,1,1,qyu3qg0q,,,,,0
+2,ia9rnfvc,Person3,0,17,16,survey,Demographics,2023-03-27 14:22:03.285265,1,,,99.0,2,,0.0,20,Female,34,1,45,1,1,qyu3qg0q,,,,,0
+1,sik9o0t0,,0,0,16,,,,0,,,0.0,1,,0.0,,,,,,1,1,87k2lr4z,,,,,1
+2,z2mym2bh,,0,0,16,,,,0,,,0.0,2,,0.0,,,,,,1,1,87k2lr4z,,,,,1
