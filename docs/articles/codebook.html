@@ -179,11 +179,9 @@ argument. For example, to generate a codebook for the
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  doc_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  app <span class="op">=</span> <span class="st">"cournot"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">)</span></span></code></pre></div>
+<span>  app <span class="op">=</span> <span class="st">"cournot"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 2</span></span>
 <span><span class="co">##  $ settings:List of 10</span></span>
 <span><span class="co">##   ..$ variable                : num 66</span></span>
@@ -223,35 +221,31 @@ argument. For example, to generate a codebook for the
 <p>The code above returns a list with the app-specific information. You
 can also generate codebooks for multiple apps by specifying them in the
 <code>app</code> argument.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>,</span>
 <span>                     package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  doc_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cournot"</span>, <span class="st">"dictator"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cournot"</span>, <span class="st">"dictator"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 3</span></span>
 <span><span class="co">##  $ settings:List of 10</span></span>
 <span><span class="co">##  $ cournot :List of 4</span></span>
 <span><span class="co">##  $ dictator:List of 3</span></span></code></pre>
 <p>You can also choose all but remove one or more apps. Here is an
 example that removes the app <code>prisoner</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  doc_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  app_rm <span class="op">=</span> <span class="st">"prisoner"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  app_rm <span class="op">=</span> <span class="st">"prisoner"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 15</span></span>
 <span><span class="co">##  $ settings            :List of 10</span></span>
 <span><span class="co">##  $ bargaining          :List of 4</span></span>
@@ -300,18 +294,16 @@ in your codebooks using the following arguments:</p>
 </h3>
 <p>You can sort the apps in the codebook by specifying the
 <code>sort</code> argument. For example:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  doc_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cournot"</span>, <span class="st">"dictator"</span><span class="op">)</span>,</span>
-<span>  sort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dictator"</span>, <span class="st">"cournot"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  sort <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dictator"</span>, <span class="st">"cournot"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 3</span></span>
 <span><span class="co">##  $ settings:List of 10</span></span>
 <span><span class="co">##  $ dictator:List of 3</span></span>
@@ -323,46 +315,40 @@ in your codebooks using the following arguments:</p>
 <p>The <code>gmoTree</code> package can automatically replace references
 to variables in <code>settings.py</code> with the values in the
 <code>settings.py</code> file.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  settings_replace <span class="op">=</span> <span class="st">"global"</span>,</span>
-<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
+<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 66</span></span></code></pre>
 <p>However, you can also choose to not replace them by using
 <code>settings_replace = NULL</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  settings_replace <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
+<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "settings.variable"</span></span></code></pre>
 <p>It is also possible to provide a list of variables that should
 replace the settings variables:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>, <span class="st">"ocode_new"</span><span class="op">)</span>,</span>
 <span>  fsource <span class="op">=</span> <span class="st">"init"</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>  settings_replace <span class="op">=</span> <span class="st">"user"</span>,</span>
 <span>  user_settings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>variable <span class="op">=</span> <span class="st">"someValue"</span><span class="op">)</span>,</span>
-<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "output_dir_input"</span></span>
-<span><span class="co">## getwd()</span></span></code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
+<span>  app <span class="op">=</span> <span class="st">"dictator"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "someValue"</span></span></code></pre>
 </div>
 </div>

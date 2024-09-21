@@ -252,79 +252,66 @@ only found in one column.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">oTree</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>You have stored all_apps_wide globally but also room-specific. This function will import both of them. (Globally, the files are saved as "all_apps_wide_." Room-specific, the files are saved as "All apps - wide-" or "all_apps_wide-.") After importing the data, make sure nothing is there twice! (Advice: You may use delete_duplicate() to remove duplicate rows of all oTree data frames.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	104 obs. of  68 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	41 obs. of  60 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ info         :List of 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	88 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	213 obs. of  30 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	88 obs. of  33 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	38 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ 2chatapp     :'data.frame':	8 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator2    :'data.frame':	24 obs. of  25 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	878 obs. of  18 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	95 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	33 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	123 obs. of  25 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	33 obs. of  29 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	8 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	366 obs. of  10 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	41 obs. of  7 variables:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>You have stored all_apps_wide globally but also room-specific. This function will import both of them. (Globally, the files are saved as "all_apps_wide_." Room-specific, the files are saved as "All apps - wide-" or "all_apps_wide-.") After importing the data, make sure nothing is there twice! (Advice: You may use delete_duplicate() to remove duplicate rows of all oTree data frames.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: 7 app(s) and/or all_apps_wide</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: 5 app(s) and/or all_apps_wide</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Time file(s)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Chat file(s)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 26 case(s) deleted</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 12 case(s) deleted</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Dropouts are deleted from all data frames. Except: The list of oTree data frames includes a chat. As the interpretation of chat data depends on how participants engage with each other, the data must be deleted with more care than deleting data in other apps. Hence, this function does not delete data in this data frame. Please do this manually if necessary!</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Errors when importing these files:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> File: ./exp_wrong_data/dictator_2023-03-27.csv: Error in read.table(file = file, header = header, sep = sep, quote = quote, : more columns than column names</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	62 obs. of  68 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	27 obs. of  60 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ info         :List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	50 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	111 obs. of  30 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	50 obs. of  33 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	16 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ 2chatapp     :'data.frame':	4 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator2    :'data.frame':	12 obs. of  25 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	772 obs. of  18 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	95 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	21 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	75 obs. of  25 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	21 obs. of  29 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	4 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	326 obs. of  10 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	41 obs. of  7 variables:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: 4 app(s) and/or all_apps_wide</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No Time files available</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No chat files available</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	62 obs. of  68 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	27 obs. of  60 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ info         :List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	50 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	111 obs. of  30 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	50 obs. of  33 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	16 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ 2chatapp     :'data.frame':	4 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator2    :'data.frame':	12 obs. of  25 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	772 obs. of  18 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	95 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	21 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	75 obs. of  25 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	21 obs. of  29 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	4 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	326 obs. of  10 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	41 obs. of  7 variables:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: 1 app(s) and/or all_apps_wide</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Time file(s)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Chat file(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	62 obs. of  68 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	27 obs. of  60 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ info         :List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	50 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	111 obs. of  30 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	50 obs. of  33 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	16 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ 2chatapp     :'data.frame':	4 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator2    :'data.frame':	12 obs. of  25 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	772 obs. of  18 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	95 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	21 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	75 obs. of  25 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	21 obs. of  29 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	4 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	326 obs. of  10 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	41 obs. of  7 variables:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: 1 app(s) and/or all_apps_wide</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Time file(s)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Imported: Chat file(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	62 obs. of  68 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ all_apps_wide:'data.frame':	27 obs. of  60 variables:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ info         :List of 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	50 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	111 obs. of  30 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	50 obs. of  33 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	16 obs. of  28 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ 2chatapp     :'data.frame':	4 obs. of  24 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator2    :'data.frame':	12 obs. of  25 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	772 obs. of  18 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	95 obs. of  11 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ chatapp      :'data.frame':	21 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ dictator     :'data.frame':	75 obs. of  25 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ survey       :'data.frame':	21 obs. of  29 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ start        :'data.frame':	4 obs. of  24 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Time         :'data.frame':	326 obs. of  10 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Chats        :'data.frame':	41 obs. of  7 variables:</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

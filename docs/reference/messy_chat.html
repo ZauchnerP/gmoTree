@@ -132,23 +132,16 @@ with the <code>$Chats</code> data frame modified.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show all Chats column names</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">oTree</span><span class="op">$</span><span class="va">Chats</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "session_code"               "id_in_session"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "participant_code"           "channel"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "nickname"                   "body"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "timestamp"                  "participant__session__code"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "participant__session_id"    "participant__id_in_session"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "participant__code"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "session_code"     "id_in_session"    "participant_code" "channel"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "nickname"         "body"             "timestamp"       </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run function</span></span></span>
 <span class="r-in"><span><span class="va">oTree</span> <span class="op">&lt;-</span> <span class="fu">messy_chat</span><span class="op">(</span><span class="va">oTree</span>, combine <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show all Chats column names again</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">oTree</span><span class="op">$</span><span class="va">Chats</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "session_code"               "id_in_session"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "participant_code"           "channel"                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "nickname"                   "body"                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "timestamp"                  "participant__session_id"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [9] "participant__id_in_session"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "session_code"     "id_in_session"    "participant_code" "channel"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "nickname"         "body"             "timestamp"       </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

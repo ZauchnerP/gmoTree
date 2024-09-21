@@ -167,8 +167,8 @@ combined_codebook <- codebook(
   fsource = "init",
   doc_info = FALSE)
 
+# Show the structure of the codebook
 str(combined_codebook, 1)
-
 str(combined_codebook$bargaining$Player, 1)
 
 # Make a codebook with only the "bargaining" app

@@ -130,29 +130,22 @@ called <code>epoch_time_completed</code> and <code>participant_code</code>.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show all Time column names</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">oTree</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "session_code"               "participant_id_in_session" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "participant_code"           "page_index"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "app_name"                   "page_name"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "epoch_time"                 "round_number"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "timeout_happened"           "is_wait_page"              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "epoch_time_completed"       "session_id"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "participant__id_in_session" "participant__code"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "time_stamp"                 "seconds_on_page"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "subsession_pk"              "auto_submitted"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "session_code"              "participant_id_in_session"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "participant_code"          "page_index"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "app_name"                  "page_name"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "epoch_time_completed"      "round_number"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "timeout_happened"          "is_wait_page"             </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run function</span></span></span>
 <span class="r-in"><span><span class="va">oTree</span> <span class="op">&lt;-</span> <span class="fu">messy_time</span><span class="op">(</span><span class="va">oTree</span>, combine <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show all Time column names again</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">oTree</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "session_code"               "participant_id_in_session" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "participant_code"           "page_index"                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "app_name"                   "page_name"                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "round_number"               "timeout_happened"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "is_wait_page"               "epoch_time_completed"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "session_id"                 "participant__id_in_session"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "seconds_on_page"            "subsession_pk"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "auto_submitted"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "session_code"              "participant_id_in_session"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "participant_code"          "page_index"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "app_name"                  "page_name"                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "epoch_time_completed"      "round_number"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "timeout_happened"          "is_wait_page"             </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

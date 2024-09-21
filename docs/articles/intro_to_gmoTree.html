@@ -245,24 +245,16 @@ oTree.</p>
 <span></span>
 <span><span class="co"># Check names of Time data frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">otree_all</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
-<span><span class="co">##  [1] "session_code"               "participant_id_in_session" </span></span>
-<span><span class="co">##  [3] "participant_code"           "page_index"                </span></span>
-<span><span class="co">##  [5] "app_name"                   "page_name"                 </span></span>
-<span><span class="co">##  [7] "epoch_time"                 "round_number"              </span></span>
-<span><span class="co">##  [9] "timeout_happened"           "is_wait_page"              </span></span>
-<span><span class="co">## [11] "epoch_time_completed"       "session_id"                </span></span>
-<span><span class="co">## [13] "participant__id_in_session" "participant__code"         </span></span>
-<span><span class="co">## [15] "time_stamp"                 "seconds_on_page"           </span></span>
-<span><span class="co">## [17] "subsession_pk"              "auto_submitted"</span></span>
+<span><span class="co">##  [1] "session_code"              "participant_id_in_session"</span></span>
+<span><span class="co">##  [3] "participant_code"          "page_index"               </span></span>
+<span><span class="co">##  [5] "app_name"                  "page_name"                </span></span>
+<span><span class="co">##  [7] "epoch_time_completed"      "round_number"             </span></span>
+<span><span class="co">##  [9] "timeout_happened"          "is_wait_page"</span></span>
 <span></span>
 <span><span class="co"># Check names of Chats data frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">otree_all</span><span class="op">$</span><span class="va">Chats</span><span class="op">)</span></span>
-<span><span class="co">##  [1] "session_code"               "id_in_session"             </span></span>
-<span><span class="co">##  [3] "participant_code"           "channel"                   </span></span>
-<span><span class="co">##  [5] "nickname"                   "body"                      </span></span>
-<span><span class="co">##  [7] "timestamp"                  "participant__session__code"</span></span>
-<span><span class="co">##  [9] "participant__session_id"    "participant__id_in_session"</span></span>
-<span><span class="co">## [11] "participant__code"</span></span></code></pre></div>
+<span><span class="co">## [1] "session_code"     "id_in_session"    "participant_code" "channel"         </span></span>
+<span><span class="co">## [5] "nickname"         "body"             "timestamp"</span></span></code></pre></div>
 <p>Now we can run the functions <code><a href="../reference/messy_time.html">messy_time()</a></code> and
 <code><a href="../reference/messy_chat.html">messy_chat()</a></code>. The warning messages are part of the expected
 output, indicating precisely which variables were combined. There is no
@@ -271,34 +263,24 @@ using <code>info = FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otree_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/messy_time.html">messy_time</a></span><span class="op">(</span><span class="va">otree_all</span>,</span>
 <span>                        combine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                        info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Warning in messy_time(otree_all, combine = TRUE, info = TRUE): More than one variable referred to the time stamp. You asked to combine them with the argument combine = TRUE. Variable(s) "epoch_time," and "time_stamp" was/were integrated to variable "epoch_time_completed" and deleted afterward.</span></span>
-<span><span class="co">## More than one variable referred to the participant code. You asked to combine them with the argument combine = TRUE. Variable "participant__code" was integrated into variable "participant_code" The variable "participant__code" was deleted afterward.</span></span></code></pre></div>
+<span>                        info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otree_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/messy_chat.html">messy_chat</a></span><span class="op">(</span><span class="va">otree_all</span>,</span>
 <span>                        combine <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                        info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Warning in messy_chat(otree_all, combine = TRUE, info = TRUE): More than one variable referred to the session code in your Chats data frame. You asked to combine them with the argument combine = TRUE. Therefore, variable "participant__session__code" was integrated into variable "session_code." The variable "participant__session__code" was deleted afterward.</span></span>
-<span><span class="co">## More than one variable referred to the participant code in your Chats data frame. You asked to combine them with the argument combine = TRUE. Therefore, variable "participant__code" was integrated into variable "participant_code" The variable "participant__code" was deleted afterward.</span></span></code></pre></div>
+<span>                        info <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check names of Time data frame again</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">otree_all</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
-<span><span class="co">##  [1] "session_code"               "participant_id_in_session" </span></span>
-<span><span class="co">##  [3] "participant_code"           "page_index"                </span></span>
-<span><span class="co">##  [5] "app_name"                   "page_name"                 </span></span>
-<span><span class="co">##  [7] "round_number"               "timeout_happened"          </span></span>
-<span><span class="co">##  [9] "is_wait_page"               "epoch_time_completed"      </span></span>
-<span><span class="co">## [11] "session_id"                 "participant__id_in_session"</span></span>
-<span><span class="co">## [13] "seconds_on_page"            "subsession_pk"             </span></span>
-<span><span class="co">## [15] "auto_submitted"</span></span>
+<span><span class="co">##  [1] "session_code"              "participant_id_in_session"</span></span>
+<span><span class="co">##  [3] "participant_code"          "page_index"               </span></span>
+<span><span class="co">##  [5] "app_name"                  "page_name"                </span></span>
+<span><span class="co">##  [7] "epoch_time_completed"      "round_number"             </span></span>
+<span><span class="co">##  [9] "timeout_happened"          "is_wait_page"</span></span>
 <span></span>
 <span><span class="co"># Check names of Chats data frame again</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">otree_all</span><span class="op">$</span><span class="va">Chats</span><span class="op">)</span></span>
-<span><span class="co">## [1] "session_code"               "id_in_session"             </span></span>
-<span><span class="co">## [3] "participant_code"           "channel"                   </span></span>
-<span><span class="co">## [5] "nickname"                   "body"                      </span></span>
-<span><span class="co">## [7] "timestamp"                  "participant__session_id"   </span></span>
-<span><span class="co">## [9] "participant__id_in_session"</span></span></code></pre></div>
+<span><span class="co">## [1] "session_code"     "id_in_session"    "participant_code" "channel"         </span></span>
+<span><span class="co">## [5] "nickname"         "body"             "timestamp"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
