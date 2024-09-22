@@ -14,10 +14,9 @@ efficiently managing data obtained from running
 <a href="https://www.otree.org/" target="_blank">oTree</a> experiments.
 It’s particularly valuable when dealing with complex experimental
 designs that span multiple sessions and generate a large number of files
-that need to be integrated.
+that need to be integrated.[^1]
 
-gmoTree is not an official package of the oTree team, but it was created
-to complement the open-source platform.
+[^1]: gmoTree is not an official package of the oTree team but is built to complement the oTree open-source platform.
 
 # Installation
 

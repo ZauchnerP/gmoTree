@@ -15,18 +15,18 @@ vignette: >
 library(gmoTree)
 ```
 
-Handling data from online experiments made with <a href="https://www.otree.org/" target="_blank">oTree</a> can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. gmoTree is not an official package of the oTree team but is built to complement the oTree open-source platform. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
+Handling data from online experiments made with <a href="https://www.otree.org/" target="_blank">oTree</a> can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
 
 # Importing and cleaning up data
 
 ## Background information on the data downloaded by oTree
 
 An oTree experiment is structured around one or more
-modular units called 'apps,' which encompass one or multiple 'pages.'
+modular units called "apps," which encompass one or multiple "pages."
 Data generated from each app can be downloaded individually,
 offering the flexibility to analyze separate components of the experiment.
 For an all-encompassing view of the experiment, the data from all apps
-can also be downloaded in a comprehensive file labeled 'all_apps_wide.'
+can also be downloaded in a comprehensive file labeled "all_apps_wide."
 
 In addition to the aforementioned app data and the cumulative all_apps_wide
 file, oTree generates a file with time stamps for every page. A file
@@ -365,7 +365,7 @@ otree2$all_apps_wide$session_id
 
 ## apptime()
 
-If we need to determine how much time the participants spent on a specific app, the `apptime()` function is a powerful tool that can help. This function calculates summary statistics such as the mean, minimum, and maximum time spent on each page, as well as a detailed list of durations for each participant in the app. The following example shows how much time the participants spent on the app 'survey' in minutes.
+If we need to determine how much time the participants spent on a specific app, the `apptime()` function is a powerful tool that can help. This function calculates summary statistics such as the mean, minimum, and maximum time spent on each page, as well as a detailed list of durations for each participant in the app. The following example shows how much time the participants spent on the app "survey" in minutes.
 
 ```{r apptime, collapse=TRUE}
 # Calculate the time all participants spent on app "survey"
@@ -470,3 +470,6 @@ show_constant(oTree = otree2)
 # Literature
 
 Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88–97. https://doi.org/10.1016/j.jbef.2015.12.001
+
+
+
