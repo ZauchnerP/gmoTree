@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   codebook: codebook.html
   intro_to_gmoTree: intro_to_gmoTree.html
-last_built: 2024-09-22T20:44Z
+last_built: 2024-09-22T21:39Z
 urls:
   reference: https://zauchnerp.github.io/gmoTree/reference
   article: https://zauchnerp.github.io/gmoTree/articles

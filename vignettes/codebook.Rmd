@@ -28,11 +28,11 @@ The output is structured with clear headings:
 - Heading Level 1: Represents each app in the oTree data.
 - Heading Level 2: `Group` and `Player` variables, categorized within each app. Showing the class `Constants` is optional and can be turned off by using the argument `include_cons = FALSE`.
 
-<img src="c3.png" style = "border:1px solid" alt="Headings">
+<img src="c3.PNG" style = "border:1px solid" alt="Headings">
 
 Below is an example showing the structure for the `cournot` app, which includes all `Constants`, `Group`, and `Player` variables. If a class contains no information, the heading will still appear, along with the message "Empty class."
 
-<img src="cournot.png" style = "border:1px solid" alt="App rankaversion Information">
+<img src="cournot.PNG" style = "border:1px solid" alt="App rankaversion Information">
 
 If the default codebook design does not meet your needs, you can create your own by selecting `output = "list"`. This will return all the information in list format, which you can then use in `R Markdown` to design your own custom codebook. Below is an example of a section of the list output for the `cournot` app.
 
@@ -130,7 +130,7 @@ str(cbook, 1)
 
 By setting the `preamb = TRUE` parameter, a predefined description of oTree data is inserted at the beginning of the codebook, explaining how experimental data is stored by oTree.
 
-<img src= "intro.png" style = "border:1px solid" alt="Introduction to oTree data picture">
+<img src= "intro.PNG" style = "border:1px solid" alt="Introduction to oTree data picture">
 
 # Customizing how the codebook is shown
 
@@ -148,7 +148,7 @@ codebook(
 )
 ```
 
-<img src="title.png" style = "border:1px solid" alt="Title picture">
+<img src="title.PNG" style = "border:1px solid" alt="Title picture">
 
 ## Sorting the code
 

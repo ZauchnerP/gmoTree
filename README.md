@@ -32,7 +32,7 @@ To install the development version:
 
 See the page
 <a href="https://zauchnerp.github.io/gmoTree/articles/intro_to_gmoTree.html" target="_blank">Introduction
-to gmoTree</a> for a more detailed overview of the functions. 
+to gmoTree</a> for a more detailed overview of most of the functions. 
 For further details on the package as a whole, visit the 
 <a href="https://zauchnerp.github.io/gmoTree/" target="_blank">
 gmoTree website</a>.
@@ -100,4 +100,4 @@ frame.
 # Before running the experiment
 
 - `show_constant()`: Shows constant variables.
-- `codebook()`: Creates a codebook based on the oTree code.
+- `codebook()`: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">"gmoTree Codebooks."</a>
