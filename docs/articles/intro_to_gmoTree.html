@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0-9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
 Zauchner</h4>
             
             <h4 data-toc-skip class="date">2023-08-24 (updated:
-2024-07-04)</h4>
+2024-09-30)</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ZauchnerP/gmoTree/blob/HEAD/vignettes/intro_to_gmoTree.Rmd" class="external-link"><code>vignettes/intro_to_gmoTree.Rmd</code></a></small>
       <div class="d-none name"><code>intro_to_gmoTree.Rmd</code></div>
@@ -77,12 +77,12 @@ Zauchner</h4>
     
     
 <p>Handling data from online experiments made with
-<a href="https://www.otree.org/" target="_blank" class="external-link">oTree</a> can be
-challenging, especially when dealing with complex experimental designs
-that span multiple sessions and return numerous files that must be
-combined. This is where the gmoTree package comes in. It helps
-streamline the data processing workflow by providing tools designed to
-import, merge, and manage data from oTree experiments.</p>
+<a href="https://www.otree.org/" target="_blank" class="external-link">oTree</a> (Chen et al.,
+2016) can be challenging, especially when dealing with complex
+experimental designs that span multiple sessions and return numerous
+files that must be combined. This is where the gmoTree package comes in.
+It helps streamline the data processing workflow by providing tools
+designed to import, merge, and manage data from oTree experiments.</p>
 <div class="section level2">
 <h2 id="importing-and-cleaning-up-data">Importing and cleaning up data<a class="anchor" aria-label="anchor" href="#importing-and-cleaning-up-data"></a>
 </h2>
@@ -130,13 +130,13 @@ all of the information provided in <code>oTree$info</code>.</p>
 <span></span>
 <span><span class="co"># Import without specifications</span></span>
 <span><span class="co"># Import all oTree files in this folder and its subfolders</span></span>
-<span><span class="va">otree</span> <span class="op">&lt;-</span> <span class="fu">gmoTree</span><span class="fu">::</span><span class="fu"><a href="../reference/import_otree.html">import_otree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></span>
-<span><span class="co">## Warning in gmoTree::import_otree(path = path): You have stored all_apps_wide</span></span>
-<span><span class="co">## globally but also room-specific. This function will import both of them.</span></span>
-<span><span class="co">## (Globally, the files are saved as "all_apps_wide_." Room-specific, the files</span></span>
-<span><span class="co">## are saved as "All apps - wide-" or "all_apps_wide-.") After importing the data,</span></span>
-<span><span class="co">## make sure nothing is there twice! (Advice: You may use delete_duplicate() to</span></span>
-<span><span class="co">## remove duplicate rows of all oTree data frames.</span></span>
+<span><span class="va">otree</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_otree.html">import_otree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></span>
+<span><span class="co">## Warning in import_otree(path = path): You have stored all_apps_wide globally</span></span>
+<span><span class="co">## but also room-specific. This function will import both of them. (Globally, the</span></span>
+<span><span class="co">## files are saved as "all_apps_wide_." Room-specific, the files are saved as "All</span></span>
+<span><span class="co">## apps - wide-" or "all_apps_wide-.") After importing the data, make sure nothing</span></span>
+<span><span class="co">## is there twice! (Advice: You may use delete_duplicate() to remove duplicate</span></span>
+<span><span class="co">## rows of all oTree data frames.</span></span>
 <span></span>
 <span><span class="co"># Check the structure of the oTree list of data frames</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">otree</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -231,15 +231,14 @@ with the argument <code>combine = TRUE</code>.</p>
 oTree.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Import data from different oTree versions</span></span>
-<span><span class="va">otree_all</span> <span class="op">&lt;-</span> <span class="fu">gmoTree</span><span class="fu">::</span><span class="fu"><a href="../reference/import_otree.html">import_otree</a></span><span class="op">(</span></span>
+<span><span class="va">otree_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_otree.html">import_otree</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## Warning in gmoTree::import_otree(path = system.file("extdata", package =</span></span>
-<span><span class="co">## "gmoTree")): You have stored all_apps_wide globally but also room-specific.</span></span>
-<span><span class="co">## This function will import both of them. (Globally, the files are saved as</span></span>
-<span><span class="co">## "all_apps_wide_." Room-specific, the files are saved as "All apps - wide-" or</span></span>
-<span><span class="co">## "all_apps_wide-.") After importing the data, make sure nothing is there twice!</span></span>
-<span><span class="co">## (Advice: You may use delete_duplicate() to remove duplicate rows of all oTree</span></span>
-<span><span class="co">## data frames.</span></span>
+<span><span class="co">## Warning in import_otree(path = system.file("extdata", package = "gmoTree")):</span></span>
+<span><span class="co">## You have stored all_apps_wide globally but also room-specific. This function</span></span>
+<span><span class="co">## will import both of them. (Globally, the files are saved as "all_apps_wide_."</span></span>
+<span><span class="co">## Room-specific, the files are saved as "All apps - wide-" or "all_apps_wide-.")</span></span>
+<span><span class="co">## After importing the data, make sure nothing is there twice! (Advice: You may</span></span>
+<span><span class="co">## use delete_duplicate() to remove duplicate rows of all oTree data frames.</span></span>
 <span></span>
 <span><span class="co"># Check names of Time data frame</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">otree_all</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
@@ -902,9 +901,20 @@ unreasonably large data frame, we should remove the variable
 <span><span class="co">## $Chats</span></span>
 <span><span class="co">## [1] "group_id"     "session_id"   "session_code" "channel"</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="codebook">codebook()<a class="anchor" aria-label="anchor" href="#codebook"></a>
+</h3>
+<p>Thorough documentation of your experiment is essential. For detailed
+guidance on generating a codebook from your oTree code, refer to the
+vignette
+<a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">gmoTree
+Codebooks</a>. I recommend creating this codebook before running the
+experiment, as it can help identify incomplete documentation or other
+potential issues within your code.</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="literature">Literature<a class="anchor" aria-label="anchor" href="#literature"></a>
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Chen, D. L., Schonger, M., &amp; Wickens, C. (2016). oTree—An
 open-source platform for laboratory, online, and field experiments.

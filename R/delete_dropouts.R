@@ -172,7 +172,7 @@ delete_dropouts <- function(oTree,
 
       inconsistent <- readLines(
         con = getOption("mypkg.connection"),
-        n = 1)
+        n = 1L)
     }
 
     # Stop if user requests it

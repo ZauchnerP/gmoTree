@@ -146,7 +146,7 @@ messy_chat <- function(oTree,
     stop(paste(stop_messages, collapse  = "\n"))
   }
 
-  if (info == TRUE && length(warning_messages) > 0L) {
+  if (info && length(warning_messages) > 0L) {
     # This is printed as a warning because other functions catch the message
     warning(paste(warning_messages, collapse = "\n"))
   }

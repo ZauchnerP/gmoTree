@@ -20,7 +20,7 @@ codebook(
   settings_replace = "global",
   user_settings = NULL,
   include_cons = TRUE,
-  preamb = TRUE,
+  preamb = FALSE,
   encoding = "UTF-8",
   title = "Codebook",
   subtitle = "created with gmoTree",

@@ -1,7 +1,7 @@
 ---
 title: "Introduction to gmoTree"
 author: "Patricia F. Zauchner"
-date: "2023-08-24 (updated: 2024-07-04)"
+date: "2023-08-24 (updated: 2024-09-30)"
 output:
   rmarkdown::html_vignette:
     toc: yes
@@ -15,7 +15,7 @@ vignette: >
 library(gmoTree)
 ```
 
-Handling data from online experiments made with <a href="https://www.otree.org/" target="_blank">oTree</a> can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
+Handling data from online experiments made with <a href="https://www.otree.org/" target="_blank">oTree</a> (Chen et al., 2016) can be challenging, especially when dealing with complex experimental designs that span multiple sessions and return numerous files that must be combined. This is where the gmoTree package comes in. It helps streamline the data processing workflow by providing tools designed to import, merge, and manage data from oTree experiments.
 
 # Importing and cleaning up data
 
@@ -59,7 +59,7 @@ path <- system.file("extdata/exp_data_5.4.0", package = "gmoTree")
 
 # Import without specifications
 # Import all oTree files in this folder and its subfolders
-otree <- gmoTree::import_otree(path = path)
+otree <- import_otree(path = path)
 
 # Check the structure of the oTree list of data frames
 str(otree, 1)
@@ -110,7 +110,7 @@ To show an example, let us first load data from different versions of oTree.
 
 ```{r, collapse=TRUE}
 # Import data from different oTree versions
-otree_all <- gmoTree::import_otree(
+otree_all <- import_otree(
   path = system.file("extdata", package = "gmoTree"))
 
 # Check names of Time data frame
@@ -467,7 +467,11 @@ otree2$dictator$constant <- 3
 show_constant(oTree = otree2)
 ```
 
-# Literature
+## codebook()
+
+Thorough documentation of your experiment is essential. For detailed guidance on generating a codebook from your oTree code, refer to the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">gmoTree Codebooks</a>. I recommend creating this codebook before running the experiment, as it can help identify incomplete documentation or other potential issues within your code.
+
+# References
 
 Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88–97. https://doi.org/10.1016/j.jbef.2015.12.001
 

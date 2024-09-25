@@ -3806,9 +3806,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !(anyNA(otree2$dictator$group_id))
         test3 <- !is.null(otree2$dictator$session_id)
-        test4 <- !(any(is.na(otree2$dictator$session_id)))
+        test4 <- !(anyNA(otree2$dictator$session_id))
         testthat::expect_true(all(c(test1, test2, test3, test4)))
 
         # Test if all IDs are there
@@ -3869,9 +3869,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !anyNA(otree2$dictator$group_id)
         test3 <- !is.null(otree2$dictator$session_id)
-        test4 <- !(any(is.na(otree2$dictator$session_id)))
+        test4 <- !anyNA(otree2$dictator$session_id)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
 
         # Test if all IDs are there
@@ -3927,9 +3927,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !anyNA(otree2$dictator$group_id)
         test3 <- !is.null(otree2$dictator$session_id)
-        test4 <- !(any(is.na(otree2$dictator$session_id)))
+        test4 <- !anyNA(otree2$dictator$session_id)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
 
         # Test if all IDs are there
@@ -3984,11 +3984,11 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !anyNA(otree2$dictator$group_id)
         test3 <- !is.null(otree2$dictator$session_id)
-        test4 <- !(any(is.na(otree2$dictator$session_id)))
+        test4 <- !anyNA(otree2$dictator$session_id)
         test5 <- !is.null(otree2$dictator$participant_id)
-        test6 <- !(any(is.na(otree2$dictator$participant_id)))
+        test6 <- !anyNA(otree2$dictator$participant_id)
         testthat::expect_true(all(c(test1, test2, test3, test4, test5, test6)))
 
         # Test if all IDs are there
@@ -4600,11 +4600,11 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !anyNA(otree2$dictator$group_id)
         test3 <- !is.null(otree2$dictator$session_id)
-        test4 <- !(any(is.na(otree2$dictator$session_id)))
+        test4 <- !anyNA(otree2$dictator$session_id)
         test5 <- !is.null(otree2$dictator$participant_id)
-        test6 <- !(any(is.na(otree2$dictator$participant_id)))
+        test6 <- !anyNA(otree2$dictator$participant_id)
         testthat::expect_true(all(c(test1, test2, test3, test4, test5, test6)))
 
         # Test if values are not there twice
@@ -4664,9 +4664,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test if variables are there and not NA
         test1 <- !is.null(otree2$dictator$group_id)
-        test2 <- !(any(is.na(otree2$dictator$group_id)))
+        test2 <- !anyNA(otree2$dictator$group_id)
         test3 <- !is.null(otree2$dictator$participant_id)
-        test4 <- !(any(is.na(otree2$dictator$participant_id)))
+        test4 <- !anyNA(otree2$dictator$participant_id)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
 
         # Test if all IDs are there

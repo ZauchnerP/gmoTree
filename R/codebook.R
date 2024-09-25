@@ -97,7 +97,6 @@
 #' @import knitr
 #' @import pander
 #' @import rmarkdown
-#' @import stats
 #' @import stringr
 #' @import utils
 #' @returns
@@ -209,7 +208,7 @@ codebook <- function(path = ".",
                      settings_replace = "global",
                      user_settings = NULL,
                      include_cons = TRUE,
-                     preamb = TRUE,
+                     preamb = FALSE,
                      encoding = "UTF-8",
                      title = "Codebook",
                      subtitle = "created with gmoTree",
@@ -236,7 +235,7 @@ codebook <- function(path = ".",
       }
 
       # Check if fsource is valid
-      if (length(fsource) > 1) {
+      if (length(fsource) > 1L) {
         stop("Please enter only one fsource!")
       }
 
@@ -250,7 +249,7 @@ codebook <- function(path = ".",
     # Others  ####
     # Check output format
     if (!is.character(output) ||
-        length(output) != 1 ||
+        length(output) != 1L ||
         !(output %in% c("list", "both", "file"))) {
       stop("Output should be \"list\", \"both\", or \"file\"!")
     }
@@ -330,11 +329,11 @@ codebook <- function(path = ".",
 
     # Check if app(s) exist(s)
     if (!is.null(app)) {
-      if (length(app) == 1) {
-        if (!(app %in% basename(dirname(files)))) {  # TODO
+      if (length(app) == 1L) {
+        if (!(app %in% basename(dirname(files)))) {
           stop("App \"", app, "\"is not in oTree code!")
         }
-      } else if (length(app) > 1) {
+      } else if (length(app) > 1L) {
         for (app_i in seq_along(app)) {
 
           if (!(app[app_i] %in% basename(dirname(files)))) {
@@ -351,7 +350,7 @@ codebook <- function(path = ".",
                          "odt_document", "rtf_document", "md_document")
 
     if (is.null(output_format) ||
-        length(output_format) > 1 ||
+        length(output_format) > 1L ||
         !(output_format %in% allowed_formats)) {
       stop("Output format should be one of the following: ",
            paste0(allowed_formats, collapse = ", "), "!")
@@ -392,12 +391,6 @@ codebook <- function(path = ".",
         if (grepl("^\\.", x = output_dir)) {
           stop("Please don't use relative paths in output_dir!")
         }
-
-        # If dir is combined with a relative output_file path
-        # if (!is.null(output_file) && grepl("^\\.", x = output_file)) {
-        #   stop("Please don't use relative paths in output_file ",
-        #        "if output_dir is not empty!")
-        # }  # TODO das ist doch quatsch oder?
 
         # If dir is not there
         if (!dir.exists(output_dir)) {

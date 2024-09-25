@@ -11,7 +11,7 @@ status](https://www.r-pkg.org/badges/version/gmoTree)](https://cran.r-project.or
 
 gmoTree is an R package developed for importing, merging, and
 efficiently managing data obtained from running
-<a href="https://www.otree.org/" target="_blank">oTree</a> experiments.
+<a href="https://www.otree.org/" target="_blank">oTree</a> (Chen et al., 2016) experiments.
 It’s particularly valuable when dealing with complex experimental
 designs that span multiple sessions and generate a large number of files
 that need to be integrated.[^1]
@@ -89,7 +89,7 @@ apps.
 
 - `pagesec()`: Calculates the time spent on each page.
 
-# Transferring variables between the apps
+## Transferring variables between the apps
 
 - `assignv()`: Copies a variable from the all_apps_wide data frame to the data frames
 of all other apps.
@@ -97,7 +97,12 @@ of all other apps.
 - `assignv_to_aaw()`: Copies a variable from one of your data frames to the `all_apps_wide` data
 frame.
 
-# Before running the experiment
+## Before running the experiment
 
 - `show_constant()`: Shows constant variables.
 - `codebook()`: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">"gmoTree Codebooks."</a>
+
+
+# References
+
+Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88–97. https://doi.org/10.1016/j.jbef.2015.12.001

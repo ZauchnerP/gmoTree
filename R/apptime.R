@@ -743,7 +743,7 @@ apptime <- function(oTree,
                               message_vector,
                               firststageproblemparticipants,
                               warningparticipants) {
-    if (nrow(singledurations) > 0) {
+    if (nrow(singledurations) > 0L) {
       output[[appname]][["mean_duration"]] <-
         ifelse(rounded,
                round(
@@ -787,7 +787,7 @@ apptime <- function(oTree,
 
       output[[appname]]$first_app_one_page <- firststageproblemparticipants
 
-      if (length(warningparticipants) > 0) {
+      if (length(warningparticipants) > 0L) {
         output[[appname]]$warnings <- unique(warningparticipants)
       }
     } # Else:
@@ -802,7 +802,7 @@ apptime <- function(oTree,
                                            firststageproblemparticipants,
                                            warningparticipants) {
     # Output for all participants or several
-    if (length(apps) == 1) {
+    if (length(apps) == 1L) {
       return(output_oneapp(
         singledurations,
         message_vector,

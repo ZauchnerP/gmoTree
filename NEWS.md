@@ -17,7 +17,7 @@
 * Minor changes in tests.R
 * Minor changes in website, new logo
 
-# gmoTree 1.0.1 (available also on CRAN)
+# gmoTree 1.0.1
 
 * Minor changes in examples and DESCRIPTION file. 
 * Changes in functions: NONE

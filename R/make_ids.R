@@ -123,10 +123,10 @@ make_ids <- function(oTree,
 
     } else if (from_app == "all_apps_wide") {
       if (is.null(oTree[[from_app]][[from_var]])) {
-        stop(paste0("from_var \"",
+        stop("from_var \"",
                     from_var,
                     "\" not found. ",
-                    "Please select another one."))
+                    "Please select another one.")
       }
     }
 
@@ -181,19 +181,19 @@ make_ids <- function(oTree,
   }
 
   # Check for NAs in the relevant variables
-  if (any(is.na(oTree[[from_app]]$participant.code))) {
+  if (anyNA(oTree[[from_app]]$participant.code)) {
     stop("There are NAs in your participant.code variable in your ",
                 "from_app! Clean your data or assign ",
                 "participant.code values by hand ",
                 "before running this function!")
   }
 
-  if (any(is.na(oTree$Chats$participant_code))) {
+  if (anyNA(oTree$Chats$participant_code)) {
     stop("There are NAs in your participant_code variable in ",
          "the oTree$Chats data frame.")
   }
 
-  if (any(is.na(oTree$Chats$participant__code))) {
+  if (anyNA(oTree$Chats$participant__code)) {
     stop("There are NAs in your participant__code variable in ",
          "the oTree$Chats data frame.")
   }
@@ -400,7 +400,7 @@ make_ids <- function(oTree,
 
     if (length(
       unique(oTree[[from_app]][, grep("group.id_in_subsession",
-                                      colnames(oTree[[from_app]]))])) == 1) {
+                                      colnames(oTree[[from_app]]))])) == 1L) {
 
       my_warnings <<- c(my_warnings, paste0(
         "The group variable values are constant. ",
@@ -549,7 +549,7 @@ make_ids <- function(oTree,
     } else {
       # This part is usually called if session.code is NA
       # This does not happen with cleaned data
-      if (any(is.na(oTree[[from_app]]$session.code))) {
+      if (anyNA(oTree[[from_app]]$session.code)) {
         my_warnings <-
           c(my_warnings,
             (paste0("At least one of your session.codes in your from_app is ",
@@ -671,7 +671,7 @@ make_ids <- function(oTree,
           !(oTree[[i]]$participant.code %in%
               oTree[[from_app]]$participant.code)])
 
-        if (length(participants_more) > 0) {
+        if (length(participants_more) > 0L) {
           my_warnings <- c(my_warnings,
                            paste0("Data frame \"",
                                   names(oTree)[[i]],
@@ -740,7 +740,7 @@ make_ids <- function(oTree,
         j <- j + 1
       }
       oTree[[i]] <-
-        oTree[[i]][ , c(c((ncol(oTree[[i]]) - j):ncol(oTree[[i]])),
+        oTree[[i]][, c(c((ncol(oTree[[i]]) - j):ncol(oTree[[i]])),
                         c(1L:(ncol(oTree[[i]]) - j - 1L)))
       ] # Again -1 because otherwise a number is there twice
 

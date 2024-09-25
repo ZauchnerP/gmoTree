@@ -1,9 +1,9 @@
 if (rlang::is_installed(c("withr", "testthat"))) {
-
+  
+    print("---- start codebook tests -----")
+  
     testthat::test_that("Codebook - double brackets", {
       # Here we see that if a value starts and ends with brackets, it makes no difference
-      # TODO 
-      
       testthat::expect_warning(
       cbook <- codebook(
         path = testthat::test_path("testdata", "ocode_z2"),
@@ -12,8 +12,6 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         output = "list"))
 
       testthat::expect_true(cbook$rankaversion$Player$acceptance$choices$value[1] == "(Yes)")
-      
-      
     })
 
     testthat::test_that("Codebook (e) - wrong output", {

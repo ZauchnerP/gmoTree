@@ -1,7 +1,7 @@
 ---
 title: "gmoTree Codebooks"
 author: "Patricia F. Zauchner"
-date: "2023-09-21 (updated: 2024-09-22)"
+date: "2023-09-21 (updated: 2024-09-30)"
 output:
   rmarkdown::html_vignette:
     toc: yes
@@ -17,9 +17,19 @@ library(gmoTree)
 
 # Overview
 
-The `gmoTree` package provides tools for generating codebooks based on data from the <a href="https://www.otree.org/" target="_blank">oTree</a> framework with the function `codebook()`. This vignette introduces you to the key features and functionalities, including how to adjust titles, work with oTree data, and customize output formats for your codebooks.
+The `gmoTree` package provides tools for generating codebooks based on data from the <a href="https://www.otree.org/" target="_blank">oTree</a> (Chen et al., 2016) framework with the function `codebook()`. This vignette introduces you to the key features and functionalities, including how to adjust titles, work with oTree data, and customize output formats for your codebooks.
 
-Disclaimer: This code has been tested with both custom implementations and official oTree sample codes.^[The oTree sample codes can be accessed when <a href="https://otree.readthedocs.io/en/latest/install-nostudio.html#install-nostudio" target="_blank">setting up an oTree project</a>. All examples presented in this vignette are based on the official oTree sample code which were slightly modified to meet this Vignette's needs.] However, due to the complexity of oTree setups, it may not address all variations. Please review your output carefully, and feel free to open a <a href="https://github.com/ZauchnerP/gmoTree/issues" target = "_blank">GitHub issue</a> if you encounter any problems.
+Disclaimer: This code has been tested with both custom implementations and official oTree sample codes.^[The oTree sample codes can be accessed when <a href="https://otree.readthedocs.io/en/latest/install-nostudio.html#install-nostudio" target="_blank">setting up an oTree project</a> (Chen et al., 2016). All examples presented in this vignette are based on the official oTree sample code, with minor modifications to meet the needs of this package.] However, due to the complexity of oTree setups, it may not address all variations. Please review your output carefully, and feel free to open a <a href="https://github.com/ZauchnerP/gmoTree/issues" target = "_blank">GitHub issue</a> if you encounter any problems.
+
+# Running the code
+
+In its simplest form, the function requires only the path to your oTree code. The code reads the contents of your oTree file, saves a file containing your codebook in your working directory, and returns a list named `cbook`, which contains all the information in a list format.
+
+```
+cbook <- codebook(system.file(path = "extdata/ocode_new", 
+                              package = "gmoTree"))
+```
+
 
 # Codebook structure and output
 
@@ -28,57 +38,21 @@ The output is structured with clear headings:
 - Heading Level 1: Represents each app in the oTree data.
 - Heading Level 2: `Group` and `Player` variables, categorized within each app. Showing the class `Constants` is optional and can be turned off by using the argument `include_cons = FALSE`.
 
-<img src= "structure.png" style = "border:1px solid" alt="Headings picture">
+<img src= "structure.png" style = "border:1px solid" alt="Image showing an example of a heading structure of a PDF file with Level 1 and Level 2 headings">
 
-Below is an example showing the structure for the `cournot` app, which includes all `Constants`, `Group`, and `Player` variables. If a class contains no information, the heading will still appear, along with the message "Empty class."
+Below is an example showing the output for the `cournot` app, which includes all `Constants`, `Group`, and `Player` variables. If a class contains no information, the heading will still appear, along with the message "Empty class."
 
-<img src="app.png" style = "border:1px solid" alt="App rankaversion information picture">
+<img src="app.png" style = "border:1px solid" alt="Image showing the rankaversion app information in the PDF output">
 
-If the default codebook design does not meet your needs, you can create your own by selecting `output = "list"`. This will return all the information in list format, which you can then use in `R Markdown` to design your own custom codebook. Below is an example of a section of the list output for the `cournot` app.
+If the default codebook design does not meet your requirements, you can either reference the previously created `cbook`  list or bypass file creation by setting `output = "list"`. This will return all the information only in list format, which you can then use in `R Markdown` to design your own custom codebook. Below is an example of a section of the list output for the `cournot` app. (The argument `doc_info = FALSE` is used to omit messages about missing variable documentation.)
 
-```
-> cbook <- gmoTree::codebook(
-+   path = file.path("C:/Users/username/Nextcloud/ocode_new"),
-+   fsource = "init",
-+   output = "list",
-+   doc_info = FALSE)
-> cbook$cournot
-$doc
-[1] "In Cournot competition, firms simultaneously decide the units of products to manufacture. The unit selling price depends on the total units produced. In this implementation, there are 2 firms competing for 1 period."
 
-$Constants
-$Constants$NAME_IN_URL
-[1] "cournot"
-
-$Constants$PLAYERS_PER_GROUP
-[1] 2
-
-$Constants$NUM_ROUNDS
-[1] 1
-
-$Constants$TOTAL_CAPACITY
-[1] 60
-
-$Constants$MAX_UNITS_PER_PLAYER
-[1] "int(60 / 2)"
-
-$Group
-$Group$unit_price
-$Group$unit_price$noargs
-[1] "TRUE"
-
-$Group$unit_price$field
-[1] "CurrencyField"
-
-$Group$total_units
-$Group$total_units$noargs
-[1] "FALSE"
-
-$Group$total_units$doc
-[1] "Total units produced by all players"
-
-$Group$total_units$field
-[1] "IntegerField"
+```{r}
+cbook <- codebook(path = system.file(path = "extdata/ocode_new", 
+                                     package = "gmoTree"), 
+                  output = "list", 
+                  doc_info = FALSE)
+print(cbook$cournot)
 ```
 
 # Choosing what to show
@@ -132,6 +106,7 @@ By setting the `preamb = TRUE` parameter, a predefined description of oTree data
 
 <img src= "otreedata.png" style = "border:1px solid" alt="Introduction to oTree data picture">
 
+
 # Customizing how the codebook is shown
 
 ## Customizing the codebook titles and metadata
@@ -148,7 +123,8 @@ codebook(
 )
 ```
 
-<img src="titles.png" style = "border:1px solid" alt="Title picture">
+<img src="titles.png" style = "border:1px solid" alt="Image showing the title section in a PDF output">
+
 
 ## Sorting the code
 
@@ -198,7 +174,7 @@ It is also possible to provide a list of variables that should replace the setti
 
 ```{r user settings}
 cbook <- codebook(
-  path = file.path(system.file("extdata", package = "gmoTree"), "ocode_new"),
+  path = system.file("extdata/ocode_new", package = "gmoTree"),
   fsource = "init",
   output = "list",
   settings_replace = "user",
@@ -264,6 +240,6 @@ codebook(
 
 This vignette covers how to customize the codebook generated by the `codebook()` function, including options for selecting content, formatting its presentation, and exporting it in various formats. These tools enable the creation of comprehensive and tailored documentation for your experimental data.
 
-# Literature
+# References
 
 Chen, D. L., Schonger, M., & Wickens, C. (2016). oTree—An open-source platform for laboratory, online, and field experiments. Journal of Behavioral and Experimental Finance, 9, 88–97. https://doi.org/10.1016/j.jbef.2015.12.001
