@@ -9,16 +9,19 @@ author = 'Patricia Zauchner'
 
 doc = """
 Redistribution Game. Third party dictator game varying needs and ranks.
+Major changes to test gmoTree package.
 """
 
 
 class Constants(BaseConstants):
     name_in_url = 'part_1'
     errorvariable = settings.error
+    error2 = settings.error2
     players_per_group = None
     MinutesForSurvey = settings.MinutesForSurvey  # Part 2
     timer123 = settings.timer123
     min_argumentsize = 25
+
     max_argumentsize = 300
     # <editor-fold desc="Payoff Structure">
     # Payoff Structure
@@ -33,29 +36,43 @@ class Constants(BaseConstants):
 
     maxtrickfalse = 2
     # <editor-fold desc="Choices">
+    fakevar1 = 1
+    fakevar2 = 1
+    fakevar3 = 1
+    fakevar4 = 1
+    fakevar5 = 1
+    fakevar6 = 1
+    fakevar7 = 1
+    fakevar8 = 1
+    fakevar9 = 1
+    fakevar11 = 1
+    fakevar12 = 1
+    fakevar13 = 1
+    fakevar14 = 1
+    
     choices = [
         # Order: Endowment Richer, Endowment Poorer, Transfer, Threshold,f Type, Result Richer, Result Poorer
         # RR = rank reversal, noRR = no rank reversal
-        [4, 1, 2, 0.5, "RR_needSat", 2, 3],
-        [5, 1, 3, 0.5, "RR_needSat", 2, 4],
-        [5, 2, 2, 1.5, "RR_needSat", 3, 4],
-        [6, 2, 3, 1.5, "RR_needSat", 3, 5],
-        [6, 3, 2, 2.5, "RR_needSat", 4, 5],
-        [7, 1, 4, 0.5, "RR_needSat", 3, 5],
-        [7, 3, 3, 2.5, "RR_needSat", 4, 6],
-        [7, 4, 2, 3.5, "RR_needSat", 5, 6],
-        [8, 1, 4, 0.5, "RR_needSat", 4, 5],
-        [8, 2, 4, 1.5, "RR_needSat", 4, 6],
-        [8, 4, 3, 3.5, "RR_needSat", 5, 7],
-        [8, 5, 2, 4.5, "RR_needSat", 6, 7],
-        [9, 2, 4, 1.5, "RR_needSat", 5, 6],
-        [9, 5, 3, 4.5, "RR_needSat", 6, 8],
-        [9, 6, 2, 5.5, "RR_needSat", 7, 8],
-        [10, 1, 5, 0.5, "RR_needSat", 5, 6],
-        [10, 3, 4, 2.5, "RR_needSat", 6, 7],
-        [10, 4, 4, 3.5, "RR_needSat", 6, 8],
-        [10, 6, 3, 5.5, "RR_needSat", 7, 9],
-        [11, 2, 5, 1.5, "RR_needSat", 6, 7],
+        # [4, 1, 2, 0.5, "RR_needSat", 2, 3],
+        # [5, 1, 3, 0.5, "RR_needSat", 2, 4],
+        # [5, 2, 2, 1.5, "RR_needSat", 3, 4],
+        # [6, 2, 3, 1.5, "RR_needSat", 3, 5],
+        # [6, 3, 2, 2.5, "RR_needSat", 4, 5],
+        # [7, 1, 4, 0.5, "RR_needSat", 3, 5],
+        # [7, 3, 3, 2.5, "RR_needSat", 4, 6],
+        # [7, 4, 2, 3.5, "RR_needSat", 5, 6],
+        # [8, 1, 4, 0.5, "RR_needSat", 4, 5],
+        # [8, 2, 4, 1.5, "RR_needSat", 4, 6],
+        # [8, 4, 3, 3.5, "RR_needSat", 5, 7],
+        # [8, 5, 2, 4.5, "RR_needSat", 6, 7],
+        # [9, 2, 4, 1.5, "RR_needSat", 5, 6],
+        # [9, 5, 3, 4.5, "RR_needSat", 6, 8],
+        # [9, 6, 2, 5.5, "RR_needSat", 7, 8],
+        # [10, 1, 5, 0.5, "RR_needSat", 5, 6],
+        # [10, 3, 4, 2.5, "RR_needSat", 6, 7],
+        # [10, 4, 4, 3.5, "RR_needSat", 6, 8],
+        # [10, 6, 3, 5.5, "RR_needSat", 7, 9],
+        # [11, 2, 5, 1.5, "RR_needSat", 6, 7],
         # Type 2 no needs
         [4, 1, 1, 0.5, "noRR_needSat", 3, 2],
         [5, 1, 1, 0.5, "noRR_needSat", 4, 2],
@@ -123,20 +140,83 @@ class Constants(BaseConstants):
         # Order: Endowment Richer, Endowment Poorer, Transfer, Threshold, Type, Result Richer, Result Poorer
         [7, 4, 2, 4.5, "Trick1", None, None],
         [10, 4, 2, 4.5, "Trick2", None, None],
-        [4, 1, 1, 1.5, "Trick1", None, None],
+        [4, 1+10, 1, 1.5, "Trick1", None, None],
         [5, 2, 2, 1.5, "Trick2", None, None]
     ]
     num_choices = len(choices)  # All possible choices
+    max_choices = max(choices)
+    min_choices = min(choices)
     # </editor-fold>
     # print("choices per type 1: ", num_choicesperrr, " and choices per type 2: ",num_choicespernorr)
 
     num_choicetypes = 4  # Maximum value. Correct value is defined in subsession.
+    P1_iTokenAddVoteFor_6 = 999
+    P1_GesamtZusatzToken = 14
+    
     num_choicespertype = 20  # Maximum value = 20. Correct value is defined in subsession.
     num_trickquestions = 4  # Number of attention checks
     num_choicetotal = num_choicetypes * num_choicespertype + num_trickquestions
     num_rounds = num_choicetotal  # Number of questions. Must be a multiple of 4 + trick questions
 
     assignmentdf = pd.read_csv("rankend/assignment.csv")
+    
+    onelevelvectorl = ["a", "b", 3]
+    onelevelvectorl2 = ["a", "b", 3, "asdfadsf", "adsfadsfasdf", "00asasdf", 2342, "wqerwerqewr"]
+    onelevelvectorn = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+
+    spaceaftercomma = [   
+        [2004, 43, 5],  
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]]
+
+
+    commentaftercomma = [   
+        [2004, 43, 5],   # Comment
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]]
+
+
+    spacebeforebracket = [   
+        [2004, 43, 5],
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]]
+
+
+    spaceafterbracket = [
+        [69, 43, 5],
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]   ]
+
+    commentafterbracket = [  # Comment
+        [69, 43, 5],
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]]
+
+    samerowbracke = [
+        [69, 43, 5],
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]]
+
+    nextrowbracket = [
+        [69, 43, 5],
+        [81, 91, 81],
+        [18, 63, 67],
+        [45, 56, 75],
+        [3, 84, 77]
+    ]
+
 
 
 class Subsession(BaseSubsession):
@@ -162,8 +242,6 @@ class Subsession(BaseSubsession):
                 random.shuffle(listofpart)
 
                 # Select data and set it to a variable
-                # TODO: Caution. If there is a warning message "single positional indexer is out-of-bounds",
-                # TODO: then the number of participants is higher than the cases in the csv!
                 for p in self.get_players():
 
                     # <editor-fold desc="Player AC assigned values">
@@ -256,6 +334,19 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    leftright = models.IntegerField(
+        doc= "   ",
+        label="  ",
+        choices=[
+            [1, "Left"],
+            [2, ""],
+            [3, ""],
+            [4, ""],
+            [5, "Right"]
+        ],
+        widget=widgets.RadioSelect,
+    )
+    
     # User-Entries:
     acceptance = models.IntegerField(
         doc="Did the dictator accept the suggested transfer?",
@@ -278,6 +369,12 @@ class Player(BasePlayer):
             [0, "B is the richer person"],
         ],
     )
+    
+    testempty = models.IntegerField(
+        doc="""This is an example doc""",
+    )
+    
+    
     is_trick = models.IntegerField(
         doc="""Is this question a trick question?""",
 
@@ -286,6 +383,7 @@ class Player(BasePlayer):
             [1, "Answer Yes trick"],
             [2, "Answer No trick"]]
     )
+
 
     endowmentA = models.FloatField(doc="The initial endowment of Person A")
     endowmentB = models.FloatField(doc="The initial endowment of the poorer person")

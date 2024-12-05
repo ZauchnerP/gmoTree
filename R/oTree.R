@@ -1,4 +1,4 @@
-#' Sample experiment data
+#' Sample experimental data
 #'
 #' @docType data
 #' @format A list of data frames created by import_otree().

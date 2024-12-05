@@ -14,6 +14,7 @@ Example code just for testing gmoTree.
 class Constants(BaseConstants):
     Testnumber = settings.Testnumber
     StartToken = settings.StartToken
+    TestVector = [1,2+8,3,4,5]
     StartToken2 = settings.StartToken * 2
     StartToken3 = StartToken * 10
     Something = settings.Something

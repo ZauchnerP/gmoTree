@@ -101,7 +101,6 @@ class Task(ExtendedPage):
         # </editor-fold>
 
 
-# Todo: Delete html and all of it at last
 class TaskForPresentationReasons(Page):
 
     # Type 1

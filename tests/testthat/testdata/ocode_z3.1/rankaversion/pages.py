@@ -100,8 +100,6 @@ class Task(ExtendedPage):
                 self.participant.vars["needs_threshold_metB"] = 0
         # </editor-fold>
 
-
-# Todo: Delete html and all of it at last
 class TaskForPresentationReasons(Page):
 
     # Type 1

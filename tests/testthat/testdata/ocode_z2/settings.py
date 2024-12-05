@@ -22,6 +22,10 @@ min_payoffPart1_ab = "1.00"  # Token
 max_payoffPart1_ab = "11.00"  # Token
 MainCurrencyForSurvey = 3  # Euro or Dollar for participating in the survey
 payoff_survey = "{:.2f}".format(MainCurrencyForSurvey*ExchangeToken)  # Token
+TestVector2 = [99,66,33]
+TestVectorC2 = ["d", "e", 4]
+error2 = "Error2insettings"
+
 # </editor-fold>
 
 LANGUAGE_CODE = 'en'  # ISO-639 code # for example: de, fr, ja, ko, zh-hans
@@ -29,7 +33,7 @@ USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # ADMIN_PASSWORD = "admin"
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')  # Todo: Change Password
+ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')  
 
 
 SESSION_CONFIG_DEFAULTS = {

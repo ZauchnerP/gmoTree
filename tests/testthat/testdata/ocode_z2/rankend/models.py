@@ -22,6 +22,12 @@ class Constants(BaseConstants):
     num_rounds = 1
     min_argumentsize = 25
     max_argumentsize = 300
+    thisisaveryveryveryverylongvariablename = 10
+    firstlastbr = "(firstlastbracketexample)"
+    emptylist = []
+    emptylist2 = [
+
+    ]
 
     # Payoff Structure
     payoffPart1_c = settings.payoffPart1_c  # Token
@@ -32,6 +38,12 @@ class Constants(BaseConstants):
     # </editor-fold>
 
     assignmentdf = pd.read_csv("rankend/assignment.csv")
+    Test1 = 1000
+    TestVector = [1,2+8,3,4,5]
+    TestVector2 = settings.TestVector2
+    TestVectorC = ["a", "b", 6]
+    TestVectorC2 = settings.TestVectorC2
+    Test2 = 2000
 
 
 class Subsession(BaseSubsession):
@@ -71,6 +83,10 @@ class Player(BasePlayer):
         doc="Player A and B: Needs threshold",
 
     )
+    thisisaveryveryvery_verylong_variable_name = models.IntegerField(
+      doc = "Testtesttest"
+    )
+
     ab_needs_met = models.IntegerField(
         doc="Player A and B: Did the person reach the needs threshold?",
         choices=[

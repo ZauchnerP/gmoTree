@@ -118,7 +118,7 @@ pagesec <- function(
   # Translate to minutes
   if (minutes) {
 
-    oTree$Time$minutes_on_page <- oTree$Time$seconds_on_page2 / 60
+    oTree$Time$minutes_on_page <- oTree$Time$seconds_on_page2 / 60L
 
     if (rounded) {
       oTree$Time$minutes_on_page <- round(oTree$Time$minutes_on_page,

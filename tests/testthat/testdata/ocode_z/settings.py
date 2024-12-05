@@ -29,7 +29,7 @@ USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # ADMIN_PASSWORD = "admin"
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')  # Todo: Change Password
+ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')  
 
 
 SESSION_CONFIG_DEFAULTS = {

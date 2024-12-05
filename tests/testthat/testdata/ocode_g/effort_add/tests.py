@@ -9,9 +9,6 @@ class PlayerBot(Bot):
             # Intro
             time.sleep(2)  # Sleep for x seconds
             yield Intro
-
-            # TODO: Find way to properly test live-pages with bots
-
             # Task
             # while not self.player.final_round:
             # if self.round_number == 1:

@@ -113,8 +113,7 @@ class Player(BasePlayer):
 
     last_answer_correct = models.BooleanField(
         doc="Did the user answer the last question correctly?",
-        initial=False)  # TODO: Die Variable scheint in den Daten nicht auf.
-
+        initial=False) 
 
 class Answer(ExtraModel):
     """ Creates an extra dataframe output. Is called with custom_export """

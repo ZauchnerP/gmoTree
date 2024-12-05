@@ -293,15 +293,14 @@ extime <- function(
 
   # Seconds  ####
   if (seconds) {
-    divsec <- 1
+    divsec <- 1L
   } else {
-    divsec <- 60 # Divide seconds by 60 to get minutes
+    divsec <- 60L # Divide seconds by 60 to get minutes
   }
 
   # Transform plabel to pcode identifier  ####
   if (!is.null(plabel)) {
-    if (length(unique(oTree$all_apps_wide$participant.label)) ==
-        length(oTree$all_apps_wide$participant.label)) {
+    if (anyDuplicated(oTree$all_apps_wide$participant.label) == 0L) {
 
       pcode <- oTree$all_apps_wide$participant.code[
         oTree$all_apps_wide$participant.label == plabel]

@@ -34,8 +34,12 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
-
+    gender = models.IntegerField(doc = "Gender")
+    print("test this")
+    
+    chandler = models.IntegerField(doc = "Chandler")
+    
+    print("test another thing")
 
 # FUNCTIONS
 def set_payoffs(group: Group):

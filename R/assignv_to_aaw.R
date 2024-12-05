@@ -115,9 +115,9 @@ assignv_to_aaw <- function(oTree,
 
     # Make indices
     indices <- c(
-      1:which(names(oTree$all_apps_wide) == resafter),
+      1L:which(names(oTree$all_apps_wide) == resafter),
       ncol(oTree$all_apps_wide),  # Put the new variable here
-      (which(names(oTree$all_apps_wide) == resafter) + 1):
+      (which(names(oTree$all_apps_wide) == resafter) + 1L):
         (ncol(oTree$all_apps_wide) - 1L)
     )
 

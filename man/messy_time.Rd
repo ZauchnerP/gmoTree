@@ -17,8 +17,8 @@ messy_time(
 by \code{\link{import_otree}}.}
 
 \item{combine}{Logical. \code{TRUE} if all variables referring to epoch time
-should be merged and/or all variables referring to participant code should be merged
-in case data of several versions of oTree are used.}
+should be merged and/or all variables referring to participant code
+should be merged in case data of several versions of oTree are used.}
 
 \item{epoch_time}{Logical. \code{TRUE} if all variables referring to the time
 stamp should be checked and merged. Only works if \code{combine = TRUE}.}

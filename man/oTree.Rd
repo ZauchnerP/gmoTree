@@ -3,7 +3,7 @@
 \docType{data}
 \name{oTree}
 \alias{oTree}
-\title{Sample experiment data}
+\title{Sample experimental data}
 \format{
 A list of data frames created by import_otree().
 }
@@ -17,6 +17,6 @@ In detail, the following apps were used:
 oTree
 }
 \description{
-Sample experiment data
+Sample experimental data
 }
 \keyword{datasets}

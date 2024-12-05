@@ -3,6 +3,7 @@ from otree import settings
 # This code was adjusted to be used by gmotree to make it a bit more messy
 
 class C(BaseConstants):
+    print("test that")
     NAME_IN_URL = 'dictator'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 1
@@ -29,12 +30,12 @@ class Group(BaseGroup):
         doc="""Amount dictator decided to keep for himself""",
         min=0,
         max=C.ENDOWMENT,
-        label="I will keep",
+        label="I will keep"
     )
 
 
 class Player(BasePlayer):
-    pass
+    gender = models.IntegerField()
 
 
 # FUNCTIONS

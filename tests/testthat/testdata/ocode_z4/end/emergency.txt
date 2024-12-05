@@ -1,0 +1,59 @@
+
+
+
+class Player(BasePlayer):
+    ConsumptionFinal = models.FloatField(
+        doc="Final consumption \=  with TokenAdd as voted for by group as alternative distribution")
+    
+    ConsumptionFinal2 = models.FloatField(
+        doc="Final consumption with TokenAdd as voted for by group as alternative distribution")
+    
+    
+    completionCode = models.StringField(
+        doc="Completion Code for MTurk. Has no role for the experiment and will not be validated unless there are "
+            "legal problems with the participants"
+    )
+
+    # With spaces at end
+    completionCodespaces = models.StringField(
+        doc="Completion Code for MTurk. Has no role for the experiment and will not be validated unless there are "   
+            "legal problems with the participants"
+    )
+
+    Acc_DistributionChange = models.IntegerField(
+        choices=[
+            [1, 'Ich hätte mich dennoch für Verfahren >' +
+                C.TOKEN_ADD_1D_NAME + '< entschieden.'],
+            [2, 'Ich hätte mich für das alternative Verfahren >' +
+                C.TOKEN_ADD_2D_NAME + '<  entschieden.'],
+            [3, 'Ich hätte mich für das alternative Verfahren >' +
+                C.TOKEN_ADD_2D_NAME + '< entschieden.']
+        ],
+        doc="Former variable name: AnerkennungPrivat",
+
+        widget=widgets.RadioSelect)
+
+    Acc_DistributionChange2 = models.IntegerField(
+        choices=[
+            [1, "Ich hätte mich dennoch für Verfahren >" +
+                C.TOKEN_ADD_1D_NAME + "< entschieden."],
+            [2, "Ich hätte mich für das alternative Verfahren >" +
+                C.TOKEN_ADD_2D_NAME + "<  entschieden."],
+            [3, "Ich hätte mich für das alternative Verfahren >" +
+                C.TOKEN_ADD_2D_NAME + "< entschieden."]
+        ],
+        doc='Former variable name: AnerkennungPrivat',
+
+        widget=widgets.RadioSelect)
+
+    hierarchy_of_principlesArg = models.TextField(
+        doc=""" Argument for Rejection """,
+        label="",
+        blank=True
+    )
+
+    hierarchy_of_principlesArg2 = models.TextField(
+        doc=''' Argument for Rejection ''',
+        label="",
+        blank=True
+    )

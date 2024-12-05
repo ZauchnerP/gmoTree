@@ -164,8 +164,6 @@ class Subsession(BaseSubsession):
                 random.shuffle(listofpart)
 
                 # Select data and set it to a variable
-                # TODO: Caution. If there is a warning message "single positional indexer is out-of-bounds",
-                # TODO: then the number of participants is higher than the cases in the csv!
                 for p in self.get_players():
 
                     # <editor-fold desc="Player AC assigned values">

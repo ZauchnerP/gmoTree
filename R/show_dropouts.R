@@ -79,8 +79,8 @@ show_dropouts <- function(oTree,
                           final_pages = NULL,
                           saved_vars = NULL) {
 
-  keep_these_participants <- c() # Is just here for the inconsistency test
-  delete_these_participants <- c()  # Not deleted here. Inconsistency check!
+  keep_these_participants <- character() # Just here for the inconsistency test
+  delete_these_participants <- character()  # Not deleted here. #Inconsistency
   dropout_data <- data.frame()
   output <- list()
   my_warnings <- list()
@@ -163,7 +163,7 @@ show_dropouts <- function(oTree,
   delete_these_participants <- unique(delete_these_participants)
 
   # Test if no one in "keep" is in "delete"  ####
-  newlist <- c()
+  newlist <- character()
   for (element in keep_these_participants) {
     if (element %in% delete_these_participants) {
       newlist <- append(element, newlist)

@@ -90,7 +90,7 @@ apptime <- function(oTree,
   } else {
     # If apps are defined, check if they are there
     if (length(apps[apps %in% names(oTree)]) != length(apps)) {
-      if (length(apps[apps %in% names(oTree)]) > 0) {
+      if (length(apps[apps %in% names(oTree)]) > 0L) {
         warning(
           "The following app(s) is/are not in ",
           "the list of oTree data frames: ",
@@ -110,7 +110,7 @@ apptime <- function(oTree,
   }
 
   # Seconds or minutes  ####
-  if (seconds == TRUE) {
+  if (seconds) {
     divsec <- 1L
   } else {
     divsec <- 60L # Divide seconds by 60 to get minutes
@@ -121,7 +121,7 @@ apptime <- function(oTree,
     stop("There is no \"Time\" data frame.")
   }
 
-  if (nrow(oTree$Time) == 0) {
+  if (nrow(oTree$Time) == 0L) {
     stop("Your \"Time\" data frame is empty.")
   }
 
@@ -492,7 +492,7 @@ apptime <- function(oTree,
 
       duration <- duration / divsec
 
-      if (duration == 0) {
+      if (duration == 0L) {
         duration <- NA
       }
 
@@ -620,7 +620,7 @@ apptime <- function(oTree,
     if (nrow(singledurations) == 0L) {
 
       if (!is.null(duplicate_participants) &&
-          length(duplicate_participants) > 1) {
+          length(duplicate_participants) > 1L) {
 
         # Duplicate data
 
@@ -726,7 +726,7 @@ apptime <- function(oTree,
     output[["messages"]] <- unique(message_vector)
     output[["first_app_one_page"]] <- firststageproblemparticipants
 
-    if (length(warningparticipants > 0L)) {
+    if (length(warningparticipants) > 0L) {
       output[["warnings"]] <- unique(warningparticipants)
     }
 
@@ -858,7 +858,7 @@ apptime <- function(oTree,
       # Time for app for all participants  ####
       output <- all_time()
 
-      if (length(output) == 1 &&
+      if (length(output) == 1L &&
           grepl("Durations not calculated", output)) {
         next
       }
@@ -866,11 +866,10 @@ apptime <- function(oTree,
   }
 
 
-  if (!is.null(pcode)) {
-    if (length(onepersonnoapp) > 0) {
+  if (!is.null(pcode) && length(onepersonnoapp) > 0L) {
       warning("Duration could not be calculated for the person in app(s): ",
               paste(onepersonnoapp, collapse = ", "), ".")
-    }
+    
   }
 
 

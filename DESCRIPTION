@@ -1,37 +1,45 @@
 Package: gmoTree
 Title: Get and Modify 'oTree' Data
-Version: 1.2.0
-Date: 2024-09-30
+Version: 1.3.0
+Date: 2024-12-06
 Authors@R: 
-    person(given = "Patricia F.", family = "Zauchner",
-    role = c("aut", "trl", "cre", "cph"),
-    email = "patricia.zauchner@gmx.at",
-    comment = c("https://orcid.org/0000-0002-5938-1683", "University of Bremen"))
+    person("Patricia F.", "Zauchner", , "patricia.zauchner@gmx.at", role = c("aut", "trl", "cre", "cph"),
+           comment = c(ORCID = "https://orcid.org/0000-0002-5938-1683", "University of Bremen"))
 Description: Efficiently manage and process data from 'oTree' experiments.
-    Import 'oTree' data and clean them by using 
-    functions that handle messy data, dropouts, and other problematic cases.
-    Create IDs, calculate the time, transfer
-    variables between app data frames, and delete sensitive information.
-    Review your experimental data prior to running 
-    the experiment and automatically generate a detailed summary 
-    of the variables used in your 'oTree' code.
-    Information on 'oTree' is found in Chen, D. L., Schonger, M., &
-    Wickens, C. (2016) <doi:10.1016/j.jbef.2015.12.001>.
+    Import 'oTree' data and clean them by using functions that handle
+    messy data, dropouts, and other problematic cases.  Create IDs,
+    calculate the time, transfer variables between app data frames, and
+    delete sensitive information.  Review your experimental data prior to
+    running the experiment and automatically generate a detailed summary
+    of the variables used in your 'oTree' code.  Information on 'oTree' is
+    found in Chen, D. L., Schonger, M., & Wickens, C. (2016)
+    <doi:10.1016/j.jbef.2015.12.001>.
 License: GPL (>= 3)
 URL: https://zauchnerp.github.io/gmoTree/,
-        https://github.com/ZauchnerP/gmoTree/,
-        https://github.com/ZauchnerP/gmoTree
+    https://github.com/ZauchnerP/gmoTree/,
+    https://github.com/ZauchnerP/gmoTree
 BugReports: https://github.com/ZauchnerP/gmoTree/issues
-Depends: R (>= 4.4.0)
-Imports: data.table (>= 1.15.4), dplyr (>= 1.1.4), knitr (>= 1.47),
-        openxlsx (>= 4.2.5.2), pander (>= 0.6.5), plyr (>= 1.8.9),
-        rlang (>= 1.1.4), rlist (>= 0.4.6.2), rmarkdown (>= 2.27),
-        stringr (>= 1.5.1)
-Suggests: testthat (>= 3.2.1), withr (>= 3.0.0)
-VignetteBuilder: knitr
+Depends: 
+    R (>= 4.4.0)
+Imports: 
+    data.table (>= 1.15.4),
+    dplyr (>= 1.1.4),
+    knitr (>= 1.47),
+    openxlsx (>= 4.2.5.2),
+    pander (>= 0.6.5),
+    plyr (>= 1.8.9),
+    rlang (>= 1.1.4),
+    rlist (>= 0.4.6.2),
+    rmarkdown (>= 2.27),
+    stringr (>= 1.5.1)
+Suggests: 
+    testthat (>= 3.2.1),
+    withr (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 BuildVignettes: true
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
 NeedsCompilation: no
+RoxygenNote: 7.3.2

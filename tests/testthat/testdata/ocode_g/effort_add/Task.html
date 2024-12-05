@@ -36,7 +36,6 @@
         // Correct last answer
         let last_answer_correct = {{ player.last_answer_correct|json }};
 
-         // TODO ist ja jetzt nicht mehr null. Deswgen lieber mit index oder rundeninfo arbeiten
         if (last_answer_correct !== null) {
             showFeedback(last_answer_correct, {{ player.number_of_attempts|json }});
         }

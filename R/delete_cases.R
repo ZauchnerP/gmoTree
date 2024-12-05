@@ -138,11 +138,13 @@ delete_cases <- function(oTree,
                          omit = FALSE,
                          info = FALSE) {
 
+
+  env <- new.env(parent = emptyenv())
+  env$messed_message <- character(0L)
+  env$chat_messed <- FALSE
+  env$time_messed <- FALSE
   all_deleted <- character(0L)
   deletion_frame <- data.frame()
-  time_messed <- FALSE
-  chat_messed <- FALSE
-  messed_message <- character(0L)
 
   # Create list of apps  ####
   appnames <- names(oTree)
@@ -164,8 +166,8 @@ delete_cases <- function(oTree,
   tryCatch({
     messy_time(oTree, combine = FALSE)
   }, error = function(e) {
-    time_messed <<- TRUE
-    messed_message <<- paste0("Please run messy_time() with the argument ",
+    env$time_messed <- TRUE
+    env$messed_message <- paste0("Please run messy_time() with the argument ",
                               "combine=TRUE before running this function.")
   })
 
@@ -173,19 +175,19 @@ delete_cases <- function(oTree,
   tryCatch({
     messy_chat(oTree, combine = FALSE)
   }, error = function(e) {
-    chat_messed <<- TRUE
+    env$chat_messed <- TRUE
 
-    if (time_messed) {
+    if (env$time_messed) {
 
       # Combine messy chat message with messy time message
-      messed_message <<-
-        paste0(messed_message,
+      env$messed_message <-
+        paste0(env$messed_message,
                " AND: Please run messy_chat() with the argument ",
                "combine=TRUE before running this function.")
     } else {
 
       # Make messy chat message
-      messed_message <<-
+      env$messed_message <-
         paste0("Please run messy_chat() with the argument ",
                "combine=TRUE before running this function.")
     }
@@ -193,9 +195,9 @@ delete_cases <- function(oTree,
 
   # Stop if messy time and/or chat variables should not be merged
 
-  if (time_messed || chat_messed) {
+  if (env$time_messed || env$chat_messed) {
     stop("You combined data from old and new oTree versions. ",
-         messed_message)
+         env$messed_message)
   }
 
   # Warnings  ####
@@ -217,7 +219,7 @@ delete_cases <- function(oTree,
   }
 
   if (!(is.null(saved_vars)) &&
-      any(!(saved_vars %in% colnames(oTree$all_apps_wide)))) {
+      !all(saved_vars %in% colnames(oTree$all_apps_wide))) {
     stop("saved_vars not in \"all_apps_wide\" data frame!")
   }
 

@@ -36,11 +36,12 @@ class Player(BasePlayer):
         label="Please enter an amount from 0 to 100",
     )
     level2 = models.IntegerField(
-        choices=["No\, I won't", "yes\, I will", "Maybe I'll do"],  # TODO choices were changed to test the code
+        choices=["No\, I won't", "yes\, I will", "Maybe I'll do"],
     )
     level3 = models.IntegerField(max = 10)
-    
+
     level = models.IntegerField(
+        doc = "choices with only [1,2,3]",
         choices=[1,2,3]
 )
 

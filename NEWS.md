@@ -1,6 +1,35 @@
-**Changes in CITATION file and NEWS file are not documented.**
+**Changes in CITATION file,  NEWS file are not documented.**
 
-# gmoTree 1.2.0
+# gmoTree 1.3.0
+
+* Changes in ```codebook()``` 
+  * Bug fixes
+    * Resolved an issue with ```Constants``` vector presentations in the output files
+    * Fixed incorrect handling of equal signs (```=```) in documentation 
+    and choices.
+  * New arguments
+      * ```splitvarname``` to deal with long variable names. Caveat: In some cases, columns may still overlap. Control your output carefully.
+      * ```sep_list``` to decide on list presentation or newline presentation in the output file
+      * ```initial``` to include the initial values in the codebook
+  * Enhancements
+    * New preamble text 
+    * ```output_format```
+      * Expanded the input possibilities for greater flexibility
+      * Changed default of ```output_format``` to ```pdf_document_simple```
+    * Improved handling of quotations
+      * Better presentations of quotations inside strings
+      * Quotation marks are now presented as straight and not smart form
+      * Removed non-escaped quotation marks from the output
+    * Improved list handling
+      * Values are now saved in list format and not as vectors
+      * Types of variables now correspond better to the types of the original variables
+      * Improved list presentation in output files for better readability
+    * Enhanced error and warning messages
+    * The function can now better deal better with empty arguments in the oTree code
+* Linted older functions (more readable)
+* Website changes
+
+# gmoTree 1.2.1
 
 * New function
   * ```codebook()```: Create a codebook for the oTree code

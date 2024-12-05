@@ -88,10 +88,11 @@ make_ids <- function(oTree,
                      emptyrows = NULL,
                      icw = FALSE) {
 
-  my_warnings <- character(0L)
-  time_messed <- FALSE
-  chat_messed <- FALSE
-  messed_message <- character(0L)
+  env <- new.env(parent = emptyenv())
+  env$time_messed <- FALSE
+  env$chat_messed <- FALSE
+  env$messed_message <- character(0L)
+  env$my_warnings <- character(0L)
 
   # Before start: Error messages  ####
   if (from_app %in% c("info", "Chats", "Time")) {
@@ -121,13 +122,12 @@ make_ids <- function(oTree,
       stop("Please only use from_app (all except all_apps_wide) ",
       "or from_var!")
 
-    } else if (from_app == "all_apps_wide") {
-      if (is.null(oTree[[from_app]][[from_var]])) {
+    } else if (from_app == "all_apps_wide" && is.null(oTree[[from_app]][[from_var]])) {
         stop("from_var \"",
-                    from_var,
-                    "\" not found. ",
-                    "Please select another one.")
-      }
+              from_var,
+              "\" not found. ",
+              "Please select another one.")
+      
     }
 
     # gmake should be automatically TRUE if from_var is set
@@ -147,8 +147,8 @@ make_ids <- function(oTree,
   tryCatch({
     messy_time(oTree, combine = FALSE)
   }, error = function(e) {
-    time_messed <<- TRUE
-    messed_message <<- paste0("Please run messy_time() with the argument ",
+    env$time_messed <- TRUE
+    env$messed_message <- paste0("Please run messy_time() with the argument ",
                               "combine=TRUE before running this function.")
   })
 
@@ -156,28 +156,28 @@ make_ids <- function(oTree,
   tryCatch({
     messy_chat(oTree, combine = FALSE)
   }, error = function(e) {
-    chat_messed <<- TRUE
+    env$chat_messed <- TRUE
 
-    if (time_messed) {
+    if (env$time_messed) {
 
       # Combine messy chat message with messy time message
-      messed_message <<-
-        paste0(messed_message,
+      env$messed_message <<-
+        paste0(env$messed_message,
                " AND: Run messy_chat() with the argument ",
                "combine=TRUE before running this function!")
     } else {
 
       # Make messy chat message
-      messed_message <<-
+      env$messed_message <<-
         paste0("Run messy_chat() with the argument ",
                "combine=TRUE before running this function!")
     }
   })
 
   # Stop if messy time and/or chat variables should not be merged
-  if (time_messed || chat_messed) {
+  if (env$time_messed || env$chat_messed) {
     stop("You combined data from old and new oTree versions. ",
-                messed_message)
+         env$messed_message)
   }
 
   # Check for NAs in the relevant variables
@@ -203,26 +203,26 @@ make_ids <- function(oTree,
     if (length(oTree[[from_app]]$participant.code) !=
        length(unique(oTree[[from_app]]$participant.code))) {
 
-      stop(paste0(
+      stop(
         from_app,
         ": The length of participant codes is not equal the length of ",
         "unique participant codes. Please check your data for ",
         "duplicates or empty rows! ",
         "(Advice: You may use delete_duplicate() to ",
-        "remove duplicate rows of all oTree data frames."))
+        "remove duplicate rows of all oTree data frames.")
     }
   } else {
     if (length(unique(oTree[[from_app]]$participant.code)) !=
        length(oTree[[from_app]]$participant.code) /
        max(oTree[[from_app]]$subsession.round_number)) {
 
-      stop(paste0(
+      stop(
         from_app,
         ": The length of participant codes is not equal the length of ",
         "unique participant codes. Please check your data for ",
         "duplicates or empty rows! ",
         "(Advice: You may use delete_duplicate() to ",
-        "remove duplicate rows of all oTree data frames."))
+        "remove duplicate rows of all oTree data frames.")
     }
   }
 
@@ -244,25 +244,25 @@ make_ids <- function(oTree,
                  )) {
 
     if (length(unique(oTree$Chats$participant_code[
-      oTree$Chats$session_code == code])) == 1) {
+      oTree$Chats$session_code == code])) == 1L) {
 
-        if (icw == FALSE) {
+        if (!icw) {
           stop(messymessage)
         }
 
     } else if (length(unique(
       oTree$Chats$participant__code[
-        oTree$Chats$session__code == code])) == 1) {
+        oTree$Chats$session__code == code])) == 1L) {
 
-      if (icw == FALSE) {
+      if (!icw) {
         stop(messymessage)  # Can this even happen?
       }
 
     } else if (length(unique(
       oTree$Chats$participant__code[
-        oTree$Chats$participant__session__code == code])) == 1) {
+        oTree$Chats$participant__session__code == code])) == 1L) {
 
-      if (icw == FALSE) {
+      if (!icw) {
         stop(messymessage)  # Can this even happen?
       }
     }
@@ -270,19 +270,19 @@ make_ids <- function(oTree,
 
   # Check if group numbers are the same in all variables
   # if app and round is not specified
-  if (gmake == TRUE &&
+  if (gmake &&
       from_app == "all_apps_wide" &&
       is.null(from_var)) {
 
     checkdata <- oTree[[from_app]][, endsWith(names(oTree[[from_app]]),
                                               "group.id_in_subsession")]
 
-    if (ncol(checkdata) == 0) {
+    if (ncol(checkdata) == 0L) {
       stop("No variable that ends with \"group.id_in_subsession\"")
     }
 
     if (inherits(checkdata, "data.frame") &&
-        !(all(checkdata == checkdata[, 1]))) {
+        !(all(checkdata == checkdata[, 1L]))) {
         # Not all the same
         stop(
           "group_id can not be calculated. ",
@@ -319,10 +319,10 @@ make_ids <- function(oTree,
           data.table::rleidv(oTree[[from_app]]$GroupSessionID)
 
         oTree[[from_app]]$group_id <-
-          oTree[[from_app]]$group_id + (gstart - 1)
+          oTree[[from_app]]$group_id + (gstart - 1L)
 
-        if (length(unique(oTree[[from_app]][[from_var]])) == 1) {
-          my_warnings <<- c(my_warnings, paste0(
+        if (length(unique(oTree[[from_app]][[from_var]])) == 1L) {
+          env$my_warnings <<- c(env$my_warnings, paste0(
             "The group variable values are constant. ",
             "Group IDs now correspond to session IDs."))
         }
@@ -340,15 +340,15 @@ make_ids <- function(oTree,
     all_group_ids <- oTree[[from_app]][, grep("group.id_in_subsession",
                                               colnames(oTree[[from_app]]))]
 
-    if (inherits(all_group_ids, "data.frame") == TRUE &&
-        ncol(all_group_ids) > 0) {
+    if (inherits(all_group_ids, "data.frame") &&
+        ncol(all_group_ids) > 0L) {
 
       # Make a helping variable GroupSessionID
-      oTree <- group_session_id_df(oTree)
+      oTree <- group_session_id_df(oTree, env = env)
 
     } else {
       # Make a helping variable GroupSessionID
-      oTree <- group_session_id_vector(oTree)
+      oTree <- group_session_id_vector(oTree, env = env)
     }
 
     # 2) Arrange group numbers, too (I took the first occurrence)
@@ -359,12 +359,12 @@ make_ids <- function(oTree,
 
     # 3) Assign session wide group number
     oTree[[from_app]]$group_id <-
-      data.table::rleidv(oTree[[from_app]]$GroupSessionID) + (gstart - 1)
+      data.table::rleidv(oTree[[from_app]]$GroupSessionID) + (gstart - 1L)
 
     return(oTree)
   }
 
-  group_session_id_df <- function(oTree) {
+  group_session_id_df <- function(oTree, env) {
     # Here several variables are called group.id_in_subsession.
     # Take the first one.
 
@@ -373,14 +373,14 @@ make_ids <- function(oTree,
       paste(
        oTree[[from_app]]$session_id,
        oTree[[from_app]][, grep("group.id_in_subsession",
-                                colnames(oTree[[from_app]]))][, 1])
+                                colnames(oTree[[from_app]]))][, 1L])
 
     if (length(
       unique(oTree[[from_app]][,
         grep("group.id_in_subsession",
-             colnames(oTree[[from_app]]))][, 1])) == 1) {
+             colnames(oTree[[from_app]]))][, 1L])) == 1L) {
 
-      my_warnings <<- c(my_warnings, paste0(
+      env$my_warnings <<- c(env$my_warnings, paste0(
         "The group variable values (of the first group variable) ",
         "are constant. ",
         "Group IDs now correspond to session IDs."))
@@ -388,7 +388,7 @@ make_ids <- function(oTree,
     return(oTree)
   }
 
-  group_session_id_vector <- function(oTree) {
+  group_session_id_vector <- function(oTree, env) {
     # Here only one variable is called group.id_in_subsession
 
     # Add session ID so there are no group IDs twice
@@ -402,7 +402,7 @@ make_ids <- function(oTree,
       unique(oTree[[from_app]][, grep("group.id_in_subsession",
                                       colnames(oTree[[from_app]]))])) == 1L) {
 
-      my_warnings <<- c(my_warnings, paste0(
+      env$my_warnings <<- c(env$my_warnings, paste0(
         "The group variable values are constant. ",
         "Group IDs now correspond to session IDs."))
     }
@@ -550,8 +550,8 @@ make_ids <- function(oTree,
       # This part is usually called if session.code is NA
       # This does not happen with cleaned data
       if (anyNA(oTree[[from_app]]$session.code)) {
-        my_warnings <-
-          c(my_warnings,
+        env$my_warnings <-
+          c(env$my_warnings,
             (paste0("At least one of your session.codes in your from_app is ",
                 "NA. All session codes that are Na are ",
                 "handled as being the same ",
@@ -571,7 +571,7 @@ make_ids <- function(oTree,
 
   # Make session_id
   oTree[[from_app]]$session_id <-
-    data.table::rleid(oTree[[from_app]]$session.code) + (sstart - 1)
+    data.table::rleid(oTree[[from_app]]$session.code) + (sstart - 1L)
 
   # Delete variable again
   oTree[[from_app]]$participant.time_started_min <- NULL
@@ -620,7 +620,7 @@ make_ids <- function(oTree,
       # Make participant_id
       oTree[[from_app]]$participant_id <-
         data.table::rleidv(oTree[[from_app]]$participant.code) +
-        (pstart - 1)
+        (pstart - 1L)
 
     } else {
       stop("There is no participant.code in ",
@@ -631,7 +631,7 @@ make_ids <- function(oTree,
 
   # Step 4: Make info lists  ####
   listincluded <- c("session_id", "session.code", "participant.code")
-  oTree[["info"]][["additional_variables"]] <- c("session_id")
+  oTree[["info"]][["additional_variables"]] <- "session_id"
 
   if (group_size_info) {
 
@@ -672,7 +672,7 @@ make_ids <- function(oTree,
               oTree[[from_app]]$participant.code)])
 
         if (length(participants_more) > 0L) {
-          my_warnings <- c(my_warnings,
+          env$my_warnings <- c(env$my_warnings,
                            paste0("Data frame \"",
                                   names(oTree)[[i]],
                                   "\" has more participants than ",
@@ -692,7 +692,7 @@ make_ids <- function(oTree,
                 oTree[[from_app]]$participant.code)])
 
           if (length(participants_more) > 0L) {
-            my_warnings <- c(my_warnings,
+            env$my_warnings <- c(env$my_warnings,
                              paste0("Data frame \"",
                                     names(oTree)[[i]],
                                     "\" has more participants than ",
@@ -713,7 +713,7 @@ make_ids <- function(oTree,
           participants_more <- unique(participants_more)
 
           if (length(participants_more) > 0L) {
-            my_warnings <- c(my_warnings,
+            env$my_warnings <- c(env$my_warnings,
                              paste0("Data frame \"", names(oTree)[[i]],
                                     "\" has more participants than ",
                                     from_app, ": ",
@@ -724,8 +724,8 @@ make_ids <- function(oTree,
           oTree <- ids_in_old_time_apps(oTree, df_group_in_date, i)
 
       } else {
-        my_warnings <-
-          c(my_warnings,
+        env$my_warnings <-
+          c(env$my_warnings,
             paste0("Participant code variable couldn't be found in \"",
                    name_of_app,
                    "\"! No IDs are calculated for this data frame."))
@@ -734,10 +734,10 @@ make_ids <- function(oTree,
       # Reorder columns  ####
       j <- 0L
       if (pmake) {
-        j <- j + 1
+        j <- j + 1L
       }
       if (group_size_info) {
-        j <- j + 1
+        j <- j + 1L
       }
       oTree[[i]] <-
         oTree[[i]][, c(c((ncol(oTree[[i]]) - j):ncol(oTree[[i]])),
@@ -755,8 +755,8 @@ make_ids <- function(oTree,
   oTree[[from_app]]$initial_order <- NULL
 
   # Print warnings  ####
-  if (length(my_warnings > 0)) {
-    warning(paste(my_warnings, collapse = "\n"))
+  if (length(env$my_warnings) > 0L) {
+    warning(paste(env$my_warnings, collapse = "\n"))
   }
 
   return(oTree)

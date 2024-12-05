@@ -76,9 +76,9 @@ class ResultsAB(Page):
 
     def vars_for_template(self):
         self.player.motivation = "Player is not dictator and must not answer this question."
-        # Todo: Change if there is an open question
 
-        # <editor-fold desc="Select data and set it to a variable"> # todo hier weitermachen
+
+        # <editor-fold desc="Select data and set it to a variable"> 
         # Pretest
         if "assignedRole" not in self.participant.vars:  # if not already assigned in the prior app (pretest)
             listofpart = [x for x in range(0, self.session.num_participants, 1)]
