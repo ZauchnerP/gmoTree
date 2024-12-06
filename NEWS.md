@@ -1,5 +1,9 @@
 **Changes in CITATION file,  NEWS file are not documented.**
 
+# gmoTree 1.3.1 
+
+* Updated figure in vignette.
+
 # gmoTree 1.3.0
 
 * Changes in ```codebook()``` 

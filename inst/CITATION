@@ -3,7 +3,7 @@ bibentry(
   title    = "gmoTree: oTree Data Manipulation Tool",
   author   = "Patricia F. Zauchner",
   year     = "2024",
-  note     = "R package version 1.3.0",
+  note     = "R package version 1.3.1",
   url      = "https://CRAN.R-project.org/package=gmoTree",
-  textVersion = "Zauchner, Patricia F. (2024). gmoTree: oTree Data Manipulation Tool. R package version 1.3.0, <https://CRAN.R-project.org/package=gmoTree/>."
+  textVersion = "Zauchner, Patricia F. (2024). gmoTree: oTree Data Manipulation Tool. R package version 1.3.1, <https://CRAN.R-project.org/package=gmoTree/>."
   )

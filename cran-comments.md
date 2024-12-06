@@ -1,3 +1,7 @@
+# Version 1.3.1
+
+Updated figure in vignette
+
 # Version 1.3.0
 
 No comments. 
