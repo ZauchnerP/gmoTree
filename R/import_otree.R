@@ -1,12 +1,16 @@
 #' Import oTree data
 #' @description
 #' Import data files that were created by oTree.
+#' 
 #' All files containing the pattern YYYY-MM-DD at the end
 #' of their file names are considered oTree files.
 #' Bot outputs are saved by oTree without the date included. Hence, to
 #' import bot data, you must either rename the original bot files
 #' using the YYYY-MM-DD format or use the argument \code{onlybots = TRUE}.
 #' By using the second option, only data of bot files are imported.
+#' Since custom export files share the same names as the app files,
+#' they must be renamed by adding 'custexp_' as a prefix to 
+#' correctly import them.
 #'
 #' Caution! Data can be downloaded from within the
 #' session and globally at the same time. If both files are downloaded,
@@ -65,7 +69,8 @@
 #' the \code{participant._current_app_name}
 #' variable set. Empty rows are deleted from all app data frames
 #' and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in
-#' the \code{$Chats} and \code{$Time} data frames are not deleted.
+#' the \code{$Chats} and \code{$Time} data frames as well as data frames 
+#' whose names start with \code{custexp_} (custom export) are not deleted.
 #'
 #' If old and new oTree versions are combined, the \code{$Time} data frame
 #' contains variables called \code{participant_code}
@@ -398,7 +403,7 @@ import_otree <- function(
       }
 
       # Delete empty  ####
-      if (del_empty) {
+      if (del_empty && !startsWith(prefix = "custexp_", x = App)) {
           oTree[[App]] <- oTree[[App]][
             !(is.na(oTree[[App]]$participant._current_app_name) |
                 oTree[[App]]$participant._current_app_name == "<NA>" |

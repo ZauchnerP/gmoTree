@@ -1,5 +1,55 @@
 if (rlang::is_installed(c("withr", "testthat"))) {
+  
+  testthat::test_that("Delete duplicate", {
+    # Prepare data
+    testthat::expect_warning(
+      otree2 <- import_otree(
+        del_empty = TRUE,
+        path =  testthat::test_path("testdata", "exp_data_5.4.0"),
+        onlybots = FALSE,
+        csv = TRUE,
+        info = FALSE))
+    # Alternative: # file.path(".", "exp_data_5.4.0"),
+    
+    n_before_aaw <- nrow(otree2$all_apps_wide)
+    n_before_dictator <- nrow(otree2$dictator)
+    n_before_custom_dictator <- nrow(otree2$custexp_dictator)
+    before_n <- otree2$info$initial_n
+    
+    # Run function
+    otree2 <- delete_duplicate(otree2)
+    
+    # Test
+    n_after_aaw <- nrow(otree2$all_apps_wide)
+    n_after_dictator <- nrow(otree2$dictator)
+    n_after_custom_dictator <- nrow(otree2$custexp_dictator)
+    
+    after_n <- otree2$info$initial_n
+    testthat::expect_gt(n_before_aaw, n_after_aaw)
+    testthat::expect_gt(n_before_dictator, n_after_dictator)
+    testthat::expect_equal(n_before_custom_dictator, n_after_custom_dictator)
+    
+    testthat::expect_gt(before_n, after_n)
+    
+    # Test if nothing is deleted from custom export
+    testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
+  })
+  
+      # TODO umsortieren
+      testthat::test_that("Import - custom export", {
+          # TODO import custom export
+          otree2 <- import_otree(
+            path = testthat::test_path("testdata", "exp_cust_data_rename"),
+            info = TRUE,
+            del_empty = FALSE
+          )
+    
+          # Test if nothing is deleted from custom export
+          testthat::expect_true(length(names(otree2)) == 4)
+          testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
+      })
 
+  
       # Imports that will be used later  ####
       # Must be outside of testthat, so that they can be referred to later
       suppressWarnings({
@@ -19,8 +69,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         # Alternative: # file.path(".", "exp_data_5.4.0"),
 
         otree_5_4_0_non_unique <- otree_5_4_0
-        otree_5_4_0 <- delete_duplicate(otree_5_4_0)
-
+        otree_5_4_0 <- delete_duplicate(otree_5_4_0)  # TODO das mit custom export testen
+ 
         otree_old_one <- import_otree(
           del_empty = TRUE,
           path = ".\\testdata\\old_one",
@@ -75,7 +125,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_warning(
           otree2 <- import_otree(
             del_empty = TRUE,
-            path = testthat::test_path("testdata", "exp_data_5.4.0subapp"),
+            path = testthat::test_path("testdata", 
+                                       "exp_data_5.4.0subapp"),
             onlybots = FALSE,
             csv = TRUE,
             info = FALSE),
@@ -86,9 +137,16 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test2 <- "chatapp" %in% names(otree2)
         test3 <- "dictator" %in% names(otree2)
         test4 <- "dictator2" %in% names(otree2)
-        testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        test5 <- "custexp_dictator" %in% names(otree2)
+        test6 <- nrow(otree2$custexp_dictator) == 8
+        
+        # Run tests
+        testthat::expect_true(all(c(test1, test2, test3, 
+                                    test4, test5, test6)))
       })
-
+ 
       testthat::test_that("Import - delete dropouts", {
         # Run functions
 
@@ -139,7 +197,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test3 <- nrow(otree1$survey) > nrow(otree2$survey)
         test4 <- nrow(otree1$Chats) == nrow(otree2$Chats) # Must be equal!
         test5 <- nrow(otree1$Time) > nrow(otree2$Time)
-        testthat::expect_true(all(c(test1, test2, test3, test4, test5)))
+        
+        # Run tests
+        testthat::expect_true(all(c(test1, test2, test3, 
+                                    test4, test5)))
 
         # Test if after-dropout numbers are the same
         test1 <- nrow(otree3$all_apps_wide) == nrow(otree2$all_apps_wide)
@@ -147,8 +208,19 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test3 <- nrow(otree3$survey) == nrow(otree2$survey)
         test4 <- nrow(otree3$Chats) == nrow(otree2$Chats)
         test5 <- nrow(otree3$Time) == nrow(otree2$Time)
-        testthat::expect_true(all(c(test1, test2, test3, test4, test5)))
+        
+        # Run tests
+        testthat::expect_true(all(c(test1, test2, test3, 
+                                    test4, test5)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree1))
+        testthat::expect_true(nrow(otree1$custexp_dictator) == 8)
+        testthat::expect_true("custexp_dictator" %in% names(otree3))
+        testthat::expect_true(nrow(otree3$custexp_dictator) == 8)
       })
+      
+
 
       testthat::test_that("Import - bot files", {
         # Run function
@@ -175,8 +247,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           "globally but also room-specific")
 
         # Test
-        testthat::expect_output(str(otree2), "List of 10")
-        # [1] "all_apps_wide" "info"          "chatapp"       "dictator"
+        testthat::expect_output(str(otree2), "List of 11")
+        # [1] "all_apps_wide" "info"          "chatapp"       "dictator" "custexp_dictator"
         # [5] "start"         "survey"        "Time"          "Chats"
       })
 
@@ -193,7 +265,7 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           "Imported:.*Errors when importing these files")
 
         # Test
-        testthat::expect_output(str(otree2), "List of 10")
+        testthat::expect_output(str(otree2), "List of 11")
       })
 
       testthat::test_that("Import - all", {
@@ -222,9 +294,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test
         testthat::expect_output(str(otree2),
-                                "List of 10")
+                                "List of 11")
         # "start", "dictator", "chatapp", "survey",
-        # "all_apps_wide", "Time", "Chats"
+        # "all_apps_wide", "Time", "Chats" "custexp_dictator"
 
         diff <- nrow(otree2$all_apps_wide[
           otree2$all_apps_wide$participant._current_app_name == "", ])
@@ -251,6 +323,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test2 <- "chatapp" %in% names(otree2)
         test3 <- "dictator" %in% names(otree2)
         test4 <- "dictator2" %in% names(otree2)
+        
+        
         testthat::expect_true(all(c(
           test1, test2, test3, test4)))
       })
@@ -628,8 +702,6 @@ if (rlang::is_installed(c("withr", "testthat"))) {
             info = TRUE), "Errors when importing these files")
       })
 
-
-
       testthat::test_that("Import (e) - xlsx - some faulty file_names", {
         # Run function
         testthat::expect_message(
@@ -688,36 +760,14 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           csv = TRUE,
           info = TRUE), "This path does not exist")
       })
+      
+
+      
 
       print("---- delete_duplicate -----")
 
       # Delete duplicate  ####
-      testthat::test_that("Delete duplicate", {
-        # Prepare data
-        testthat::expect_warning(
-          otree2 <- import_otree(
-            del_empty = TRUE,
-            path =  testthat::test_path("testdata", "exp_data_5.4.0"),
-            onlybots = FALSE,
-            csv = TRUE,
-            info = FALSE))
-        # Alternative: # file.path(".", "exp_data_5.4.0"),
 
-        n_before_aaw <- nrow(otree2$all_apps_wide)
-        n_before_dictator <- nrow(otree2$dictator)
-        before_n <- otree2$info$initial_n
-
-        # Run function
-        otree2 <- delete_duplicate(otree2)
-
-        # Test
-        n_after_aaw <- nrow(otree2$all_apps_wide)
-        n_after_dictator <- nrow(otree2$dictator)
-        after_n <- otree2$info$initial_n
-        testthat::expect_gt(n_before_aaw, n_after_aaw)
-        testthat::expect_gt(n_before_dictator, n_after_dictator)
-        testthat::expect_gt(before_n, after_n)
-      })
 
       testthat::test_that("Delete duplicate - time and chat", {
         # Prepare data
@@ -854,15 +904,28 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         n_before_survey <- nrow(otree2$survey)
         n_before_survey <- nrow(otree2$Time)
         n_before_chat <- nrow(otree2$Chat)
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
+        
+        print("before")
+        print(nrow(otree2$custexp_dictator))
+        print(otree2$custexp_dictator)
 
         # Run function and test
         testthat::expect_message(
-          delete_cases(otree2,
+          otree2 <- delete_cases(otree2,
                        person,
                        reason = "Upon request",
                        info = TRUE),
           "Cases are deleted")
-        otree2 <- delete_cases(otree2, person, reason = "Upon request")
+        
+        print("after")
+        print(nrow(otree2$custexp_dictator))
+        print(otree2$custexp_dictator)
+        
+
 
         # After
         n_after_aaw <- nrow(otree2$all_apps_wide)
@@ -870,6 +933,14 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         n_after_survey <- nrow(otree2$survey)
         n_after_time <- nrow(otree2$Time)
         n_after_chat <- nrow(otree2$Chat)
+        n_after_export_dicator <- nrow(otree2$custexp_dictator)
+        print("-..")
+        print(nrow(otree2$custexp_dictator))
+        print(otree2$custexp_dictator)
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
 
         # Diff
         diff_aaw <- n_before_aaw - n_after_aaw
@@ -891,7 +962,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_gt(n_after_survey, 0L)
         testthat::expect_gt(n_after_time, 0L)
         testthat::expect_gt(n_after_chat, 0L)
-
+        testthat::expect_gt(n_after_export_dicator, 0L)
+        
         # Test if deleted people are really deleted
         test0 <- length(otree2$info[["deleted_cases"]][["codes"]]) == 1L
         test1 <- person %in% otree2$info[["deleted_cases"]][["codes"]]
@@ -926,6 +998,7 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
       })
+
 
       testthat::test_that("Delete cases - new oTree, one random data frame", {
         # Prepare data
@@ -1018,6 +1091,7 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
       })
+
 
       testthat::test_that("Delete cases - old and new otree", {
         # Prepare data (delete person from old and new data frame)
@@ -1181,6 +1255,12 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
+        
+        
       })
 
       testthat::test_that("Delete cases - more people - one not there", {
@@ -1425,6 +1505,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete cases - plabels", {
@@ -2192,6 +2276,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete sessions - new, one random data frame", {
@@ -2292,6 +2380,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete sessions - new info = TRUE", {
@@ -2358,6 +2450,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete sessions - without aaw", {
@@ -2933,6 +3029,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete dropouts - final_apps new oTree, random df", {
@@ -3027,6 +3127,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete dropouts - final_apps old oTree", {
@@ -3447,6 +3551,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete dropouts 2 - inconsistent no", {
@@ -3702,6 +3810,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("several deletions - version 2", {
@@ -3742,6 +3854,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         test4 <- length(otree2$info$deleted_cases$codes) ==
           nrow(otree2$info$deleted_cases$unique)
         testthat::expect_true(all(c(test1, test2, test3, test4)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("several deletions - version 3", {
@@ -3837,6 +3953,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
                                 otree2$dictator$participant_id), ]
         test2 <- all(diff(otree2$dictator$participant_id) >= 0L)
         testthat::expect_true(all(c(test1, test2)))
+        
+        # Test custom export
+        print("---------------------------------------")
+        print(names(otree2$custexp_dictator))
       })
 
       testthat::test_that("Make IDs - from_var, gmake = TRUE", {
@@ -4933,7 +5053,7 @@ if (rlang::is_installed(c("withr", "testthat"))) {
                                         gmake = TRUE,
                                         from_app = "Chats",
                                         emptyrows = "yes"),
-                               "You are not supposed to use")
+                               "You can not use ")
       })
 
       testthat::test_that("Make IDs (e) - no participant.code", {
@@ -5338,6 +5458,7 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           round(mean(output$single_durations$duration), 2L)
         testthat::expect_true(all(c(test1, test2, test3, test4,
                                     test5, test6, test7)))
+        
       })
 
       testthat::test_that("extime - new oTree - secondsonpage2", {
@@ -7707,6 +7828,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
             !is.na(otree2$Time$seconds_on_page2)] / 60L, 2L))
 
         testthat::expect_true(all(c(test1, test2)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
+        
       })
 
       testthat::test_that("pagesec - minutes ", {
@@ -7725,6 +7850,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
           otree2$Time$minutes_on_page[!is.na(otree2$Time$minutes_on_page)],
           round(otree2$Time$seconds_on_page2[
             !is.na(otree2$Time$seconds_on_page2)] / 60L, 2L))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
 
       })
 
@@ -7777,6 +7905,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
             !is.na(otree2$Time$seconds_on_page2)] / 60L, 2L))
 
         testthat::expect_true(all(c(test1, test2, test3)))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) %% 8 == 0)
 
       })
 
@@ -7946,6 +8077,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
                           newvar = "gender")
         # Test
         testthat::expect_vector(otree2$survey$gender)
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Assign variable - new, one random df", {
@@ -7963,6 +8097,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         # Test
         testthat::expect_vector(otree2$survey$gender)
         testthat::expect_null(otree2$random_dataframe$gender)
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Assign variable - old", {
@@ -7993,6 +8130,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         diff <- match("younger30", names(otree2$all_apps_wide)) -
           match("survey.1.player.age", names(otree2$all_apps_wide))
         testthat::expect_identical(diff, 1L)
+        
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Assign variable (e) - no aaw", {
@@ -8087,6 +8228,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
 
         # Test
         testthat::expect_vector(otree2$all_apps_wide$younger30)
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Assign variable to aaw - random df", {
@@ -8128,6 +8272,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_true(is.na(otree2$all_apps_wide$younger30[
           otree2$all_apps_wide$participant.code == person
         ]))
+        
+        # Test if nothing is deleted from custom export
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Assign variable to aaw - all NA", {
@@ -8269,6 +8416,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_null(otree2$Chats$participant__label)
         testthat::expect_null(otree2$dictator$participant.label)
         testthat::expect_null(otree2$survey$participant.label)
+        
+        # Check if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
       testthat::test_that("Delete participant labels - random df", {
@@ -8290,6 +8441,10 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         testthat::expect_null(otree2$Chats$participant__label)
         testthat::expect_null(otree2$dictator$participant.label)
         testthat::expect_null(otree2$survey$participant.label)
+        
+        # Check if nothing is deleted from custom export
+        testthat::expect_true("custexp_dictator" %in% names(otree2))
+        testthat::expect_true(nrow(otree2$custexp_dictator) == 8)
       })
 
 }

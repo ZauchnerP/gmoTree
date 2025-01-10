@@ -87,6 +87,8 @@ apptime <- function(oTree,
     apps <- apps[apps != "all_apps_wide"]
     apps <- apps[apps != "Time"]
     apps <- apps[apps != "Chats"]
+    apps <- apps[!startsWith(prefix = "custexp_", x = apps)]
+    
   } else {
     # If apps are defined, check if they are there
     if (length(apps[apps %in% names(oTree)]) != length(apps)) {

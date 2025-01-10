@@ -42,6 +42,7 @@ delete_duplicate <- function(oTree) {
   appnames <- appnames[appnames != "info"]
   appnames <- appnames[appnames != "Time"]
   appnames <- appnames[appnames != "Chats"]
+  appnames <- appnames[!startsWith(prefix = "custexp_", x = appnames)]
 
   for (app in appnames) {
     columns <- names(oTree[[app]])

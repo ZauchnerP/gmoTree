@@ -1,0 +1,9 @@
+test,testplayer
+x,"Player(id_in_group=1, round_number=1)"
+x,"Player(id_in_group=2, round_number=1)"
+x,"Player(id_in_group=1, round_number=1)"
+x,"Player(id_in_group=2, round_number=1)"
+x,"Player(id_in_group=1, round_number=1)"
+x,"Player(id_in_group=2, round_number=1)"
+x,"Player(id_in_group=1, round_number=1)"
+x,"Player(id_in_group=2, round_number=1)"

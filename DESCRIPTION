@@ -1,8 +1,8 @@
 Package: gmoTree
 Title: Get and Modify 'oTree' Data
-Version: 1.3.1
-Date: 2024-12-06
-Authors@R: 
+Version: 1.3.2
+Date: 2024-01-03
+Authors@R:
     person("Patricia F.", "Zauchner", , "patricia.zauchner@gmx.at", role = c("aut", "trl", "cre", "cph"),
            comment = c(ORCID = "https://orcid.org/0000-0002-5938-1683", "University of Bremen"))
 Description: Efficiently manage and process data from 'oTree' experiments.
@@ -19,9 +19,9 @@ URL: https://zauchnerp.github.io/gmoTree/,
     https://github.com/ZauchnerP/gmoTree/,
     https://github.com/ZauchnerP/gmoTree
 BugReports: https://github.com/ZauchnerP/gmoTree/issues
-Depends: 
+Depends:
     R (>= 4.4.0)
-Imports: 
+Imports:
     data.table (>= 1.15.4),
     dplyr (>= 1.1.4),
     knitr (>= 1.47),
@@ -32,10 +32,10 @@ Imports:
     rlist (>= 0.4.6.2),
     rmarkdown (>= 2.27),
     stringr (>= 1.5.1)
-Suggests: 
+Suggests:
     testthat (>= 3.2.1),
     withr (>= 3.0.0)
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 BuildVignettes: true
 Config/testthat/edition: 3

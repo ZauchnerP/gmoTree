@@ -1,22 +1,28 @@
 **Changes in CITATION file,  NEWS file are not documented.**
 
-# gmoTree 1.3.1 
+# gmoTree 1.3.2
 
-* Updated figure in vignette.
+* Bug fixes
+  * Changed text in the codebook preamble
+  * Can handle custom exports better when their names start with "custexp_"
+
+# gmoTree 1.3.1
+
+* Updated figure in vignette
 
 # gmoTree 1.3.0
 
-* Changes in ```codebook()``` 
+* Changes in ```codebook()```
   * Bug fixes
     * Resolved an issue with ```Constants``` vector presentations in the output files
-    * Fixed incorrect handling of equal signs (```=```) in documentation 
-    and choices.
+    * Fixed incorrect handling of equal signs (```=```) in documentation
+    and choices
   * New arguments
-      * ```splitvarname``` to deal with long variable names. Caveat: In some cases, columns may still overlap. Control your output carefully.
+      * ```splitvarname``` to deal with long variable names. Caveat: In some cases, columns may still overlap. Control your output carefully!
       * ```sep_list``` to decide on list presentation or newline presentation in the output file
       * ```initial``` to include the initial values in the codebook
   * Enhancements
-    * New preamble text 
+    * New preamble text
     * ```output_format```
       * Expanded the input possibilities for greater flexibility
       * Changed default of ```output_format``` to ```pdf_document_simple```
@@ -44,34 +50,33 @@
 # gmoTree 1.1.0
 
 * Changes in functions
-  * ```extime()```: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the 'seconds_on_page2' variable.
-  * ```apptime()```: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the 'seconds_on_page2' variable.
+  * ```extime()```: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the ```seconds_on_page2``` variable
+  * ```apptime()```: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the ```seconds_on_page2``` variable
 * Linted code (more efficient & readable)
 * Minor changes in tests.R
 * Minor changes in website, new logo
 
 # gmoTree 1.0.1
 
-* Minor changes in examples and DESCRIPTION file. 
+* Minor changes in examples and DESCRIPTION file
 * Changes in functions: NONE
 
 # gmoTree 1.0.0
 
-File names of the examples are now portable.
-
+* File names of the examples are now portable
 * Changes in functions
-  * ```import_otree()```: Minor changes. Can also import portable file names now.
+  * ```import_otree()```: Minor changes. Can also import portable file names now
 
 # gmoTree 0.0.3
 
-* Minor improvement of the documentation & website.
+* Minor improvement of the documentation & website
 * Changes in functions: NONE
 
-# gmoTree 0.0.2 
+# gmoTree 0.0.2
 
-* Minor improvement of the documentation & website. (Sent to CRAN and omitted here.)
+* Minor improvement of the documentation & website (Sent to CRAN and omitted here.)
 * Changes in functions: NONE
 
 # gmoTree 0.0.1
 
-* Beta version of gmoTree published (formerly known as "ioTree").
+* Beta version of gmoTree published (formerly known as "ioTree")

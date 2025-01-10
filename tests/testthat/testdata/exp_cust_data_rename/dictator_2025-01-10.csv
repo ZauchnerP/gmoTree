@@ -1,0 +1,9 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._current_page_name,participant.time_started_utc,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.role,player.payoff,group.id_in_subsession,group.kept,subsession.round_number,session.code,session.label,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,88p5ctfp,,0,5,4,dictator,Results,2025-01-10 12:32:52.615202,1,,,1.0,1,,1.0,1,1.0,1,d5j7zn7t,,,,,1
+2,syo3awrl,,0,5,4,dictator,Results,2025-01-10 12:32:52.607932,1,,,99.0,2,,99.0,1,1.0,1,d5j7zn7t,,,,,1
+1,2qbjkgax,,0,5,4,dictator,Results,2025-01-10 14:11:32.901510,1,,,1.0,1,,1.0,1,1.0,1,hypcdaas,,,,,1
+2,qk4n7dx5,,0,5,4,dictator,Results,2025-01-10 14:11:40.110750,1,,,99.0,2,,99.0,1,1.0,1,hypcdaas,,,,,1
+1,2hn0on91,,0,1,4,dictator,Introduction,2025-01-10 14:18:22.039253,1,,,0.0,1,,0.0,1,,1,oz5g8abi,,,,,1
+2,5s79tmd5,,0,1,4,dictator,Introduction,2025-01-10 14:18:22.031841,1,,,0.0,2,,0.0,1,,1,oz5g8abi,,,,,1
+1,qpmjohvc,,0,5,4,dictator,Results,2025-01-10 14:18:45.126468,1,,,1.0,1,,1.0,1,1.0,1,co5kamru,,,,,0
+2,sad1irzs,,0,5,4,dictator,Results,2025-01-10 14:18:49.593905,1,,,99.0,2,,99.0,1,1.0,1,co5kamru,,,,,0

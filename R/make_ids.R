@@ -95,10 +95,12 @@ make_ids <- function(oTree,
   env$my_warnings <- character(0L)
 
   # Before start: Error messages  ####
-  if (from_app %in% c("info", "Chats", "Time")) {
+  if (from_app %in% c("info", "Chats", "Time") && 
+      !startsWith(prefix = "custexp_", x = from_app)) {
     stop(
-      "You are not supposed to use \"Chats,\" or \"Time,\" or \"info\" as ",
-      "from_app! Choose another app!")
+      "You can not use \"Chats,\" or \"Time,\" or \"info\" or ",
+      "custom exports as ",
+      "\"from_app\"!")
   }
 
   if (is.null(oTree[[from_app]])) {
@@ -662,7 +664,8 @@ make_ids <- function(oTree,
     name_of_app <- rlist::list.names(oTree[i])
 
     # Assign values
-    if (name_of_app != "info") {
+    if (name_of_app != "info" && 
+        !startsWith(prefix = "custexp_", x = name_of_app)) {
 
       if ("participant.code" %in% names(oTree[[i]])) {  # For all normal DFs
 
