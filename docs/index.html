@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@
 <ul>
 <li><p><code><a href="reference/messy_chat.html">messy_chat()</a></code>: Checks for a messy <code>Chats</code> data frame and combines variables that refer to the same concept.</p></li>
 <li><p><code><a href="reference/messy_chat.html">messy_chat()</a></code>: Checks for a messy <code>Time</code> data frame and combines variables that refer to the same concept.</p></li>
-<li><p><code><a href="reference/delete_duplicate.html">delete_duplicate()</a></code>: Deletes duplicate rows from all data frames in the oTree list.</p></li>
+<li><p><code><a href="reference/delete_duplicate.html">delete_duplicate()</a></code>: Deletes duplicate rows from all data frames in the list of data frames.</p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -105,8 +105,8 @@
 </h2>
 <ul>
 <li><p><code><a href="reference/show_dropouts.html">show_dropouts()</a></code>: Shows participant codes of people who did not finish at (a) certain app(s) or page(s).</p></li>
-<li><p><code><a href="reference/delete_dropouts.html">delete_dropouts()</a></code>: Deletes the data of participants who did not finish at (a) certain app(s) or page(s). This function deletes the participants’ data from all data frames in the oTree list. Caution: It does not delete the cases from the original CSV and Excel files!</p></li>
-<li><p><code><a href="reference/delete_cases.html">delete_cases()</a></code>: Deletes the data of specified participants from all data frames in the oTree list. Caution: This function does not delete the data from the original CSV and Excel files!</p></li>
+<li><p><code><a href="reference/delete_dropouts.html">delete_dropouts()</a></code>: Deletes the data of participants who did not finish at (a) certain app(s) or page(s). This function deletes the participants’ data from all data frames in the list of data frames. Caution: It does not delete the cases from the original CSV and Excel files!</p></li>
+<li><p><code><a href="reference/delete_cases.html">delete_cases()</a></code>: Deletes the data of specified participants from all data frames in the list of data frames. Caution: This function does not delete the data from the original CSV and Excel files!</p></li>
 <li><p><code><a href="reference/delete_sessions.html">delete_sessions()</a></code>: Deletes the data of specified sessions from all data frames in the oTree list. Caution: This function does not delete the data from the original CSV and Excel files!</p></li>
 </ul>
 </div>
@@ -139,7 +139,7 @@
 <h2 id="transferring-variables-between-the-apps">Transferring variables between the apps<a class="anchor" aria-label="anchor" href="#transferring-variables-between-the-apps"></a>
 </h2>
 <ul>
-<li><p><code><a href="reference/assignv.html">assignv()</a></code>: Copies a variable from the all_apps_wide data frame to the data frames of all other apps.</p></li>
+<li><p><code><a href="reference/assignv.html">assignv()</a></code>: Copies a variable from the <code>all_apps_wide</code> data frame to the data frames of all other apps.</p></li>
 <li><p><code><a href="reference/assignv_to_aaw.html">assignv_to_aaw()</a></code>: Copies a variable from one of your data frames to the <code>all_apps_wide</code> data frame.</p></li>
 </ul>
 </div>
@@ -147,11 +147,8 @@
 <h2 id="before-running-the-experiment">Before running the experiment<a class="anchor" aria-label="anchor" href="#before-running-the-experiment"></a>
 </h2>
 <ul>
-<li>
-<code><a href="reference/show_constant.html">show_constant()</a></code>: Shows constant variables.</li>
-<li>
-<code><a href="reference/codebook.html">codebook()</a></code>: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">“gmoTree Codebooks.”</a>
-</li>
+<li><p><code><a href="reference/show_constant.html">show_constant()</a></code>: Shows variables with no variation.</p></li>
+<li><p><code><a href="reference/codebook.html">codebook()</a></code>: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">gmoTree Codebooks.</a></p></li>
 </ul>
 </div>
 </div>
@@ -190,7 +187,6 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Patricia F. Zauchner <br><small class="roles"> Author, translator, maintainer, copyright holder </small> <a href="https://orcid.org/https://orcid.org/0000-0002-5938-1683" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -201,7 +197,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

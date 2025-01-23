@@ -17,7 +17,7 @@ timer123 = 500
 # Payoff in Token
 showup = "1.40"  # In dollar
 showupToken = "{:.2f}".format(float(showup)*ExchangeToken)
-payoffPart1_c = 6*ExchangeToken  # Token
+payoffPart1_c = 6 * ExchangeToken  # Token
 min_payoffPart1_ab = "1.00"  # Token
 max_payoffPart1_ab = "11.00"  # Token
 MainCurrencyForSurvey = 3  # Euro or Dollar for participating in the survey

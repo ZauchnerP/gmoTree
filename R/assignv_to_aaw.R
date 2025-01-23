@@ -1,15 +1,14 @@
 #' Assign a variable to all_apps_wide
 #' @description
 #' Assign a variable from one of the app data frames to \code{$all_apps_wide}.
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
-#' @param app Character. The data frame from which the variable is taken.
-#' @param variable Character.
+#' @inheritParams apptime
+#' @param app Character string. The data frame from which the variable is taken.
+#' @param variable Character string.
 #' The name of the variable that should be assigned to \code{$all_apps_wide}.
-#' @param newvar Character.
+#' @param newvar Character string.
 #' The name of the newly created variable in the \code{$all_apps_wide} data
 #' frame.
-#' @param resafter Character.
+#' @param resafter Character string.
 #' The name of the variable that precedes the new variable.
 #' If \code{NULL}, the new variable will be placed at the end of the data frame.
 #' @returns This function returns a duplicate of the original oTree list of
@@ -19,9 +18,9 @@
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
 #'
-#' # Check out the old variable 
+#' # Check out the old variable
 #' oTree$survey$player.age
-#' 
+#'
 #' # Create a new variable
 #' oTree$survey$younger30 <- ifelse(oTree$survey$player.age < 30, 1, 0)
 #'
@@ -80,20 +79,20 @@ assignv_to_aaw <- function(oTree,
                "or did you forget to import app data? Sometimes, this can ",
                "happen if you import data from within a session or room ",
                "where you can only import \"all_apps_wide\" but not the ",
-               "separate app data, time data or chat data.")
+               "separate app data, Time data or Chats data.")
     }
   } else {
-    stop("There is no \"all_apps_wide\" in your oTree list of ",
+    stop("There is no \"all_apps_wide\" in your list of ",
                 "data frames!")
   }
 
   # Check if there is only one variable/new variable
   if (length(variable) > 1L) {
-    stop("Plase enter only one variable name!")
+    stop("Please enter only one variable name!")
   }
 
   if (length(newvar) > 1L) {
-    stop("Plase enter only one new variable name!")
+    stop("Please enter only one new variable name!")
   }
 
   # Check if variable is there

@@ -18,6 +18,7 @@ class Constants(BaseConstants):
     StartToken2 = settings.StartToken * 2
     StartToken3 = StartToken * 10
     Something = settings.Something
+    Something2 = Something
     TestToken = StartToken * 5
     players_per_group = None
     Variable1 = "xyz"

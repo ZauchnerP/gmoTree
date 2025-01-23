@@ -9,7 +9,7 @@ certain page(s) and/or app(s)."><meta property="og:image" content="https://zauch
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,24 +54,25 @@ certain page(s) and/or app(s).</p>
 
 
 <dl><dt id="arg-otree">oTree<a class="anchor" aria-label="anchor" href="#arg-otree"></a></dt>
-<dd><p>A list of data frames that were created
-by <code><a href="import_otree.html">import_otree</a></code>.</p></dd>
+<dd><p>A list of data frames created
+with <code><a href="import_otree.html">import_otree()</a></code>.</p></dd>
 
 
 <dt id="arg-final-apps">final_apps<a class="anchor" aria-label="anchor" href="#arg-final-apps"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the app(s) at which the participants have to finish the
 experiment.</p></dd>
 
 
 <dt id="arg-final-pages">final_pages<a class="anchor" aria-label="anchor" href="#arg-final-pages"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the page(s) at which the participants have to finish the
 experiment.</p></dd>
 
 
 <dt id="arg-saved-vars">saved_vars<a class="anchor" aria-label="anchor" href="#arg-saved-vars"></a></dt>
-<dd><p>The name(s) of variable(s) that need(s) to be
+<dd><p>Character string or character vector.
+The name(s) of variable(s) that need(s) to be
 shown in the list of information on dropout cases.</p></dd>
 
 </dl></div>
@@ -79,8 +80,7 @@ shown in the list of information on dropout cases.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>This function returns a list of information on participants who did not
 finish the experiment.</p>
-<p>In this list, you can find the following information:</p>
-<p>- <code>$full</code> = A data frame that contains information
+<p>In this list, you can find the following information:</p><ul><li><p><code>$full</code> = A data frame that contains information
 on all participants who did not finish the study;
 it shows their participant codes, the names of the apps in which they
 left the experiment,
@@ -90,28 +90,28 @@ the dropout reason (<code>"ENC"</code>, experiment not completed, combined
 with the name of the data frame in which the dropout was observed).
 Because participants usually appear in multiple app data frames,
 the <code>$full</code> data frame may contain several entries for
-each person.</p>
-<p>- <code>$unique</code> = A data frame that contains similar information as
+each person.</p></li>
+<li><p><code>$unique</code> = A data frame that contains similar information as
 the <code>$full</code> data frame but with only one row per participant and
-no information on the data frame in which the dropout was observed.</p>
-<p>- <code>$all_end</code> = A table that provides information
+no information on the data frame in which the dropout was observed.</p></li>
+<li><p><code>$all_end</code> = A table that provides information
 on the app and page combinations
 where participants ended the experiment. This table also includes
 information on participants who did not drop out of the experiment.
 The <code>$all_end</code> table is only shown if an <code>$all_apps_wide</code>
-data frame exists.</p>
-<p>- <code>$codes</code> = A vector containing the participant codes of
-all participants who did not finish the experiment.</p>
-<p>- <code>$count</code> = The number of all participants who did not
-finish the experiment.</p>
-<p>It is important to note that if only the argument <code>final_pages</code> is set,
+data frame exists.</p></li>
+<li><p><code>$codes</code> = A vector containing the participant codes of
+all participants who did not finish the experiment.</p></li>
+<li><p><code>$count</code> = The number of all participants who did not
+finish the experiment.</p></li>
+</ul><p>It is important to note that if only the argument <code>final_pages</code> is set,
 this function does not distinguish between page names that reoccur in
 different apps.</p>
 <p>If the columns <code>end_app</code> and <code>end_page</code> in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
 by using the argument <code>del_empty = TRUE</code>" when
-using <code><a href="import_otree.html">import_otree</a></code>.</p>
+using <code><a href="import_otree.html">import_otree()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -632,7 +632,7 @@ using <code><a href="import_otree.html">import_otree</a></code>.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

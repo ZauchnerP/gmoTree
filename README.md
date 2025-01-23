@@ -49,7 +49,8 @@ the same concept.
 - `messy_chat()`: Checks for a messy `Time` data frame and combines variables that refer to
 the same concept.
 
-- `delete_duplicate()`: Deletes duplicate rows from all data frames in the oTree list.
+- `delete_duplicate()`: Deletes duplicate rows from all data frames 
+in the list of data frames.
 
 ## Dealing with dropouts and deleting cases
 
@@ -58,11 +59,10 @@ app(s) or page(s).
 
 - `delete_dropouts()`: Deletes the data of participants who did not finish at (a) certain
 app(s) or page(s). This function deletes the participants’ data from all
-data frames in the oTree list. Caution: It does not delete the cases
+data frames in the list of data frames. Caution: It does not delete the cases
 from the original CSV and Excel files!
 
-- `delete_cases()`: Deletes the data of specified participants from all data frames in the
-oTree list. Caution: This function does not delete the data from the
+- `delete_cases()`: Deletes the data of specified participants from all data frames in the list of data frames. Caution: This function does not delete the data from the
 original CSV and Excel files!
 
 - `delete_sessions()`: Deletes the data of specified sessions from all data frames in the oTree
@@ -91,7 +91,7 @@ apps.
 
 ## Transferring variables between the apps
 
-- `assignv()`: Copies a variable from the all_apps_wide data frame to the data frames
+- `assignv()`: Copies a variable from the `all_apps_wide` data frame to the data frames
 of all other apps.
 
 - `assignv_to_aaw()`: Copies a variable from one of your data frames to the `all_apps_wide` data
@@ -99,9 +99,9 @@ frame.
 
 ## Before running the experiment
 
-- `show_constant()`: Shows constant variables.
-- `codebook()`: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">"gmoTree Codebooks."</a>
+- `show_constant()`: Shows variables with no variation.
 
+- `codebook()`: Creates a codebook based on the oTree code. See also the vignette <a href="https://zauchnerp.github.io/gmoTree/articles/codebook.html" target="_blank">gmoTree Codebooks.</a>
 
 # References
 

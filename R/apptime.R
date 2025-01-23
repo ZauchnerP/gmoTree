@@ -2,24 +2,25 @@
 #' @description
 #' Calculate the time spent on one app or several apps.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}
-#' @param apps Character. Name(s) of the app(s) for which the time
+#' @param oTree A list of data frames created
+#' with \code{\link[=import_otree]{import_otree()}}.
+#' @param apps Character string or character vector.
+#' Name(s) of the app(s) for which the time
 #' should be calculated.
-#' @param pcode Character. The value of the \code{participant.code}
+#' @param pcode Character string. The value of the \code{participant.code}
 #' variable if the time should only be calculated for one specified participant.
-#' @param plabel Character. The value of the \code{participant.label}
+#' @param plabel Character string. The value of the \code{participant.label}
 #' variable if the time should only be calculated for one specified participant.
 #' @param group_id Integer. The value of the \code{group_id} variable if the
 #' time should only be calculated for one specified group. The \code{group_id}
-#' variable can be created with \code{\link{make_ids}}.
+#' variable can be created with \code{\link[=make_ids]{make_ids()}}.
 #' @param seconds Logical. \code{TRUE} if the output should be
 #' in seconds instead of minutes.
 #' @param rounded Logical. \code{TRUE} if the output should be rounded.
 #' @param digits Integer.
 #' The number of digits to which the output should be rounded.
 #' This parameter has no effect unless \code{rounded = TRUE}.
-#' @param sinfo Character. \code{"session_id"} to use session ID
+#' @param sinfo Character string. \code{"session_id"} to use session ID
 #' for additional information in the data frame
 #' of single durations, \code{"session_code"} to use session codes,
 #' or \code{NULL} if no
@@ -73,22 +74,20 @@ apptime <- function(oTree,
 
   output <- list()
   participant_code_name <- NULL
-  message_vector <- c()
-  duplicate_participants <- c()
-  firststageproblemparticipants <- c()
-  warningparticipants <- c()
-  onepersonnoapp <- c()
   othertime <- FALSE  # Whether seconds_on_page2 should be used
+
+  env <- new.env(parent = emptyenv())
+  env$warningparticipants <- character(0L)
+  env$onepersonnoapp <- character(0L)
+  env$duplicate_participants <- character(0L)
+  env$firststageproblemparticipants <- character(0L)
+  env$message_vector <- character(0L)
 
   # Create list of apps if argument apps is empty  ####
   if (is.null(apps)) {
-    apps <- names(oTree)
-    apps <- apps[apps != "info"]
-    apps <- apps[apps != "all_apps_wide"]
-    apps <- apps[apps != "Time"]
-    apps <- apps[apps != "Chats"]
+    apps <- setdiff(names(oTree), c("info", "all_apps_wide", "Time", "Chats"))
     apps <- apps[!startsWith(prefix = "custexp_", x = apps)]
-    
+
   } else {
     # If apps are defined, check if they are there
     if (length(apps[apps %in% names(oTree)]) != length(apps)) {
@@ -103,8 +102,8 @@ apptime <- function(oTree,
         )
       } else {
         stop(
-            "The apps specified in the argument apps are not in the ",
-            "oTree list of data frames!"
+          "The apps specified in the argument apps are not in the ",
+          "list of data frames!"
         )
       }
       apps <- apps[apps %in% names(oTree)]
@@ -177,7 +176,7 @@ apptime <- function(oTree,
     },
     warning = function(w) {
       # Catch warning, but continue with messy_time()
-      warning(w)
+      # warning not necessary!
       invokeRestart("muffleWarning")
     }
   )
@@ -234,7 +233,7 @@ apptime <- function(oTree,
       sinfo == "session_code" &&
       is.null(oTree$Time$session_code) &&
       is.null(oTree$Time$session__code)) {
-    # Does this possibility even exist?
+    # Does this even occur?
     stop(
       "There is no session_code or session__code in the Time data frame.\n",
       "This might be because you are using an ",
@@ -256,7 +255,7 @@ apptime <- function(oTree,
     )
 
     if (length_session_code_variables > 1L) {
-      # Does this possibility even exist?
+      # Does this even occur?
       # Are there old oTree versions where this could be relevant?
       stop(
         "More than one variable referred to the session code ",
@@ -277,26 +276,32 @@ apptime <- function(oTree,
     "- Duration = NA!!",
     " This applies to all participants listed in $first_app_one_page."
   )
+  errormax1min1minus <- paste0(
+    "If the first app only has one page, ",
+    "the indices for the first and the last page are the same ",
+    "- Duration can not be calculated."
+  )
+
 
   duplicatewarning <- paste0(
     "Some participants have duplicate data and are not ",
     "used in the analyses. ",
-    "See $dulicate_participants!"
+    "See $duplicate_participants!"
   )
 
   # Transform plabel to pcode identifier  ####
   if (!is.null(plabel)) {
-    if (length(unique(oTree$all_apps_wide$participant.label)) ==
-        length(oTree$all_apps_wide$participant.label)) {
-      pcode <- oTree$all_apps_wide$participant.code[
-        oTree$all_apps_wide$participant.label == plabel
-      ]
-    } else {
+    if (anyDuplicated(oTree$all_apps_wide$participant.label)) {
       stop(
         "You do not have unique participant labels in your ",
         "all_apps_wide data frame! The argument plabel is ",
         "not working in such a case!"
       )
+
+    } else {
+      pcode <- oTree$all_apps_wide$participant.code[
+        oTree$all_apps_wide$participant.label == plabel]
+
     }
   }
 
@@ -339,8 +344,10 @@ apptime <- function(oTree,
   }
 
   # Get the minimum page index of an app (step 2)
-  calc_minpageindex2 <- function(all_indices, app_indices,
-                                 minpageindex, who) {
+  calc_minpageindex2 <- function(all_indices,
+                                 app_indices,
+                                 minpageindex, who,
+                                 env) {
     # Adjust min and max page index
     # min page index should jump to the next lower page_index
     # or stay at 1 if it was 1 and used in the old oTree version
@@ -359,15 +366,18 @@ apptime <- function(oTree,
 
     # Warning: If there is only one page in the first app
     if (maxpageindex == 1L && minpageindex == 1L) {
-      firststageproblemparticipants <<- c(firststageproblemparticipants, who)
-      message_vector <<- c(message_vector, errormax1min1)
+
+      env$firststageproblemparticipants <-
+        c(env$firststageproblemparticipants, who)
+
+      env$message_vector <-
+        c(env$message_vector, errormax1min1)
     }
-    output <- list(
+
+    return(list(
       min = minpageindex,
       max = maxpageindex
-    )
-
-    return(output)
+    ))
   }
 
   # Get time stamp for the minimum page index of an app
@@ -389,11 +399,13 @@ apptime <- function(oTree,
     duration <- (maxtimestamp - mintimestamp) / divsec
 
     if (length(mintimestamp) > 1L || length(maxtimestamp) > 1L) {
-      duplicate_participants <<- c(
-        duplicate_participants,
+      env$duplicate_participants <- c(
+        env$duplicate_participants,
         who
       )
-      message_vector <<- c(duplicatewarning, message_vector)
+
+      env$message_vector <- c(duplicatewarning,
+                              env$message_vector)
     }
 
     return(duration)
@@ -404,7 +416,9 @@ apptime <- function(oTree,
   specified_duration <- function(participant_code_name,
                                  who,
                                  appname,
-                                 several_participants = FALSE) {
+                                 env,
+                                 several_participants = FALSE
+                                 ) {
 
     app_indices <- calc_pages_per_app_indices(
       participant_code_name = participant_code_name,
@@ -416,16 +430,18 @@ apptime <- function(oTree,
       who = who)
 
     # Check for duplicate pages   ####
-    if (several_participants) {
+    if (several_participants && anyDuplicated(all_indices)) {
       # Return NA for this person and continue to the next
       # for one participant of all (all_time)
-      if (any(duplicated(all_indices))) {
-        duplicate_participants <<- c(duplicate_participants, who)
-        message_vector <<- c(duplicatewarning, message_vector)
-        # Do not throw a warning here, because the handling of
-        # duplicate cases is handled a level above.
-        return(NA)
-      }
+
+      env$duplicate_participants <- c(env$duplicate_participants, who)
+
+      env$message_vector <- c(duplicatewarning, env$message_vector)
+      # Do not throw a warning here, because the handling of
+      # duplicate cases is handled a level above.
+
+      return(NA)
+
     } # Duplicates for only one person are checked at another point!
 
     if (!othertime) {
@@ -444,7 +460,8 @@ apptime <- function(oTree,
           all_indices = all_indices,
           app_indices = app_indices,
           minpageindex = minpageindex,
-          who = who
+          who = who,
+          env = env
         ) # Info: Here, firststageproblemparticipants are calculated
 
         minpageindex <- newminmax$min
@@ -463,18 +480,21 @@ apptime <- function(oTree,
         }
       } else {
         if (!several_participants) {
-          onepersonnoapp <<- c(onepersonnoapp, appname)
+          env$onepersonnoapp <- c(env$onepersonnoapp, appname)
 
         } else if (several_participants) {
-          message_vector <<- unique(message_vector)
-          message_vector <<-
-            c(message_vector,
+
+          env$message_vector <- unique(env$message_vector)
+
+          env$message_vector <-
+            c(env$message_vector,
               paste0(
                 "For some participants, no duration could be ",
                 "calculated. See list in $warnings."))
 
-          warningparticipants <<- c(warningparticipants, who)
+          env$warningparticipants <- c(env$warningparticipants, who)
         }
+
         duration <- NA
       }
     } else if (othertime) {
@@ -500,20 +520,26 @@ apptime <- function(oTree,
 
       if (is.na(duration)) {
         if (several_participants) {
-          message_vector <<- unique(message_vector)
-          message_vector <<-
+          env$message_vector <- unique(env$message_vector)
+
+          env$message_vector <-
             c(
-              message_vector,
+              env$message_vector,
               paste0(
                 "For some participants, no duration could be ",
                 "calculated. See list in $warnings. Did they ",
                 "make it to the app(s)?"
               )
             )
-          warningparticipants <<- c(warningparticipants, who)
+
+          env$warningparticipants <- c(env$warningparticipants, who)
+
         } else {
-          message_vector <<- unique(message_vector)
-          message_vector <<- c(message_vector, paste0(
+          # TODO #1: This message is not returned yet.
+          # Don't know I should do this
+          env$message_vector <- unique(env$message_vector)
+
+          env$message_vector <- c(env$message_vector, paste0(
             "Duration could not be calculated for person ",
             who, "in app ", appname,
             "."))
@@ -533,6 +559,7 @@ apptime <- function(oTree,
 
   # Calculate time for a specified individual
   specified_time <- function() {
+
     # Calls time calculation for (a) specific individual(s)
 
     # Duration  ####
@@ -542,7 +569,8 @@ apptime <- function(oTree,
       duration <- specified_duration(
         participant_code_name = participant_code_name,
         who = pcode,
-        appname = appname
+        appname = appname,
+        env = env
       )
     } else if (!(pcode %in% unique(oTree$Time$participant__code)) &&
                !(pcode %in% unique(oTree$Time$participant_code))
@@ -569,15 +597,13 @@ apptime <- function(oTree,
   }
 
   # Function for all individuals for specified app names
-  # appname is set before this function is called
-  all_time <- function() {
-
+  all_time <- function(appname, env) {
     # Create variables for all participants (all_time)
-    singledurations <- data.frame()
+    env$singledurations <- data.frame()
     # Reset the vectors because they are shown for each app individually
-    firststageproblemparticipants <<- c() # Calculated in specified_duration()
-    warningparticipants <<- c()
-    message_vector <<- c()
+    env$firststageproblemparticipants <- character(0L)
+    env$warningparticipants <- character(0L)
+    env$message_vector <- character(0L)
 
     # Make list of all participants for all participants (all_time)
     if (is.null(group_id)) {
@@ -596,22 +622,22 @@ apptime <- function(oTree,
       duration <- specified_duration(participant_code_name,
                                      who = i,
                                      appname = appname,
-                                     several_participants = TRUE) # Whether specified_duration is separately run for several people
+                                     several_participants = TRUE,
+                                     env = env)
 
       # Add to data frame  ####
-
       if (!is.null(duration) && !is.na(duration)) {
         session <- get_session(who = i)
 
-        singledurations <- plyr::rbind.fill(
-          singledurations,
+        env$singledurations <- plyr::rbind.fill(
+          env$singledurations,
           data.frame(
             participant = i,
             session = ifelse(!is.null(sinfo), session, NA),
             duration = duration))
 
         if (is.null(sinfo)) {
-          singledurations <- singledurations[, c(
+          env$singledurations <- env$singledurations[, c(
             "participant",
             "duration")]
         }
@@ -619,121 +645,104 @@ apptime <- function(oTree,
     }
 
     # Single durations data frame is empty - dealing with the reasons  ####
-    if (nrow(singledurations) == 0L) {
+    env$singledurationsthere <- TRUE
 
-      if (!is.null(duplicate_participants) &&
-          length(duplicate_participants) > 1L) {
+    if (nrow(env$singledurations) == 0L) {
 
-        # Duplicate data
+      env$singledurationsthere <- FALSE
 
-        output[[appname]]$messages <-
+      if (!is.null(env$duplicate_participants) &&
+          length(env$duplicate_participants) > 1L) {
+
+        env$message_vector <-
           paste0(
             "Durations not calculated. ",
             "There are duplicate data in your ",
             "Time data frame.")
 
-        return(output)
-
       } else {
 
-        output[[appname]]$first_app_one_page <- firststageproblemparticipants
-        message_vector <<- unique(message_vector)
-
-        if (length(listallparticipants) ==
-            length(firststageproblemparticipants)) {
-
-          # If all are first stage participants
-
-          output[[appname]]$message <- paste0(
-            "Durations not calculated. ", message_vector)
-        } else {
-
-          # Several reasons
-
-          output[[appname]]$message <- paste0(
-            "Durations not calculated. ",
-            "Check your data before rerunning ",
-            "the function. Plus: ", message_vector)
+        if (length(env$message_vector) > 0L) {
+          env$message_vector <- unique(env$message_vector)
         }
 
-        # Return from all_time()
-        return(output)
+        if (length(listallparticipants) ==
+            length(env$firststageproblemparticipants)) {
+
+          # If all are first stage participants
+          env$message_vector <- paste0(
+            "Durations not calculated. ", errormax1min1minus)
+
+        } else {
+          # Several reasons
+          env$message_vector <- paste0(
+            "Durations not calculated. ",
+            "Check your data before rerunning ",
+            "the function.")
+        }
       }
     }
 
     # Make output for all participants  ####
     return(call_output_all_participants(
-      singledurations,
-      message_vector,
-      firststageproblemparticipants,
-      warningparticipants
+      appname = appname,
+      env = env
     ))
   }
-
 
   # Make sub functions 3 - output  ####
 
   # Make output for a specific app if there is only 1 app in the final output
   # Get min, max, mean, and single durations
-  output_oneapp <- function(singledurations,
-                            message_vector,
-                            firststageproblemparticipants,
-                            warningparticipants) {
-    output[["mean_duration"]] <-
-      ifelse(rounded,
-             round(
-               mean(singledurations$duration,
-                    na.rm = TRUE
-               ),
-               digits = digits
-             ),
-             mean(singledurations$duration,
-                  na.rm = TRUE
-             )
-      )
+  output_oneapp <- function(env) {
+    if (env$singledurationsthere) {
+      output[["mean_duration"]] <-
+        ifelse(rounded,
+               round(
+                 mean(env$singledurations$duration,
+                      na.rm = TRUE), digits = digits),
+               mean(env$singledurations$duration,
+                    na.rm = TRUE))
 
-    output[["min_duration"]] <-
-      ifelse(rounded,
-             round(
-               min(singledurations$duration,
-                   na.rm = TRUE
-               ),
-               digits = digits
-             ),
-             min(singledurations$duration,
-                 na.rm = TRUE
-             )
-      )
+      output[["min_duration"]] <-
+        ifelse(rounded,
+               round(
+                 min(env$singledurations$duration,
+                     na.rm = TRUE), digits = digits),
+               min(env$singledurations$duration, na.rm = TRUE))
 
-    output[["max_duration"]] <-
-      ifelse(rounded,
-             round(
-               max(singledurations$duration,
-                   na.rm = TRUE
-               ),
-               digits = digits
-             ),
-             max(singledurations$duration,
-                 na.rm = TRUE
-             )
-      )
+      output[["max_duration"]] <-
+        ifelse(rounded,
+               round(
+                 max(env$singledurations$duration,
+                     na.rm = TRUE), digits = digits),
+               max(env$singledurations$duration, na.rm = TRUE))
 
-    output[["single_durations"]] <- singledurations
+      output[["single_durations"]] <- env$singledurations
 
-    if (rounded) {
-      output[["single_durations"]]$duration <-
-        round(output[["single_durations"]]$duration, digits = digits)
+      if (rounded) {
+        output[["single_durations"]]$duration <-
+          round(output[["single_durations"]]$duration, digits = digits)
+      }
+
+      # These warnings are only shown if there are also valid values in the
+      # single durations data frames
+      if (length(env$warningparticipants) > 0L) {
+        output[["warnings"]] <- unique(env$warningparticipants)
+      }
+
+      if (length(env$duplicate_participants) > 0L) {
+        output[["duplicate_participants"]] <- unique(env$duplicate_participants)
+      }
+
+      if (length(env$firststageproblemparticipants) > 0L) {
+        output[["first_app_one_page"]] <- env$firststageproblemparticipants
+      }
     }
 
-    output[["messages"]] <- unique(message_vector)
-    output[["first_app_one_page"]] <- firststageproblemparticipants
-
-    if (length(warningparticipants) > 0L) {
-      output[["warnings"]] <- unique(warningparticipants)
-    }
-
-    if (length(duplicate_participants) > 0L) {
-      output[["duplicate_participants"]] <- unique(duplicate_participants)
+    # For all, even if single durations not there
+    if (length(env$message_vector) > 0L) {
+      output[["messages"]] <- unique(env$message_vector)
     }
 
     return(output)
@@ -741,85 +750,77 @@ apptime <- function(oTree,
 
   # Make output for a specific app if there are more apps in the final output
   # Get min, max, mean, and single durations
-  output_moreapps <- function(singledurations,
-                              message_vector,
-                              firststageproblemparticipants,
-                              warningparticipants) {
-    if (nrow(singledurations) > 0L) {
+  output_moreapps <- function(appname, env) {
+
+    if (nrow(env$singledurations) > 0L) {
       output[[appname]][["mean_duration"]] <-
         ifelse(rounded,
                round(
-                 mean(singledurations$duration,
+                 mean(env$singledurations$duration,
                       na.rm = TRUE), digits = digits),
-               mean(singledurations$duration,
+               mean(env$singledurations$duration,
                     na.rm = TRUE))
 
       output[[appname]][["min_duration"]] <-
         ifelse(rounded,
                round(
-                 min(singledurations$duration,
-                     na.rm = TRUE
-                 ),
-                 digits = digits
-               ),
-               min(singledurations$duration,
-                   na.rm = TRUE
-               )
-        )
+                 min(env$singledurations$duration,
+                     na.rm = TRUE), digits = digits),
+               min(env$singledurations$duration, na.rm = TRUE))
 
       output[[appname]][["max_duration"]] <-
         ifelse(rounded,
-               round(
-                 max(singledurations$duration,
-                     na.rm = TRUE),
+               round(max(env$singledurations$duration, na.rm = TRUE),
                  digits = digits),
-               max(singledurations$duration,
-                   na.rm = TRUE
-               ))
+               max(env$singledurations$duration, na.rm = TRUE))
 
       output[[appname]]$single_durations <-
-        singledurations[order(singledurations$duration), ]
+        env$singledurations[order(env$singledurations$duration), ]
 
       if (rounded) {
         output[[appname]]$single_durations$duration <-
           round(output[[appname]]$single_durations$duration, digits = digits)
       }
 
-      output[[appname]]$messages <- unique(message_vector)
-
-      output[[appname]]$first_app_one_page <- firststageproblemparticipants
-
-      if (length(warningparticipants) > 0L) {
-        output[[appname]]$warnings <- unique(warningparticipants)
+      if (length(env$warningparticipants) > 0L) {
+        output[[appname]]$warnings <- unique(env$warningparticipants)
       }
-    } # Else:
-    # If single durations are not there
-    # This was already dealt with at another level
+
+      if (length(env$duplicate_participants) > 0L) {
+        output[[appname]][["duplicate_participants"]] <-
+          unique(env$duplicate_participants)
+      }
+
+      if (length(env$firststageproblemparticipants) > 0L) {
+        output[[appname]][["first_app_one_page"]] <-
+          env$firststageproblemparticipants
+      }
+    }
+
+    # For all, even if single durations not there
+    if (length(env$message_vector) > 0L) {
+      output[[appname]][["messages"]] <- unique(env$message_vector)
+    }
 
     return(output)
   }
 
   # Call output_oneapp or output_moreapps
-  call_output_all_participants <- function(singledurations, message_vector,
-                                           firststageproblemparticipants,
-                                           warningparticipants) {
+  call_output_all_participants <- function(appname, env) {
+
     # Output for all participants or several
     if (length(apps) == 1L) {
-      return(output_oneapp(
-        singledurations,
-        message_vector,
-        firststageproblemparticipants,
-        warningparticipants
-      ))
-    } else {
-      message_vector <<- unique(message_vector)
 
-      return(output_moreapps(
-        singledurations,
-        message_vector,
-        firststageproblemparticipants,
-        warningparticipants
-      ))
+      return(output_oneapp(env = env))
+
+    } else {
+      env$message_vector <- unique(env$message_vector)
+
+      output <- output_moreapps(appname = appname,
+                                env = env)
+
+
+      return(output)
     }
   }
 
@@ -839,7 +840,7 @@ apptime <- function(oTree,
               oTree$Time[[participant_code_name]] == who
             ])
         } else if (!is.null(oTree$Time$session__code)) {
-          # Does this even exist?
+          # Does this even occur?
           # I don't have session__code in my current data
           session <-
             unique(oTree$Time$session__code[
@@ -858,7 +859,8 @@ apptime <- function(oTree,
       output <- specified_time()
     } else {
       # Time for app for all participants  ####
-      output <- all_time()
+      output <- all_time(appname = appname,
+                         env = env)
 
       if (length(output) == 1L &&
           grepl("Durations not calculated", output)) {
@@ -867,13 +869,30 @@ apptime <- function(oTree,
     }
   }
 
+  # Check if all messages are identical
+  mesvec <- c()
+  for (name in names(output)) {
 
-  if (!is.null(pcode) && length(onepersonnoapp) > 0L) {
-      warning("Duration could not be calculated for the person in app(s): ",
-              paste(onepersonnoapp, collapse = ", "), ".")
-    
+    if (length(names(output[[name]])) == 1L &&
+        "messages" %in% names(output[[name]])) {
+      mesvec <- c(output[[name]][["messages"]], mesvec)
+    }
   }
 
+  if (!is.null(mesvec) &&
+      length(mesvec) == length(names(output))) {
+    all_equal <- all(mesvec == mesvec[1L])
+    if (all_equal) {
+      output <- list()
+      output[["messages"]] <- unique(mesvec)
+    }
+  }
+
+  if (!is.null(pcode) && length(env$onepersonnoapp) > 0L) {
+    warning("Duration could not be calculated for the person in app(s): ",
+            paste(env$onepersonnoapp, collapse = ", "), ".")
+
+  }
 
   # Return  ####
   return(output)

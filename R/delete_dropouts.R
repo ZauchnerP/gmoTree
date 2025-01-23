@@ -6,8 +6,8 @@
 #' Caution 1: This function does not delete cases from the original CSV and
 #' Excel files!
 #'
-#' Caution 2: This function does not delete cases from custom exports if the
-#' custom exports do not have a variable named \code{participant.code} and
+#' Caution 2: This function does not delete cases from custom export
+#' data frames if they do not have a variable named \code{participant.code} and
 #' a variable named \code{session.code}!
 #'
 #' Caution 3: This function does not delete any data from
@@ -17,27 +17,29 @@
 #' other apps. Hence, this function does not delete data in this data frame.
 #' Please do this manually if necessary!)
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}
-#' @param final_apps Character.
+#' @inheritParams apptime
+#' @param final_apps Character string or character vector.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment.
-#' @param final_pages Character.
+#' @param final_pages Character string or character vector.
 #' The name(s) of the page(s) at which the participants have to finish the
 #' experiment.
-#' @param saved_vars Character. The name(s) of variable(s) that need(s) to be
+#' @param saved_vars Character string or character vector.
+#' The name(s) of variable(s) that need(s) to be
 #' stored in the list of information on deleted cases
 #' in \code{$info$deleted_cases}.
-#' @param reason Character. The reason for deletion that should be stored in
+#' @param reason Character string.
+#' The reason for deletion that should be stored in
 #' the list of information on deleted cases in \code{$info$deleted_cases}.
-#' @param inconsistent Character. Should the function continue or be stopped if
+#' @param inconsistent Character string.
+#' Should the function continue or be stopped if
 #' at least one participant has inconsistent end_pages, inconsistent end_apps,
 #' or both? To continue, type \code{"yes"},
 #' to stop the function, type \code{"no"}.
 #' @param info Logical. \code{TRUE} if a brief information on the dropout
 #' deletion process should be printed.
 #' @returns
-#' This function returns a duplicate of the original oTree list of data frames
+#' This function returns a duplicate of the original list of data frames
 #' but without the deleted cases.
 #'
 #' It adds information on the deleted cases to \code{$info$deleted_cases}. (This
@@ -81,7 +83,7 @@
 #' these variables were not saved by oTree for the specific participants.
 #' This could be because empty rows were not deleted. This can be done
 #' by using the argument \code{del_empty = TRUE} when
-#' using \code{\link{import_otree}}.
+#' using \code{\link[=import_otree]{import_otree()}}.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
@@ -146,7 +148,7 @@ delete_dropouts <- function(oTree,
   if (!("all_apps_wide" %in% names(oTree)) && !is.null(saved_vars)) {
     stop("The argument \"saved_vars\" only works when you ",
          "have \"all_apps_wide\" in your ",
-         "oTree list of data frames.")
+         "list of data frames.")
   } else if ("all_apps_wide" %in% names(oTree) &&
              !is.null(saved_vars) &&
              !(all(saved_vars %in% colnames(oTree$all_apps_wide)))) {
@@ -310,6 +312,7 @@ delete_dropouts <- function(oTree,
                       "end_app",
                       "end_page"),
                     saved_vars)
+
     dropout_data2 <- cbind(unique(dropout_data[uniquelist]),
                            reason = reason
     )

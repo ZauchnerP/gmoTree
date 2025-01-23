@@ -9,8 +9,7 @@
 #' storing the data using the newer oTree version's variable names
 #' and removing the outdated variables.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
+#' @inheritParams apptime
 #' @param combine Logical. \code{TRUE} if all variables referring to epoch time
 #' should be merged and/or all variables referring to participant code
 #' should be merged in case data of several versions of oTree are used.

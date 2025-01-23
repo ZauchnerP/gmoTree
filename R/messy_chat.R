@@ -10,8 +10,7 @@
 #' and removing the outdated variables.
 #'
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
+#' @inheritParams apptime
 #' @param combine Logical. \code{TRUE} if all variables referring to
 #' the session code should be merged and/or all variables referring
 #' to participant code should be merged in case data of several versions

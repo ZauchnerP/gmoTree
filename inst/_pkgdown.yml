@@ -1,11 +1,7 @@
 # This is the file that should be modified!
 
 # Create a footer for the impressum
-footer:
-  structure:
-    left: legal
-  components:
-    legal: <a href="impressum.html">Site notice</a>
+# TODO insert impressum again
 
 # Make site searchable
 development:
@@ -31,6 +27,10 @@ meta:
     image:
       src: man/figures/logo.png 
       alt: "gmoTree package logo"
+      
+# Make package linkable by other locally installed packages
+deploy:
+  install_metadata: true
 
 # # Add logo
 # template:

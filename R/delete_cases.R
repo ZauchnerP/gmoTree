@@ -1,13 +1,13 @@
 #' Delete specific cases
 #' @description
-#' Delete specific cases from all data frames in the oTree list.
+#' Delete specified cases from all data frames in the list of data frames.
 #'
 #' Caution 1: This function does not delete cases from the original
 #' CSV and Excel files!
 #'
-#' Caution 2: This function does not delete cases from custom exports
-#' and custom data frames if these data frames do not have a variable
-#' named participant.code!
+#' Caution 2: This function does not delete cases from
+#' custom data frames if these data frames do not have a variable
+#' named \code{participant.code}!
 #'
 #' Caution 3: This function does not delete any data from
 #' the \code{$Chats} data frame!
@@ -17,16 +17,19 @@
 #' Hence, this function does not delete data in this data frame.
 #' Please do this manually if necessary!)
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
-#' @param pcodes Character. The value(s) of the participant.code variable of
-#' the participants whose data should be removed.
-#' @param plabels Character. The value(s) of the participant.label variable of
-#' the participants whose data should be removed.
-#' @param saved_vars Character. The name(s) of variable(s) that need(s) to be
+#' @inheritParams apptime
+#' @param pcodes Character string or character vector.
+#' The value(s) of the \code{participant.code} variable of
+#' the participant(s) whose data should be removed.
+#' @param plabels Character string or character vector.
+#' The value(s) of the \code{participant.label} variable of
+#' the participant(s) whose data should be removed.
+#' @param saved_vars Character string or character vector.
+#' The name(s) of variable(s) that need(s) to be
 #' stored in the list of information on deleted cases
 #' in \code{$info$deleted_cases}.
-#' @param reason Character. The reason for deletion that should be stored in
+#' @param reason Character string.
+#' The reason for deletion that should be stored in
 #' the list of information on deleted cases in \code{$info$deleted_cases}.
 #' @param omit Logical. \code{TRUE} if the deleted cases should not be added to
 #' the information on deleted cases in \code{$info$deleted_cases}.
@@ -44,7 +47,12 @@
 #'
 #' - \code{$count} = The number of participants in \code{$codes}.
 #'
-#' - \code{$full} and \code{$unique} = The data frames \code{$full} and \code{$unique} contain information on each deleted participant and the reason why they were deleted. The entries to the \code{$full} and the \code{$unique} data frames are the same. Columns \code{"end_app"} and \code{"end_page"} are left empty intentionally because they are only filled by the \code{\link{delete_dropouts}} function.
+#' - \code{$full} and \code{$unique} = The data frames \code{$full}
+#' and \code{$unique} contain information on each deleted participant and
+#' the reason why they were deleted. The entries to the \code{$full} and
+#' the \code{$unique} data frames are the same. Columns \code{end_app}
+#' and \code{end_page} are left empty intentionally because they are only
+#' filled by the \code{\link[=delete_dropouts]{delete_dropouts()}} function.
 #'
 #' @examples
 #' # Use package-internal list of oTree data frames
@@ -52,25 +60,27 @@
 #'
 #' # Delete only one case
 #' oTree2 <- delete_cases(oTree,
-#'                        pcodes = "xmxl46rm",
-#'                        reason = "requested")
+#'   pcodes = "xmxl46rm",
+#'   reason = "requested")
 #'
 #' # Show changes in row numbers
-#' print(paste("Row numbers before deletion: ", nrow(oTree$all_apps_wide), nrow(oTree$survey),
-#' nrow(oTree$Time), nrow(oTree$Chats)))
+#' print(paste("Row numbers before deletion: ",
+#'   nrow(oTree$all_apps_wide), nrow(oTree$survey),
+#'   nrow(oTree$Time), nrow(oTree$Chats)))
 #'
-#' print(paste("Row numbers after deletion: ", nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-#' nrow(oTree2$Time), nrow(oTree2$Chats)))
+#' print(paste("Row numbers after deletion: ",
+#'   nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
+#'   nrow(oTree2$Time), nrow(oTree2$Chats)))
 #'
 #' # Delete several cases
 #' deletionlist <- c("4zhzdmzo", "xmxl46rm")
 #' oTree2 <- delete_cases(oTree,
-#'                        pcodes = deletionlist,
-#'                        reason = "requested")
+#'   pcodes = deletionlist,
+#'   reason = "requested")
 #'
 #' # Show row numbers again
 #' print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-#' nrow(oTree2$Time), nrow(oTree2$Chats)))
+#'   nrow(oTree2$Time), nrow(oTree2$Chats)))
 #'
 #' # Show information on all deleted cases (also dropouts):
 #' oTree2$info$deleted_cases$full
@@ -83,8 +93,8 @@
 #'
 #' # Show row numbers again
 #' print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-#' nrow(oTree2$Time), nrow(oTree2$Chats)))
-#' 
+#'   nrow(oTree2$Time), nrow(oTree2$Chats)))
+#'
 #' # Check the "full" deletion information
 #' oTree2$info$deleted_cases$full
 #'
@@ -98,8 +108,8 @@
 #'
 #' # Show row numbers again
 #' print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-#' nrow(oTree2$Time), nrow(oTree2$Chats)))
-#' 
+#'   nrow(oTree2$Time), nrow(oTree2$Chats)))
+#'
 #' # Check the "full" deletion information
 #' oTree2$info$deleted_cases$full
 #'
@@ -110,22 +120,22 @@
 #' # Show number of all deleted cases
 #' length(oTree2$info$deleted_cases$codes)
 #' oTree2$info$deleted_cases$count
-#' 
+#'
 #' # Delete a session and delete a single case from another session
 #' oTree2 <- delete_sessions(oTree,
 #'   scodes = c("vd1h01iv"),
-#'   reason = "Server Crash", 
+#'   reason = "Server Crash",
 #'   saved_vars = "dictator.1.group.id_in_subsession")
 #' oTree2 <- delete_cases(oTree2,
-#'                        pcodes = "4zhzdmzo",
-#'                        reason = "requested")
-#'                        
+#'   pcodes = "4zhzdmzo",
+#'   reason = "requested")
+#'
 #' # Check the "full" deletion information
 #' oTree2$info$deleted_cases$full
-#' 
+#'
 #' # See codes of deleted variables
 #' oTree2$info$deleted_cases$codes
-#' 
+#'
 #' # See number of deleted variables
 #' oTree2$info$deleted_cases$count
 
@@ -138,11 +148,11 @@ delete_cases <- function(oTree,
                          omit = FALSE,
                          info = FALSE) {
 
-
   env <- new.env(parent = emptyenv())
   env$messed_message <- character(0L)
   env$chat_messed <- FALSE
   env$time_messed <- FALSE
+
   all_deleted <- character(0L)
   deletion_frame <- data.frame()
 
@@ -171,7 +181,7 @@ delete_cases <- function(oTree,
                               "combine=TRUE before running this function.")
   })
 
-  # Check mixed Chat data
+  # Check mixed Chats data
   tryCatch({
     messy_chat(oTree, combine = FALSE)
   }, error = function(e) {
@@ -215,7 +225,7 @@ delete_cases <- function(oTree,
   if (!("all_apps_wide" %in% names(oTree)) && !is.null(saved_vars)) {
     stop("The argument \"saved_vars\" only works when ",
          "you have \"all_apps_wide\" in your ",
-         "oTree list of data frames.")
+         "list of data frames.")
   }
 
   if (!(is.null(saved_vars)) &&
@@ -229,6 +239,10 @@ delete_cases <- function(oTree,
     if (!is.null(pcodes)) {
 
       # Error messages
+      if (!is.character(pcodes)) { # Automatically returns "not found" error if not there
+        stop("Error: \"pcodes\" must be a character (vector).")
+      }
+
       if (anyNA(pcodes)) {
         stop("At least one element in pcodes is NA")
       }
@@ -241,6 +255,11 @@ delete_cases <- function(oTree,
 
     # If plabels was chosen  ####
     if (!is.null(plabels)) {
+
+      # Error messages # Automatically returns "not found" error if not there
+      if (!is.character(plabels)) {
+        stop("Error: \"plabels\" must be a character (vector).")
+      }
 
       if (anyNA(plabels)) {
         stop("At least one element in plabel is NA")

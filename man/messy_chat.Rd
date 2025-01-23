@@ -13,8 +13,8 @@ messy_chat(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
 \item{combine}{Logical. \code{TRUE} if all variables referring to
 the session code should be merged and/or all variables referring

@@ -1,7 +1,7 @@
 ---
 title: "gmoTree Codebooks"
 author: "Patricia F. Zauchner"
-date: "2023-09-21 (updated: 2024-12-06)"
+date: "2023-09-21 (updated: 2025-02-04)"
 output:
   rmarkdown::html_vignette:
     toc: yes
@@ -17,13 +17,15 @@ library(gmoTree)
 
 # Overview
 
-The `gmoTree` package provides tools for generating codebooks based on data from the <a href="https://www.otree.org/" target="_blank">oTree</a> (Chen et al., 2016) framework with the function `codebook()`. This vignette introduces its key features and functionalities. 
+With the `codebook()` function, you can generate codebooks based on your <a href="https://www.otree.org/" target="_blank">oTree</a> (Chen et al., 2016) code. This vignette introduces its key features and functionalities.
 
-Disclaimer: This code has been tested with both custom implementations and official oTree sample codes.^[The oTree sample codes can be accessed when <a href="https://otree.readthedocs.io/en/latest/install-nostudio.html#install-nostudio" target="_blank">setting up an oTree project</a> (Chen et al., 2016). All examples presented in this vignette are based on the official oTree sample code, with minor modifications to meet the needs of this package.] However, due to the complexity of oTree setups, it may not address all variations. Please review your output carefully, and feel free to open a <a href="https://github.com/ZauchnerP/gmoTree/issues" target = "_blank">GitHub issue</a> if you encounter any problems.
+Disclaimer: This code was tested with both custom implementations and official oTree sample codes.^[The oTree sample codes can be accessed when <a href="https://otree.readthedocs.io/en/latest/install-nostudio.html#install-nostudio" target="_blank">setting up an oTree project</a> (Chen et al., 2016). All examples presented in this vignette are based on the official oTree sample code, with minor modifications to meet the needs of this package.] However, due to the complexity of oTree setups, it may not address all variations. Please review your output carefully, and feel free to open a <a href="https://github.com/ZauchnerP/gmoTree/issues" target = "_blank">GitHub issue</a> if you encounter any problems.
+
+`Session` and `Participant` variables as well as built-in variables are not shown in the codebooks! See also further important limitations of this function in the details section of `codebook()`.
 
 # Running the code
 
-In its simplest form, the function requires only the path to your oTree code. The following code reads the contents of your oTree file, saves a file containing your codebook in your working directory, and returns a list named `cbook`, containing the extracted information.
+In its simplest form, the function requires only the path to your oTree code folder. The following code reads the contents of your oTree folder, saves a PDF file containing your codebook in your working directory, and returns a list named `cbook`, containing the extracted information.
 
 ```
 cbook <- codebook("D:/pathtoyourproject/oTree_codes")
@@ -31,37 +33,35 @@ cbook <- codebook("D:/pathtoyourproject/oTree_codes")
 
 # Codebook structure and output
 
-The output is structured with clear headings:
+## File output
 
-- Heading Level 1: Represents each app in the oTree data.
-- Heading Level 2: `Group` and `Player` variables, categorized within each app. Showing the class `Constants` is optional and can be turned off by using the argument `include_cons = FALSE`.
+The output file is structured as follows: Each application is represented as a chapter (heading level 1), with subchapters for the variables from the `Group` and `Player` classes (heading level 2). The display of the `Constants` class is optional and enabled by default. It can be disabled with the argument `include_cons = FALSE`. The display of the `Subsession` class is also optional, but disabled by default. I can be enabled with `include_subs = TRUE`.
 
 <img src= "structure.png" style = "border:1px solid" alt="Image showing an example of a heading structure of a PDF file with Level 1 and Level 2 headings">
 
-The example below shows the output for the `cournot` app, which includes all `Constants`, `Group`, and `Player` variables. If a class contains no information, the heading will still appear, along with the message "Empty class."
+The example below shows the output for the `cournot` app, which includes all variables from the `Constants`, `Group`, and `Player` classes. If a class contains no custom variables, the class heading will still appear, accompanied by the message “No model fields except the built-in ones.”
 
-<img src="app.png" style = "border:1px solid" alt="Image showing the rankaversion app information in the PDF output">
+<img src="app.png" style = "border:1px solid" alt="Image showing the cournot app information in the PDF output">
 
-Use `output = "list"` to bypass file creation. This option returns all the information in list format, which can then be used in R Markdown to design a custom codebook. Below is an example of how such a list output looks like. (The argument `doc_info = FALSE` suppresses messages about missing variable documentation.)
+## List output
+
+Use `output = "list"` to bypass file creation. This option returns all the information in list format, which can be used in R Markdown for custom codebooks. Below is an example of such a list output. (The argument `doc_info = FALSE` suppresses messages about missing documentation for variables.)
 
 
-```{r cornout codebook}
+```{r cournot codebook}
 # Create the codebook list
-cbook <- codebook(path = system.file(path = "extdata/ocode_new", 
-                                     package = "gmoTree"), 
-                  output = "list", 
+cbook <- codebook(path = system.file(path = "extdata/ocode_new",
+                                     package = "gmoTree"),
+                  output = "list",
                   doc_info = FALSE)
 
-
-str(cbook, 1)  # Show all apps 
+str(cbook, 1)  # Show all apps
 print(cbook$cournot)  # Only show cournot app
 ```
 
 # Choosing what to show
 
-## Apps
-
-Per default, all apps are included in the codebook. To generate a codebook for only one app, use the `app` argument. For example, to generate a codebook for the `cournot` app:
+By default, all apps are included in the codebook. To generate a codebook for only one app, use the `app` argument. For example, to generate a codebook for the `cournot` app:
 
 ```{r one app}
 cbook <- codebook(
@@ -89,7 +89,7 @@ cbook <- codebook(
 str(cbook, 1)
 ```
 
-You can also choose all but remove one or more apps. Here is an example that removes the app `prisoner`:
+You can also show all apps except for one or more. Here is an example that removes the app `prisoner`:
 
 ```{r removing apps}
 cbook <- codebook(
@@ -102,13 +102,6 @@ cbook <- codebook(
 str(cbook, 1)
 ```
 
-## oTree data description
-
-By setting the `preamb = TRUE` parameter, a predefined description of oTree data is inserted at the beginning of the codebook, explaining how experimental data is stored by oTree.
-
-<img src= "intro.png" style = "border:1px solid" alt="Introduction to oTree data picture">
-
-
 # Customizing how the codebook is shown
 
 ## Customizing the codebook titles and metadata
@@ -117,7 +110,7 @@ You can easily modify the titles, subtitles, dates, and author names in your cod
 
 ```
 codebook(
-    path = "YouroTreePath",  # Can be either absolute or relative!
+    path = "Your_oTree_path",  # Can be either absolute or relative!
     title = "Codebook",
     subtitle = "Example Project",
     date = "today",
@@ -159,7 +152,8 @@ cbook <- codebook(
 print(cbook$dictator$Constants$Variable)
 ```
 
-You can also choose to not replace the references to settings variables by using `settings_replace = NULL`.
+
+You can also choose not to replace the references to settings variables by using `settings_replace = NULL`.
 
 ```{r do not replace settings}
 cbook <- codebook(
@@ -172,7 +166,7 @@ cbook <- codebook(
 print(cbook$dictator$Constants$Variable)
 ```
 
-It is also possible to provide a list of variables to replace the settings variables with the argument `user_settings`. For example: 
+It is also possible to provide a list of variables to replace the settings variables with the argument `user_settings`. For example:
 
 ```{r user settings}
 cbook <- codebook(
@@ -188,11 +182,11 @@ print(cbook$dictator$Constants$Variable)
 
 # Saving your codebook
 
-When you choose `output = "file"` or `output = "both"`, your codebook will be saved as a professional document ready for publication or sharing.
+When you choose `output = "file"` or `output = "both"`, your codebook will be saved as a professional document.
 
 ## Output formats
 
-The argument `output_format` allows you to choose the format of the exported codebook file. 
+The argument `output_format` allows you to choose the format of the exported codebook file.
 Available formats are:
 
 * `html_document`
@@ -206,14 +200,15 @@ Available formats are:
 
 You can choose the format that best suits your needs, with all formats except PDF allowing easy post-generation editing.
 
-When knitting to PDF, make sure to have LaTex installed! It is recommended to use `output_format = pdf_document_simple`. However, many non-Latin characters (e.g., Chinese characters) may not work with this format. In such cases, you can choose `output_format = pdf_document`, which is set to use `xelatex`.
+When knitting to PDF, make sure to have LaTex installed! It is recommended to use `output_format = pdf_document_simple`. However, some non-Latin characters (e.g., Chinese characters) may not work with this format. In such cases, you can choose `output_format = pdf_document`, which is set to use `xelatex`.
 
-Please note that using `xelatex` with gmoTree has some limitations: for example, `gmoTree` currently cannot handle long variable values that result in excessively long table cells. This can cause the PDF to display improperly in certain viewers, such as Nitro. To address this, carefully review your file. If necessary, consider using `output_format = latex_document`. Alternatively, open the file with a PDF viewer that can handle these cases, then save it there to ensure it displays correctly in other PDF viewers.
+Please note that using `xelatex` with gmoTree has some limitations: for example, `gmoTree` currently cannot handle long variable values that result in excessively long table cells. This can cause the PDF to display improperly in certain viewers, such as Nitro. To address this, carefully review your file. If necessary, consider using `output_format = latex_document` to generate a `.tex` file, which you can then compile into a PDF. Alternatively, open the file with a PDF viewer that can handle these cases, then save it there to ensure it displays correctly in other PDF viewers.
 
 ## Output files
 
-By default, `gmoTree` codebooks are saved in your working directory with the default file name `codebook`. 
-You can modify this by specifying a custom file name and directory path.
+By default, `gmoTree` codebooks are saved in your working directory with
+the default file name `codebook`, followed by the file extension.
+You can modify this by specifying either a custom file name, another directory path, or both.
 
 For example, to save the codebook with a different name, use the following code:
 

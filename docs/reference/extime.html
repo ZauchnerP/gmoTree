@@ -11,7 +11,7 @@ the first page!"><meta property="og:image" content="https://zauchnerp.github.io/
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,24 +69,26 @@ the first page!</p>
 
 
 <dl><dt id="arg-otree">oTree<a class="anchor" aria-label="anchor" href="#arg-otree"></a></dt>
-<dd><p>A list of data frames that were created
-by <code><a href="import_otree.html">import_otree</a></code>.</p></dd>
+<dd><p>A list of data frames created
+with <code><a href="import_otree.html">import_otree()</a></code>.</p></dd>
 
 
 <dt id="arg-pcode">pcode<a class="anchor" aria-label="anchor" href="#arg-pcode"></a></dt>
-<dd><p>Character. The value of the <code>participant.code</code>
+<dd><p>Character string.
+The value of the <code>participant.code</code>
 variable if the time should only be calculated for one specified participant.</p></dd>
 
 
 <dt id="arg-plabel">plabel<a class="anchor" aria-label="anchor" href="#arg-plabel"></a></dt>
-<dd><p>Character. The value of the <code>participant.label</code> variable
+<dd><p>Character string.
+The value of the <code>participant.label</code> variable
 if the time should only be calculated for one specified participant.</p></dd>
 
 
 <dt id="arg-group-id">group_id<a class="anchor" aria-label="anchor" href="#arg-group-id"></a></dt>
 <dd><p>Integer. The value of the group_id variable if the
 time should only be calculated for one specified group. The <code>group_id</code>
-variable can be created with <code><a href="make_ids.html">make_ids</a></code>.</p></dd>
+variable can be created with <code><a href="make_ids.html">make_ids()</a></code>.</p></dd>
 
 
 <dt id="arg-seconds">seconds<a class="anchor" aria-label="anchor" href="#arg-seconds"></a></dt>
@@ -115,11 +117,11 @@ not the numeric value of the <code>page_index</code> variable.</p></dd>
 
 
 <dt id="arg-tz">tz<a class="anchor" aria-label="anchor" href="#arg-tz"></a></dt>
-<dd><p>Character. Time zone.</p></dd>
+<dd><p>Character string. Time zone.</p></dd>
 
 
 <dt id="arg-sinfo">sinfo<a class="anchor" aria-label="anchor" href="#arg-sinfo"></a></dt>
-<dd><p>Character. <code>"session_id"</code> to use session ID for
+<dd><p>Character string. <code>"session_id"</code> to use session ID for
 additional information in the data frame
 of single durations, <code>"session_code"</code> to use session codes,
 or <code>NULL</code> if no session column should be shown.</p></dd>
@@ -138,22 +140,21 @@ the function returns an error if several oTree versions' data are present.</p></
     <p>This function returns either a single value if only the data of one person
 is calculated or a list of information on the time several participants
 spent on the experiment.</p>
-<p>In this list, you can find the following information:</p>
-<p>- <code>$mean_duration</code> = The experiment's average duration.</p>
-<p>- <code>$min_duration</code> = The experiment's minimum duration.</p>
-<p>- <code>$max_duration</code> = The experiment's maximum duration.</p>
-<p>- <code>$single_durations</code> = A data frame of all durations that
-are used for calculating the min, max, and mean duration.</p>
-<p>- <code>$messages</code> = All important notes to the calculations.</p>
-<p>- <code>$only_one_page</code> = A vector of all individuals who
-only have one time stamp.</p>
-    </div>
+<p>In this list, you can find the following information:</p><ul><li><p><code>$mean_duration</code> = The experiment's average duration.</p></li>
+<li><p><code>$min_duration</code> = The experiment's minimum duration.</p></li>
+<li><p><code>$max_duration</code> = The experiment's maximum duration.</p></li>
+<li><p><code>$single_durations</code> = A data frame of all durations that
+are used for calculating the min, max, and mean duration.</p></li>
+<li><p><code>$messages</code> = All important notes to the calculations.</p></li>
+<li><p><code>$only_one_page</code> = A vector of all individuals who
+only have one time stamp.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This functions calculates the time spent on the experiment by using
 the variable that refers to the time stamp. If that variable is not
 present, the function alternatively uses <code>seconds_on_page2</code>,
-which can be created with the <code><a href="pagesec.html">pagesec</a></code> function.</p>
+which can be created with the <code><a href="pagesec.html">pagesec()</a></code> function.</p>
     </div>
 
     <div class="section level2">
@@ -255,7 +256,7 @@ which can be created with the <code><a href="pagesec.html">pagesec</a></code> fu
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

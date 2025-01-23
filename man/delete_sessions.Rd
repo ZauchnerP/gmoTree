@@ -7,18 +7,20 @@
 delete_sessions(oTree, scodes, saved_vars = NULL, reason, info = FALSE)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
-\item{scodes}{Character. The session.code(s) of the
+\item{scodes}{Character string or character vector.
+The session.code(s) of the
 session(s) whose data should be removed.}
 
-\item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
+\item{saved_vars}{Character string or character vector.
+The name(s) of variable(s) that need(s) to be
 stored in the list of information on deleted cases
 in \code{$info$deleted_cases}.}
 
-\item{reason}{Character. The reason for deletion that should be stored in
-the list of information on deleted cases in \code{$info$deleted_cases}.}
+\item{reason}{Character string. The reason for deletion that should be stored
+in the list of information on deleted cases in \code{$info$deleted_cases}.}
 
 \item{info}{Logical. \code{TRUE} if a brief information on the session
 deletion process should be printed.}
@@ -31,8 +33,8 @@ It adds information on the deleted cases to \code{$info$deleted_cases}.
 (This list is also filled by other functions.)
 
 In this list, you can find the following information:
-
-- \code{$full} and \code{$unique} = The data frames \code{$full}
+\itemize{
+\item \code{$full} and \code{$unique} = The data frames \code{$full}
 and \code{$unique} contain
 information on all participants
 whose data were deleted. The entries to the \code{$full}
@@ -40,17 +42,16 @@ and the \code{$unique} data
 frames in this list are the same. Columns \code{end_app}
 and \code{end_page} are left
 empty intentionally because they are only filled by
-the \code{\link{delete_dropouts}}
+the \code{\link[=delete_dropouts]{delete_dropouts()}}
 function. Columns \code{participant.code} and \code{reason} are filled.
-
-- \code{$codes} = A vector containing the participant codes of
+\item \code{$codes} = A vector containing the participant codes of
 all deleted participants.
-
-- \code{$count} = The number of all deleted participants.
+\item \code{$count} = The number of all deleted participants.
+}
 }
 \description{
-Delete cases from specific sessions in all data frames in the
-oTree list of data frames.
+Delete cases from specific sessions in all data frames within the
+list of data frames.
 
 Caution 1: This function does not delete cases from the
 original CSV and Excel files!
@@ -69,11 +70,13 @@ oTree2 <- delete_sessions(oTree,
   reason = "Only tests")
 
 # Show changes in row numbers
-print(paste("Row numbers before deletion: ", nrow(oTree$all_apps_wide), nrow(oTree$survey),
-nrow(oTree$Time), nrow(oTree$Chats)))
+print(paste("Row numbers before deletion: ",
+  nrow(oTree$all_apps_wide), nrow(oTree$survey),
+  nrow(oTree$Time), nrow(oTree$Chats)))
 
-print(paste("Row numbers after deletion: ", nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+print(paste("Row numbers after deletion: ",
+  nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Delete two sessions and show deletion message
 oTree2 <- delete_sessions(oTree,
@@ -83,7 +86,7 @@ oTree2 <- delete_sessions(oTree,
 
 # Show row numbers again
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Delete session and save variable to the info list
 oTree2 <- delete_sessions(oTree,
@@ -102,8 +105,8 @@ oTree2$info$deleted_cases$count
 
 # Delete a single case and then delete a session
 oTree2 <- delete_cases(oTree,
-                       pcodes = "4zhzdmzo",
-                       reason = "requested")
+  pcodes = "4zhzdmzo",
+  reason = "requested")
 oTree2 <- delete_sessions(oTree2,
   scodes = c("vd1h01iv"),
   reason = "Server Crash",

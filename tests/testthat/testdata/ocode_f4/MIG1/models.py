@@ -9,7 +9,7 @@ import math
 author = 'Patricia Zauchner'
 
 doc = """
-Migration Game. 
+Migration Game.
 Run only on Chrome. Never on IE!
 In IE, the dialogue windows won't work.
 """
@@ -61,10 +61,10 @@ class Constants(BaseConstants):
     P1_Acc_ArgBestToken = 2
     # </editor-fold>
     # <editor-fold desc="Zeiten (in Minuten">
-    ChatTime_Ack = 6  # Todo: Check if time is correct. Should be 6 minutes.
+    ChatTime_Ack = 6  
     ChatTime_Ack_Sec = ChatTime_Ack * 60
-    ChatTime_Distribution = 5  # Formerly known as ChatTime_Verteilung #Todo: Check if time is correct. Should be 5 minutes.
-    ChatTime_DistributionCorr = 1  # Formerly known as ChatTime_VerteilungKorr #Todo: Check if time is correct. Should be 1 minute.
+    ChatTime_Distribution = 5  # Formerly known as ChatTime_Verteilung 
+    ChatTime_DistributionCorr = 1  # Formerly known as ChatTime_VerteilungKorr 
     ChatTime_DistributionCorrSek = ChatTime_DistributionCorr * 60  # Formerly known as ChatTime_VerteilungKorrSek
     # </editor-fold>
 
@@ -116,7 +116,7 @@ class Group(BaseGroup):
             p.GroupRank = randomnumber[p.id_in_group - 1]
 
     def effortGroupRank(self):
-        """ 
+        """
         If Effort = 1, the individuals in the group are assigned IDs according to their effort.
         This method is called by the intro-WaitPage.
         """
@@ -434,7 +434,7 @@ class Group(BaseGroup):
 
     def NewDisVoteRes(self, Correction):
         """
-        Prior name: P1_Wahlergebnis1 
+        Prior name: P1_Wahlergebnis1
         Wird in Pages --> P1_Rej_5_Chat_DistributionProcedure_2WP_After aufgerufen
         """
         corr = ""

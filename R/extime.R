@@ -3,15 +3,16 @@
 #' Calculate the time spent on the experiment.
 #' If not stated otherwise, the calculation only starts at the end of
 #' the first page!
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
-#' @param pcode Character. The value of the \code{participant.code}
+#' @inheritParams apptime
+#' @param pcode Character string.
+#' The value of the \code{participant.code}
 #' variable if the time should only be calculated for one specified participant.
-#' @param plabel Character. The value of the \code{participant.label} variable
+#' @param plabel Character string.
+#' The value of the \code{participant.label} variable
 #' if the time should only be calculated for one specified participant.
 #' @param group_id Integer. The value of the group_id variable if the
 #' time should only be calculated for one specified group. The \code{group_id}
-#' variable can be created with \code{\link{make_ids}}.
+#' variable can be created with \code{\link[=make_ids]{make_ids()}}.
 #' @param seconds Logical. \code{TRUE} if the output should be in seconds
 #' instead of minutes.
 #' @param rounded Logical. \code{TRUE} if the output should be rounded.
@@ -25,8 +26,8 @@
 #' variable in \code{$all_apps_wide} (\code{"real"}). Important: If integer,
 #' it represents the position within the page index sequence,
 #' not the numeric value of the \code{page_index} variable.
-#' @param tz Character. Time zone.
-#' @param sinfo Character. \code{"session_id"} to use session ID for
+#' @param tz Character string. Time zone.
+#' @param sinfo Character string. \code{"session_id"} to use session ID for
 #' additional information in the data frame
 #' of single durations, \code{"session_code"} to use session codes,
 #' or \code{NULL} if no session column should be shown.
@@ -60,7 +61,7 @@
 #' This functions calculates the time spent on the experiment by using
 #' the variable that refers to the time stamp. If that variable is not
 #' present, the function alternatively uses \code{seconds_on_page2},
-#' which can be created with the \code{\link{pagesec}} function.
+#' which can be created with the \code{\link[=pagesec]{pagesec()}} function.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree
@@ -93,8 +94,9 @@ extime <- function(
   # Old Version of oTree (time_stamp & participant__code)
   # New Version of oTree (epoch_time & participant_code)
 
-  firststageproblemparticipants <- character(0L)
-  messages <- character(0L)
+  env <- new.env(parent = emptyenv())
+  env$firststageproblemparticipants <- character(0L)
+  env$messages <- character(0L)
   othertime <- FALSE
 
   # Define error and warning messages  ####
@@ -109,17 +111,19 @@ extime <- function(
     "Warning: For this participant, the experiment only has one page. ",
     "I.e., the indices for the first and the last page are the same. ")
 
-  indextoohigh <- FALSE
+  env$indextoohigh <- FALSE
   indextoohigh_message <-
     paste0("The chosen starting value startat is higher than the ",
-           "total number of all indices (for at least one case if more participants ",
+           "total number of all indices (for at least one ",
+           "case if more participants ",
            "are chosen). Please select a valid starting value.")
 
-  indextoolow <- FALSE
+  env$indextoolow <- FALSE
   indextoolow_message <-
     paste0("The chosen starting value startat is lower than ",
            "the lowest number of all indices (for at least one case if ",
-           "more participants are chosen). Please select a valid starting value.")
+           "more participants are chosen). ",
+           "Please select a valid starting value.")
 
   # Error handling  ####
   if (is.null(oTree$Time)) {
@@ -132,7 +136,7 @@ extime <- function(
 
   if (startat == "real" && is.null(oTree$all_apps_wide)) {
     stop("The argument \"startat = real\" only works if there is a ",
-         "\"all apps wide\" data frame in your oTree list of data frames!")
+         "\"all apps wide\" data frame in your list of data frames!")
   }
 
   if (startat != "real" && startat < 1L) {
@@ -323,7 +327,8 @@ extime <- function(
 
   min_max_stamps_dur_spec <- function(allindices,
                                       who,
-                                      max_index = max_index) {
+                                      max_index = max_index,
+                                      env) {
 
     # First time stamp for specific individuals
     if (startat == "real") {
@@ -338,11 +343,11 @@ extime <- function(
     } else {
       # Check if startat is valid
       if (startat > length(allindices)) {
-        indextoohigh <<- TRUE
+        env$indextoohigh <- TRUE
         stop(indextoohigh_message)
 
       } else if (startat < min(allindices)) {
-        indextoolow <<- TRUE
+        env$indextoolow <- TRUE
         stop(indextoolow_message)
       }
 
@@ -367,7 +372,9 @@ extime <- function(
 
   # Make sub functions 2 - duration calculation  ####
   duration_specific <- function(part_code,
-                                several_participants = FALSE) {
+                                env,
+                                several_participants = FALSE
+                                ) {
     # Duration for one person
     # Info: Existence of this person in the Time data frame was already checked
     # at the beginning of the extime function!
@@ -388,13 +395,13 @@ extime <- function(
         max_index == 0L)  {
 
       # Warning: If there is only one page in the experiment
-      firststageproblemparticipants <<-
-        c(firststageproblemparticipants, part_code)
+      env$firststageproblemparticipants <-
+        c(env$firststageproblemparticipants, part_code)
 
       if (!several_participants) {
-        messages <<- c(messages, errormax1min1_specific)
+        env$messages <- c(env$messages, errormax1min1_specific)
       } else if (several_participants) {
-        messages <<- c(messages, errormax1min1)
+        env$messages <- c(env$messages, errormax1min1)
       }
       duration <- NA
 
@@ -404,7 +411,8 @@ extime <- function(
         # Get time stamps and duration
         duration <- min_max_stamps_dur_spec(allindices = allindices,
                                             who = part_code,
-                                            max_index = max_index)
+                                            max_index = max_index,
+                                            env = env)
 
       } else {
         # Get duration
@@ -488,16 +496,17 @@ extime <- function(
         round(output[["single_durations"]][["duration"]], digits = digits)
     }
 
-    if (length(unique(messages) > 0L)) {
-      output[["messages"]] <- unique(messages)
+    if (length(unique(env$messages)) > 0L) {
+      output[["messages"]] <- unique(env$messages)
     }
 
-    if (length(firststageproblemparticipants) > 0L) {
-      output[["only_one_page"]] <- firststageproblemparticipants
+    if (length(env$firststageproblemparticipants) > 0L) {
+      output[["only_one_page"]] <- env$firststageproblemparticipants
     }
 
-    if (length(warningparticipants) > 0L) {
-      output[["warnings"]] <- unique(warningparticipants)
+    if (length(env$warningparticipants) > 0L) {
+
+      output[["warnings"]] <- unique(env$warningparticipants)
 
       output[["messages"]] <-
         c(output[["messages"]],
@@ -516,7 +525,8 @@ extime <- function(
 
     # Get time
     withCallingHandlers({
-      duration <- duration_specific(part_code = pcode)   # Info: Messages are set here
+      duration <- duration_specific(part_code = pcode,
+                                    env = env)   # Info: Messages are set here
     }, error = function(e) {
       stop(e)
     }, warning = function(w) {
@@ -529,8 +539,8 @@ extime <- function(
       duration <- round(duration, digits = digits)
     }
     duration <- duration
-    if (length(messages) > 0L) {
-      warning(unique(messages))
+    if (length(env$messages) > 0L) {
+      warning(unique(env$messages))  # TODO does this even work?
     }
     return(duration)
   }
@@ -547,7 +557,7 @@ extime <- function(
     )
   } else {    # Time for all participants  ####
     singledurations <- data.frame()
-    warningparticipants <- c()
+    env$warningparticipants <- c()
 
     # Make list of all participants for all groups ####
     if (is.null(group_id)) {
@@ -562,7 +572,8 @@ extime <- function(
       tryCatch(
         {
           duration <- duration_specific(part_code = i,
-                                        several_participants = TRUE)
+                                        several_participants = TRUE,
+                                        env = env)
 
           if (length(duration) > 1L) stop("One participant is there twice")
 
@@ -586,14 +597,14 @@ extime <- function(
             }
           }
         }, error = function(e) {
-          warningparticipants <<- c(warningparticipants, i)
+          env$warningparticipants <- c(env$warningparticipants, i)
 
         }, warning = function(w) {
           warning("Warning: ", w)
         }
       )
-      if (indextoohigh) stop(indextoohigh_message)
-      if (indextoolow) stop(indextoolow_message)
+      if (env$indextoohigh) stop(indextoohigh_message)
+      if (env$indextoolow) stop(indextoolow_message)
     }
 
     # Make output  ####

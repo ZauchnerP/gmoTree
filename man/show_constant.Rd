@@ -7,8 +7,8 @@
 show_constant(oTree, value = "any")
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
 \item{value}{The value that is controlled to be the same within a column.
 If the value is set to \code{"any"}, the function checks for
@@ -21,12 +21,12 @@ Each vector contains the names of all variables with constant values.
 If there are no variables with constant values, the vector is empty.
 }
 \description{
-Show all columns with no variation in their values for each data frame
-in the oTree list of data frames (except the ones in the info list).
-This function is helpful before running an experiment to check if there
-are unnecessary variables.
-You can check for columns that have any unchanging possible value
-or for columns containing only a specific value.
+Show all variables with no variation in their values within each data frame
+of the list of data frames (except the ones in the info list).
+This function is useful for identifying unnecessary variables before
+running an experiment.
+It allows checking for columns with any unchanging value or only
+a specific value.
 }
 \examples{
 # Use package-internal list of oTree data frames

@@ -18,23 +18,24 @@ import_otree(
 )
 }
 \arguments{
-\item{path}{Character. The path to the files (default is the
-working directory).}
+\item{path}{Character string or character vector.
+The path(s) to the files (default is the working directory).}
 
-\item{file_names}{Character. The name(s) of the file(s) to be imported.
+\item{file_names}{Character string or character vector.
+The name(s) of the file(s) to be imported.
 If not specified, all files in the path and subfolders are imported.}
 
-\item{final_apps}{Character.
+\item{final_apps}{Character string or character vector.
 The name(s) of the app(s) at which the participants have to finish the
 experiment. If the argument final_apps is left empty, you can still call
 for deleting the participants who did not finish the experiment
-with \code{\link{delete_dropouts}}.}
+with \code{\link[=delete_dropouts]{delete_dropouts()}}.}
 
-\item{final_pages}{Character.
+\item{final_pages}{Character string or character vector.
 The name(s) of the page(s) at which the participants have to finish the
 experiment. If the argument final_pages is left empty, you can still
 call for deleting the participants who did not finish the experiment
-with \code{\link{delete_dropouts}}.}
+with \code{\link[=delete_dropouts]{delete_dropouts()}}.}
 
 \item{recursive}{Logical. \code{TRUE} if the files in the path's
 subfolders should also be imported.}
@@ -51,7 +52,8 @@ from the \code{$all_apps_wide} or normal app data frames (not Time or Chats).}
 \item{info}{Logical. \code{TRUE} if a brief information on the data
 import should be printed.}
 
-\item{encoding}{Character. Encoding of the CSV files that are imported.
+\item{encoding}{Character string.
+Encoding of the CSV files that are imported.
 Default is \code{"UTF-8"}.}
 }
 \value{
@@ -74,7 +76,8 @@ Information: Empty rows are rows without
 the \code{participant._current_app_name}
 variable set. Empty rows are deleted from all app data frames
 and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in
-the \code{$Chats} and \code{$Time} data frames are not deleted.
+the \code{$Chats} and \code{$Time} data frames as well as data frames
+whose names start with \code{custexp_} (custom export) are not deleted.
 
 If old and new oTree versions are combined, the \code{$Time} data frame
 contains variables called \code{participant_code}
@@ -86,17 +89,22 @@ only found in one column.
 }
 \description{
 Import data files that were created by oTree.
+
 All files containing the pattern YYYY-MM-DD at the end
 of their file names are considered oTree files.
 Bot outputs are saved by oTree without the date included. Hence, to
 import bot data, you must either rename the original bot files
 using the YYYY-MM-DD format or use the argument \code{onlybots = TRUE}.
 By using the second option, only data of bot files are imported.
+Since custom export files share the same names as the app files,
+they must be renamed by adding 'custexp_' as a prefix to
+correctly import them.
 
 Caution! Data can be downloaded from within the
 session and globally at the same time. If both files are downloaded,
 this can lead to the \code{$all_apps_wide} data being there twice! You can
-remove duplicate data by using \code{\link{delete_duplicate}}.
+remove duplicate data by
+using \code{\link[=delete_duplicate]{delete_duplicate()}}.
 
 Caution! When importing Excel files, this function does not check
 for erroneous data structures

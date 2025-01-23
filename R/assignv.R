@@ -1,13 +1,12 @@
 #' Assign a variable from all_apps_wide
 #' @description
 #' Assign a variable from \code{$all_apps_wide} to the other app data frames.
-#' @param oTree A list of data frames that were
-#' created by \code{\link{import_otree}}
-#' @param variable Character. The variable in the \code{$all_apps_wide}
+#' @inheritParams apptime
+#' @param variable Character string. The variable in the \code{$all_apps_wide}
 #' data frame that should be assigned to all other apps.
-#' @param newvar Character. The name of the newly created variable.
+#' @param newvar Character string. The name of the newly created variable.
 #' @returns This function returns a duplicate of the
-#' original oTree list of data frames
+#' original list of data frames
 #' but with an additional column in all data frames. The additional column
 #' contains data from the specified variable found in \code{$all_apps_wide}.
 #' @examples
@@ -41,16 +40,16 @@ assignv <- function(oTree,
 
   # Check  ####
   if (!("all_apps_wide" %in% names(oTree))) {
-    stop("There is no \"all_apps_wide\" in your oTree list of ",
+    stop("There is no \"all_apps_wide\" in your list of ",
          "data frames!")
   }
 
   if (length(variable) > 1L) {
-    stop("Plase enter only one variable name!")
+    stop("Please enter only one variable name!")
   }
 
   if (length(newvar) > 1L) {
-    stop("Plase enter only one new variable name!")
+    stop("Please enter only one new variable name!")
   }
 
   if (!(variable %in% colnames(oTree[["all_apps_wide"]]))) {
@@ -67,8 +66,10 @@ assignv <- function(oTree,
     for (app in appnames) {
 
       if (app != "Time" && app != "Chats") {
-        # Exclude custom exports
+
+        # Exclude custom exports if they don't have participant.code
         if ("participant.code" %in% colnames(oTree[[app]])) {
+
           # Assign variable
           oTree[[app]][[newvar]][oTree[[app]]$participant.code == i] <-
             oTree[["all_apps_wide"]][[variable]][

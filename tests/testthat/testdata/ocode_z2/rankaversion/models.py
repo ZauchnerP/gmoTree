@@ -144,8 +144,8 @@ class Constants(BaseConstants):
         [5, 2, 2, 1.5, "Trick2", None, None]
     ]
     num_choices = len(choices)  # All possible choices
-    max_choices = max(choices)
-    min_choices = min(choices)
+    max_choices = max(choices)  # Makes no sense
+    min_choices = min(choices) # Makes no sense
     # </editor-fold>
     # print("choices per type 1: ", num_choicesperrr, " and choices per type 2: ",num_choicespernorr)
 
@@ -163,6 +163,9 @@ class Constants(BaseConstants):
     onelevelvectorl = ["a", "b", 3]
     onelevelvectorl2 = ["a", "b", 3, "asdfadsf", "adsfadsfasdf", "00asasdf", 2342, "wqerwerqewr"]
     onelevelvectorn = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+    onelevelvectorn_min = min(onelevelvectorn)
+    onelevelvectorn_max = max(onelevelvectorn)
+    onelevelvectorn_mean = mean(onelevelvectorn)
 
     spaceaftercomma = [   
         [2004, 43, 5],  
@@ -179,6 +182,9 @@ class Constants(BaseConstants):
         [45, 56, 75],
         [3, 84, 77]]
 
+    commentaftercomma_max = max(commentaftercomma)
+    commentaftercomma_min = min(commentaftercomma)
+    commentaftercomma_mean = mean(commentaftercomma)
 
     spacebeforebracket = [   
         [2004, 43, 5],
@@ -202,7 +208,7 @@ class Constants(BaseConstants):
         [45, 56, 75],
         [3, 84, 77]]
 
-    samerowbracke = [
+    samerowbracket = [
         [69, 43, 5],
         [81, 91, 81],
         [18, 63, 67],
@@ -216,7 +222,6 @@ class Constants(BaseConstants):
         [45, 56, 75],
         [3, 84, 77]
     ]
-
 
 
 class Subsession(BaseSubsession):

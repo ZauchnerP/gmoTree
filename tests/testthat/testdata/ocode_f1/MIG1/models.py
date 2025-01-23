@@ -61,10 +61,10 @@ class Constants(BaseConstants):
     P1_Acc_ArgBestToken = 2
     # </editor-fold>
     # <editor-fold desc="Zeiten (in Minuten">
-    ChatTime_Ack = 6  # Todo: Check if time is correct. Should be 6 minutes.
+    ChatTime_Ack = 6 
     ChatTime_Ack_Sec = ChatTime_Ack * 60
-    ChatTime_Distribution = 5  # Formerly known as ChatTime_Verteilung #Todo: Check if time is correct. Should be 5 minutes.
-    ChatTime_DistributionCorr = 1  # Formerly known as ChatTime_VerteilungKorr #Todo: Check if time is correct. Should be 1 minute.
+    ChatTime_Distribution = 5  # Formerly known as ChatTime_Verteilung 
+    ChatTime_DistributionCorr = 1  # Formerly known as ChatTime_VerteilungKorr 
     ChatTime_DistributionCorrSek = ChatTime_DistributionCorr * 60  # Formerly known as ChatTime_VerteilungKorrSek
     # </editor-fold>
 
@@ -100,14 +100,14 @@ class Subsession(BaseSubsession):
                 g.treatment_ec = self.session.config['session_treatment_ec']
         else:
             for g in self.get_groups():
-                g.treatment_ec = 0  # Todo: Here you can enter the treatment manually.
+                g.treatment_ec = 0  
         # Assign Treatments: Political participation
         if "session_treatment_pol" in self.session.config:  # if treatment was already assigned in session config
             for g in self.get_groups():
                 g.treatment_pol = self.session.config['session_treatment_pol']
         else:
             for g in self.get_groups():
-                g.treatment_pol = 1  # Todo: Here you can enter the treatment manually.
+                g.treatment_pol = 1
         # </editor-fold>
         # <editor-fold desc="Exclude player 1 from economic and political participation">
         for p in self.get_players():  # Exclusion of player 1 in effort task:

@@ -10,6 +10,7 @@ StartToken = [9, 14, 17, 23, 37 + Testnumber]
 OtherTest1 = StartToken
 OtherTest2  = StartToken * 5
 Something = [1, 3, "test", 3, 1]
+Something3 = [1, 3, "test", 3, 1]
 # </editor-fold>
 
 # LANGUAGE_CODE = 'en'  # ISO-639 code # for example: de, fr, ja, ko, zh-hans
@@ -18,7 +19,6 @@ Something = [1, 3, "test", 3, 1]
 # ADMIN_USERNAME = 'admin'
 # ADMIN_PASSWORD = "admin"
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')  
-
 
 SESSION_CONFIGS = [
     {

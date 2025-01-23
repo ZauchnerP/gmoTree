@@ -3,8 +3,8 @@
 certain page(s) and/or app(s).
 Caution 1: This function does not delete cases from the original CSV and
 Excel files!
-Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named participant.code and
+Caution 2: This function does not delete cases from custom export
+data frames if they do not have a variable named participant.code and
 a variable named session.code!
 Caution 3: This function does not delete any data from
 the $Chats data frame!
@@ -15,8 +15,8 @@ Please do this manually if necessary!)"><meta property="og:description" content=
 certain page(s) and/or app(s).
 Caution 1: This function does not delete cases from the original CSV and
 Excel files!
-Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named participant.code and
+Caution 2: This function does not delete cases from custom export
+data frames if they do not have a variable named participant.code and
 a variable named session.code!
 Caution 3: This function does not delete any data from
 the $Chats data frame!
@@ -31,7 +31,7 @@ Please do this manually if necessary!)"><meta property="og:image" content="https
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,8 +66,8 @@ Please do this manually if necessary!)"><meta property="og:image" content="https
 certain page(s) and/or app(s).</p>
 <p>Caution 1: This function does not delete cases from the original CSV and
 Excel files!</p>
-<p>Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named <code>participant.code</code> and
+<p>Caution 2: This function does not delete cases from custom export
+data frames if they do not have a variable named <code>participant.code</code> and
 a variable named <code>session.code</code>!</p>
 <p>Caution 3: This function does not delete any data from
 the <code>$Chats</code> data frame!
@@ -95,37 +95,40 @@ Please do this manually if necessary!)</p>
 
 
 <dl><dt id="arg-otree">oTree<a class="anchor" aria-label="anchor" href="#arg-otree"></a></dt>
-<dd><p>A list of data frames that were created
-by <code><a href="import_otree.html">import_otree</a></code></p></dd>
+<dd><p>A list of data frames created
+with <code><a href="import_otree.html">import_otree()</a></code>.</p></dd>
 
 
 <dt id="arg-final-apps">final_apps<a class="anchor" aria-label="anchor" href="#arg-final-apps"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the app(s) at which the participants have to finish the
 experiment.</p></dd>
 
 
 <dt id="arg-final-pages">final_pages<a class="anchor" aria-label="anchor" href="#arg-final-pages"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the page(s) at which the participants have to finish the
 experiment.</p></dd>
 
 
 <dt id="arg-saved-vars">saved_vars<a class="anchor" aria-label="anchor" href="#arg-saved-vars"></a></dt>
-<dd><p>Character. The name(s) of variable(s) that need(s) to be
+<dd><p>Character string or character vector.
+The name(s) of variable(s) that need(s) to be
 stored in the list of information on deleted cases
 in <code>$info$deleted_cases</code>.</p></dd>
 
 
 <dt id="arg-inconsistent">inconsistent<a class="anchor" aria-label="anchor" href="#arg-inconsistent"></a></dt>
-<dd><p>Character. Should the function continue or be stopped if
+<dd><p>Character string.
+Should the function continue or be stopped if
 at least one participant has inconsistent end_pages, inconsistent end_apps,
 or both? To continue, type <code>"yes"</code>,
 to stop the function, type <code>"no"</code>.</p></dd>
 
 
 <dt id="arg-reason">reason<a class="anchor" aria-label="anchor" href="#arg-reason"></a></dt>
-<dd><p>Character. The reason for deletion that should be stored in
+<dd><p>Character string.
+The reason for deletion that should be stored in
 the list of information on deleted cases in <code>$info$deleted_cases</code>.</p></dd>
 
 
@@ -136,12 +139,11 @@ deletion process should be printed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>This function returns a duplicate of the original oTree list of data frames
+    <p>This function returns a duplicate of the original list of data frames
 but without the deleted cases.</p>
 <p>It adds information on the deleted cases to <code>$info$deleted_cases</code>. (This
 list is also filled by other functions.)</p>
-<p>In this list, you can find the following information:</p>
-<p>- <code>$full</code> = A data frame that contains information
+<p>In this list, you can find the following information:</p><ul><li><p><code>$full</code> = A data frame that contains information
 on all participants who did not finish the study;
 it shows their participant codes, the names of the apps in which they
 left the experiment,
@@ -151,27 +153,27 @@ the dropout reason (<code>"ENC"</code>, experiment not completed, combined
 with the name of the data frame in which the dropout was observed).
 Because participants usually appear in multiple app data frames,
 the <code>$info$deleted_cases$full</code> data frame may contain several entries
-for each person.</p>
-<p>- <code>$unique</code> = A data frame that contains similar information as
+for each person.</p></li>
+<li><p><code>$unique</code> = A data frame that contains similar information as
 the <code>$full</code> data frame but with only one row per participant and
-no information on the data frame in which the dropout was observed.</p>
-<p>- <code>$all_end</code> = A table that provides information on the app and page
+no information on the data frame in which the dropout was observed.</p></li>
+<li><p><code>$all_end</code> = A table that provides information on the app and page
 combinations where participants ended the experiment.
 This table also includes information for participants who did not drop out
 of the experiment.
 The <code>$all_end</code> table is only shown if an <code>$all_apps_wide</code> data
-frame exists.</p>
-<p>- <code>$codes</code> = A vector containing the participant codes of
-all deleted participants.</p>
-<p>- <code>$count</code> = The number of all deleted participants.</p>
-<p>It is important to note that if only the argument <code>final_pages</code> is set,
+frame exists.</p></li>
+<li><p><code>$codes</code> = A vector containing the participant codes of
+all deleted participants.</p></li>
+<li><p><code>$count</code> = The number of all deleted participants.</p></li>
+</ul><p>It is important to note that if only the argument <code>final_pages</code> is set,
 this function does not distinguish between page names that reoccur in
 different apps.</p>
 <p>If the columns <code>end_app</code> and <code>end_page</code> in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
 by using the argument <code>del_empty = TRUE</code> when
-using <code><a href="import_otree.html">import_otree</a></code>.</p>
+using <code><a href="import_otree.html">import_otree()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -325,7 +327,7 @@ using <code><a href="import_otree.html">import_otree</a></code>.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

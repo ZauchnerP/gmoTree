@@ -18,21 +18,22 @@ apptime(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
-\item{apps}{Character. Name(s) of the app(s) for which the time
+\item{apps}{Character string or character vector.
+Name(s) of the app(s) for which the time
 should be calculated.}
 
-\item{pcode}{Character. The value of the \code{participant.code}
+\item{pcode}{Character string. The value of the \code{participant.code}
 variable if the time should only be calculated for one specified participant.}
 
-\item{plabel}{Character. The value of the \code{participant.label}
+\item{plabel}{Character string. The value of the \code{participant.label}
 variable if the time should only be calculated for one specified participant.}
 
 \item{group_id}{Integer. The value of the \code{group_id} variable if the
 time should only be calculated for one specified group. The \code{group_id}
-variable can be created with \code{\link{make_ids}}.}
+variable can be created with \code{\link[=make_ids]{make_ids()}}.}
 
 \item{seconds}{Logical. \code{TRUE} if the output should be
 in seconds instead of minutes.}
@@ -43,7 +44,7 @@ in seconds instead of minutes.}
 The number of digits to which the output should be rounded.
 This parameter has no effect unless \code{rounded = TRUE}.}
 
-\item{sinfo}{Character. \code{"session_id"} to use session ID
+\item{sinfo}{Character string. \code{"session_id"} to use session ID
 for additional information in the data frame
 of single durations, \code{"session_code"} to use session codes,
 or \code{NULL} if no

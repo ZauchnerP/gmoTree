@@ -3,8 +3,7 @@
 #' Create a new variable in the \code{$Time} data frame that contains the time
 #' spent on each page.
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
+#' @inheritParams apptime
 #' @param minutes Logical. \code{TRUE} if the output should be
 #' minutes instead of seconds.
 #' @param rounded Logical. \code{TRUE} if the output should be rounded.
@@ -35,9 +34,9 @@ pagesec <- function(
     minutes = FALSE,
     combine = FALSE) {
 
-  # Check if time data frame is there  ####
+  # Check if Time data frame is there  ####
   if (is.null(oTree$Time)) {
-    stop("No time data frame found!")
+    stop("No Time data frame found!")
   }
 
   # Check if there are too many epoch times and participant code variables

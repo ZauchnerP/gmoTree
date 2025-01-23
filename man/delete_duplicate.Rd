@@ -7,14 +7,15 @@
 delete_duplicate(oTree)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 }
 \value{
 This function returns a duplicate of the original oTree
 list of data frames but without duplicate rows in all app data
-frames and \code{$all_apps_wide}. This function has no effect on the data
-frames \code{$Time} and \code{$Chats}.
+frames and \code{$all_apps_wide}.
+This function does not modify the custom export data frames and the
+the \code{$Time} and \code{$Chats} data frames.
 
 This function does NOT add information to \code{$info$deleted_cases},
 because it does not delete any important information but only
@@ -24,7 +25,7 @@ However, the function adjusts \code{$info$initial_n}, if
 an \code{$all_apps_wide} data frame exists.
 }
 \description{
-Delete duplicate rows from all oTree app data frames
+Delete duplicate rows from all app data frames
 and \code{$all_apps_wide}.
 }
 \examples{
@@ -38,14 +39,14 @@ oTree <- import_otree()
 
 # First, show some row numbers
 print(paste(nrow(oTree$all_apps_wide), nrow(oTree$survey),
-nrow(oTree$Time), nrow(oTree$Chats)))
+            nrow(oTree$Time), nrow(oTree$Chats)))
 
 # Delete duplicate rows
 oTree <- delete_duplicate(oTree)
 
 # Show row numbers again
 print(paste(nrow(oTree$all_apps_wide), nrow(oTree$survey),
-nrow(oTree$Time), nrow(oTree$Chats)))
+             nrow(oTree$Time), nrow(oTree$Chats)))
 \dontshow{\}) # examplesIf}
 }
 \keyword{oTree}

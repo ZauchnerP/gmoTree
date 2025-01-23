@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
 Zauchner</h4>
             
             <h4 data-toc-skip class="date">2023-09-21 (updated:
-2024-12-06)</h4>
+2025-02-04)</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ZauchnerP/gmoTree/blob/HEAD/vignettes/codebook.Rmd" class="external-link"><code>vignettes/codebook.Rmd</code></a></small>
       <div class="d-none name"><code>codebook.Rmd</code></div>
@@ -79,80 +79,90 @@ Zauchner</h4>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The <code>gmoTree</code> package provides tools for generating
-codebooks based on data from the
-<a href="https://www.otree.org/" target="_blank" class="external-link">oTree</a> (Chen et al.,
-2016) framework with the function <code><a href="../reference/codebook.html">codebook()</a></code>. This vignette
-introduces its key features and functionalities.</p>
-<p>Disclaimer: This code has been tested with both custom
-implementations and official oTree sample codes.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;The oTree sample codes can be accessed when
+<p>With the <code><a href="../reference/codebook.html">codebook()</a></code> function, you can generate codebooks
+based on your <a href="https://www.otree.org/" target="_blank" class="external-link">oTree</a>
+(Chen et al., 2016) code. This vignette introduces its key features and
+functionalities.</p>
+<p>Disclaimer: This code was tested with both custom implementations and
+official oTree sample codes.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;The oTree sample codes can be accessed when
 &lt;a href="https://otree.readthedocs.io/en/latest/install-nostudio.html#install-nostudio" target="_blank" class="external-link"&gt;setting
 up an oTree project&lt;/a&gt; (Chen et al., 2016). All examples presented in
 this vignette are based on the official oTree sample code, with minor
-modifications to meet the needs of this package.&lt;/p&gt;'><sup>1</sup></a> However, due to the
-complexity of oTree setups, it may not address all variations. Please
-review your output carefully, and feel free to open a
+modifications to meet the needs of this package.&lt;/p&gt;'><sup>1</sup></a> However, due to the complexity of oTree
+setups, it may not address all variations. Please review your output
+carefully, and feel free to open a
 <a href="https://github.com/ZauchnerP/gmoTree/issues" target="_blank" class="external-link">GitHub
 issue</a> if you encounter any problems.</p>
+<p><code>Session</code> and <code>Participant</code> variables as well
+as built-in variables are not shown in the codebooks! See also further
+important limitations of this function in the details section of
+<code><a href="../reference/codebook.html">codebook()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="running-the-code">Running the code<a class="anchor" aria-label="anchor" href="#running-the-code"></a>
 </h2>
 <p>In its simplest form, the function requires only the path to your
-oTree code. The following code reads the contents of your oTree file,
-saves a file containing your codebook in your working directory, and
-returns a list named <code>cbook</code>, containing the extracted
-information.</p>
+oTree code folder. The following code reads the contents of your oTree
+folder, saves a PDF file containing your codebook in your working
+directory, and returns a list named <code>cbook</code>, containing the
+extracted information.</p>
 <pre><code><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span><span class="st">"D:/pathtoyourproject/oTree_codes"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="codebook-structure-and-output">Codebook structure and output<a class="anchor" aria-label="anchor" href="#codebook-structure-and-output"></a>
 </h2>
-<p>The output is structured with clear headings:</p>
-<ul>
-<li>Heading Level 1: Represents each app in the oTree data.</li>
-<li>Heading Level 2: <code>Group</code> and <code>Player</code>
-variables, categorized within each app. Showing the class
-<code>Constants</code> is optional and can be turned off by using the
-argument <code>include_cons = FALSE</code>.</li>
-</ul>
+<div class="section level3">
+<h3 id="file-output">File output<a class="anchor" aria-label="anchor" href="#file-output"></a>
+</h3>
+<p>The output file is structured as follows: Each application is
+represented as a chapter (heading level 1), with subchapters for the
+variables from the <code>Group</code> and <code>Player</code> classes
+(heading level 2). The display of the <code>Constants</code> class is
+optional and enabled by default. It can be disabled with the argument
+<code>include_cons = FALSE</code>. The display of the
+<code>Subsession</code> class is also optional, but disabled by default.
+I can be enabled with <code>include_subs = TRUE</code>.</p>
 <p><img src="structure.png" style="border:1px solid" alt="Image showing an example of a heading structure of a PDF file with Level 1 and Level 2 headings"></p>
 <p>The example below shows the output for the <code>cournot</code> app,
-which includes all <code>Constants</code>, <code>Group</code>, and
-<code>Player</code> variables. If a class contains no information, the
-heading will still appear, along with the message “Empty class.”</p>
-<p><img src="app.png" style="border:1px solid" alt="Image showing the rankaversion app information in the PDF output"></p>
+which includes all variables from the <code>Constants</code>,
+<code>Group</code>, and <code>Player</code> classes. If a class contains
+no custom variables, the class heading will still appear, accompanied by
+the message “No model fields except the built-in ones.”</p>
+<p><img src="app.png" style="border:1px solid" alt="Image showing the cournot app information in the PDF output"></p>
+</div>
+<div class="section level3">
+<h3 id="list-output">List output<a class="anchor" aria-label="anchor" href="#list-output"></a>
+</h3>
 <p>Use <code>output = "list"</code> to bypass file creation. This option
-returns all the information in list format, which can then be used in R
-Markdown to design a custom codebook. Below is an example of how such a
-list output looks like. (The argument <code>doc_info = FALSE</code>
-suppresses messages about missing variable documentation.)</p>
+returns all the information in list format, which can be used in R
+Markdown for custom codebooks. Below is an example of such a list
+output. (The argument <code>doc_info = FALSE</code> suppresses messages
+about missing documentation for variables.)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create the codebook list</span></span>
-<span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"extdata/ocode_new"</span>, </span>
-<span>                                     package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>, </span>
-<span>                  output <span class="op">=</span> <span class="st">"list"</span>, </span>
+<span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"extdata/ocode_new"</span>,</span>
+<span>                                     package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
+<span>                  output <span class="op">=</span> <span class="st">"list"</span>,</span>
 <span>                  doc_info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span>  <span class="co"># Show all apps </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span>  <span class="co"># Show all apps</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 16</span></span>
 <span><span class="co">##  $ settings            :List of 10</span></span>
-<span><span class="co">##  $ bargaining          :List of 4</span></span>
-<span><span class="co">##  $ bertrand            :List of 4</span></span>
-<span><span class="co">##  $ common_value_auction:List of 4</span></span>
-<span><span class="co">##  $ cournot             :List of 4</span></span>
-<span><span class="co">##  $ dictator            :List of 4</span></span>
-<span><span class="co">##  $ guess_two_thirds    :List of 4</span></span>
-<span><span class="co">##  $ matching_pennies    :List of 4</span></span>
-<span><span class="co">##  $ payment_info        :List of 4</span></span>
-<span><span class="co">##  $ prisoner            :List of 4</span></span>
-<span><span class="co">##  $ public_goods_simple :List of 3</span></span>
-<span><span class="co">##  $ survey              :List of 3</span></span>
-<span><span class="co">##  $ traveler_dilemma    :List of 4</span></span>
-<span><span class="co">##  $ trust               :List of 3</span></span>
-<span><span class="co">##  $ trust_simple        :List of 3</span></span>
-<span><span class="co">##  $ volunteer_dilemma   :List of 4</span></span></code></pre>
+<span><span class="co">##  $ bargaining          :List of 5</span></span>
+<span><span class="co">##  $ bertrand            :List of 5</span></span>
+<span><span class="co">##  $ common_value_auction:List of 5</span></span>
+<span><span class="co">##  $ cournot             :List of 5</span></span>
+<span><span class="co">##  $ dictator            :List of 5</span></span>
+<span><span class="co">##  $ guess_two_thirds    :List of 5</span></span>
+<span><span class="co">##  $ matching_pennies    :List of 5</span></span>
+<span><span class="co">##  $ payment_info        :List of 5</span></span>
+<span><span class="co">##  $ prisoner            :List of 5</span></span>
+<span><span class="co">##  $ public_goods_simple :List of 4</span></span>
+<span><span class="co">##  $ survey              :List of 4</span></span>
+<span><span class="co">##  $ traveler_dilemma    :List of 5</span></span>
+<span><span class="co">##  $ trust               :List of 4</span></span>
+<span><span class="co">##  $ trust_simple        :List of 4</span></span>
+<span><span class="co">##  $ volunteer_dilemma   :List of 5</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">cournot</span><span class="op">)</span>  <span class="co"># Only show cournot app</span></span></code></pre></div>
 <pre><code><span><span class="co">## $doc</span></span>
@@ -174,6 +184,9 @@ suppresses messages about missing variable documentation.)</p>
 <span><span class="co">## $Constants$MAX_UNITS_PER_PLAYER</span></span>
 <span><span class="co">## [1] "int(60 / 2)"</span></span>
 <span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $Subsession</span></span>
+<span><span class="co">## [1] "Pass"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $Group</span></span>
 <span><span class="co">## $Group$unit_price</span></span>
@@ -199,7 +212,7 @@ suppresses messages about missing variable documentation.)</p>
 <span><span class="co">## $Player</span></span>
 <span><span class="co">## $Player$units</span></span>
 <span><span class="co">## $Player$units$noargs</span></span>
-<span><span class="co">## [1] "FALSE"</span></span>
+<span><span class="co">## [1] FALSE</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $Player$units$min</span></span>
 <span><span class="co">## [1] "0"</span></span>
@@ -216,13 +229,11 @@ suppresses messages about missing variable documentation.)</p>
 <span><span class="co">## $Player$units$field</span></span>
 <span><span class="co">## [1] "IntegerField"</span></span></code></pre>
 </div>
+</div>
 <div class="section level2">
 <h2 id="choosing-what-to-show">Choosing what to show<a class="anchor" aria-label="anchor" href="#choosing-what-to-show"></a>
 </h2>
-<div class="section level3">
-<h3 id="apps">Apps<a class="anchor" aria-label="anchor" href="#apps"></a>
-</h3>
-<p>Per default, all apps are included in the codebook. To generate a
+<p>By default, all apps are included in the codebook. To generate a
 codebook for only one app, use the <code>app</code> argument. For
 example, to generate a codebook for the <code>cournot</code> app:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -247,15 +258,16 @@ example, to generate a codebook for the <code>cournot</code> app:</p>
 <span><span class="co">##   ..$ ADMIN_PASSWORD          : chr "environ.get('OTREE_ADMIN_PASSWORD')"</span></span>
 <span><span class="co">##   ..$ DEMO_PAGE_INTRO_HTML    : chr "Here are some oTree games."</span></span>
 <span><span class="co">##   ..$ SECRET_KEY              : chr "9356668094877"</span></span>
-<span><span class="co">##  $ cournot :List of 4</span></span>
-<span><span class="co">##   ..$ doc      : chr "In Cournot competition, firms simultaneously decide the units of products to manufacture. The unit selling pric"| __truncated__</span></span>
-<span><span class="co">##   ..$ Constants:List of 5</span></span>
+<span><span class="co">##  $ cournot :List of 5</span></span>
+<span><span class="co">##   ..$ doc       : chr "In Cournot competition, firms simultaneously decide the units of products to manufacture. The unit selling pric"| __truncated__</span></span>
+<span><span class="co">##   ..$ Constants :List of 5</span></span>
 <span><span class="co">##   .. ..$ NAME_IN_URL         : chr "cournot"</span></span>
 <span><span class="co">##   .. ..$ PLAYERS_PER_GROUP   : num 2</span></span>
 <span><span class="co">##   .. ..$ NUM_ROUNDS          : num 1</span></span>
 <span><span class="co">##   .. ..$ TOTAL_CAPACITY      : num 60</span></span>
 <span><span class="co">##   .. ..$ MAX_UNITS_PER_PLAYER: chr "int(60 / 2)"</span></span>
-<span><span class="co">##   ..$ Group    :List of 2</span></span>
+<span><span class="co">##   ..$ Subsession: chr "Pass"</span></span>
+<span><span class="co">##   ..$ Group     :List of 2</span></span>
 <span><span class="co">##   .. ..$ unit_price :List of 2</span></span>
 <span><span class="co">##   .. .. ..$ noargs: logi TRUE</span></span>
 <span><span class="co">##   .. .. ..$ field : chr "CurrencyField"</span></span>
@@ -263,9 +275,9 @@ example, to generate a codebook for the <code>cournot</code> app:</p>
 <span><span class="co">##   .. .. ..$ noargs: logi FALSE</span></span>
 <span><span class="co">##   .. .. ..$ doc   : chr "Total units produced by all players"</span></span>
 <span><span class="co">##   .. .. ..$ field : chr "IntegerField"</span></span>
-<span><span class="co">##   ..$ Player   :List of 1</span></span>
+<span><span class="co">##   ..$ Player    :List of 1</span></span>
 <span><span class="co">##   .. ..$ units:List of 6</span></span>
-<span><span class="co">##   .. .. ..$ noargs: chr "FALSE"</span></span>
+<span><span class="co">##   .. .. ..$ noargs: logi FALSE</span></span>
 <span><span class="co">##   .. .. ..$ min   : chr "0"</span></span>
 <span><span class="co">##   .. .. ..$ max   : chr "int(60 / 2)"</span></span>
 <span><span class="co">##   .. .. ..$ doc   : chr "Quantity of units to produce"</span></span>
@@ -286,10 +298,10 @@ can also generate codebooks for multiple apps by specifying them in the
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 3</span></span>
 <span><span class="co">##  $ settings:List of 10</span></span>
-<span><span class="co">##  $ cournot :List of 4</span></span>
-<span><span class="co">##  $ dictator:List of 4</span></span></code></pre>
-<p>You can also choose all but remove one or more apps. Here is an
-example that removes the app <code>prisoner</code>:</p>
+<span><span class="co">##  $ cournot :List of 5</span></span>
+<span><span class="co">##  $ dictator:List of 5</span></span></code></pre>
+<p>You can also show all apps except for one or more. Here is an example
+that removes the app <code>prisoner</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/ocode_new"</span>, package <span class="op">=</span> <span class="st">"gmoTree"</span><span class="op">)</span>,</span>
@@ -301,29 +313,20 @@ example that removes the app <code>prisoner</code>:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 15</span></span>
 <span><span class="co">##  $ settings            :List of 10</span></span>
-<span><span class="co">##  $ bargaining          :List of 4</span></span>
-<span><span class="co">##  $ bertrand            :List of 4</span></span>
-<span><span class="co">##  $ common_value_auction:List of 4</span></span>
-<span><span class="co">##  $ cournot             :List of 4</span></span>
-<span><span class="co">##  $ dictator            :List of 4</span></span>
-<span><span class="co">##  $ guess_two_thirds    :List of 4</span></span>
-<span><span class="co">##  $ matching_pennies    :List of 4</span></span>
-<span><span class="co">##  $ payment_info        :List of 4</span></span>
-<span><span class="co">##  $ public_goods_simple :List of 3</span></span>
-<span><span class="co">##  $ survey              :List of 3</span></span>
-<span><span class="co">##  $ traveler_dilemma    :List of 4</span></span>
-<span><span class="co">##  $ trust               :List of 3</span></span>
-<span><span class="co">##  $ trust_simple        :List of 3</span></span>
-<span><span class="co">##  $ volunteer_dilemma   :List of 4</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="otree-data-description">oTree data description<a class="anchor" aria-label="anchor" href="#otree-data-description"></a>
-</h3>
-<p>By setting the <code>preamb = TRUE</code> parameter, a predefined
-description of oTree data is inserted at the beginning of the codebook,
-explaining how experimental data is stored by oTree.</p>
-<p><img src="intro.png" style="border:1px solid" alt="Introduction to oTree data picture"></p>
-</div>
+<span><span class="co">##  $ bargaining          :List of 5</span></span>
+<span><span class="co">##  $ bertrand            :List of 5</span></span>
+<span><span class="co">##  $ common_value_auction:List of 5</span></span>
+<span><span class="co">##  $ cournot             :List of 5</span></span>
+<span><span class="co">##  $ dictator            :List of 5</span></span>
+<span><span class="co">##  $ guess_two_thirds    :List of 5</span></span>
+<span><span class="co">##  $ matching_pennies    :List of 5</span></span>
+<span><span class="co">##  $ payment_info        :List of 5</span></span>
+<span><span class="co">##  $ public_goods_simple :List of 4</span></span>
+<span><span class="co">##  $ survey              :List of 4</span></span>
+<span><span class="co">##  $ traveler_dilemma    :List of 5</span></span>
+<span><span class="co">##  $ trust               :List of 4</span></span>
+<span><span class="co">##  $ trust_simple        :List of 4</span></span>
+<span><span class="co">##  $ volunteer_dilemma   :List of 5</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="customizing-how-the-codebook-is-shown">Customizing how the codebook is shown<a class="anchor" aria-label="anchor" href="#customizing-how-the-codebook-is-shown"></a>
@@ -334,7 +337,7 @@ explaining how experimental data is stored by oTree.</p>
 <p>You can easily modify the titles, subtitles, dates, and author names
 in your codebooks using the following arguments:</p>
 <pre><code><span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
-<span>    path <span class="op">=</span> <span class="st">"YouroTreePath"</span>,  <span class="co"># Can be either absolute or relative!</span></span>
+<span>    path <span class="op">=</span> <span class="st">"Your_oTree_path"</span>,  <span class="co"># Can be either absolute or relative!</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Codebook"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Example Project"</span>,</span>
 <span>    date <span class="op">=</span> <span class="st">"today"</span>,</span>
@@ -359,8 +362,8 @@ in your codebooks using the following arguments:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">cbook</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## List of 3</span></span>
 <span><span class="co">##  $ settings:List of 10</span></span>
-<span><span class="co">##  $ dictator:List of 4</span></span>
-<span><span class="co">##  $ cournot :List of 4</span></span></code></pre>
+<span><span class="co">##  $ dictator:List of 5</span></span>
+<span><span class="co">##  $ cournot :List of 5</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="referring-to-settings">Referring to settings<a class="anchor" aria-label="anchor" href="#referring-to-settings"></a>
@@ -381,7 +384,7 @@ to variables in <code>settings.py</code> with the values in the
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cbook</span><span class="op">$</span><span class="va">dictator</span><span class="op">$</span><span class="va">Constants</span><span class="op">$</span><span class="va">Variable</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 66</span></span></code></pre>
-<p>You can also choose to not replace the references to settings
+<p>You can also choose not to replace the references to settings
 variables by using <code>settings_replace = NULL</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
@@ -418,7 +421,7 @@ example:</p>
 </h2>
 <p>When you choose <code>output = "file"</code> or
 <code>output = "both"</code>, your codebook will be saved as a
-professional document ready for publication or sharing.</p>
+professional document.</p>
 <div class="section level3">
 <h3 id="output-formats">Output formats<a class="anchor" aria-label="anchor" href="#output-formats"></a>
 </h3>
@@ -438,7 +441,7 @@ format of the exported codebook file. Available formats are:</p>
 formats except PDF allowing easy post-generation editing.</p>
 <p>When knitting to PDF, make sure to have LaTex installed! It is
 recommended to use <code>output_format = pdf_document_simple</code>.
-However, many non-Latin characters (e.g., Chinese characters) may not
+However, some non-Latin characters (e.g., Chinese characters) may not
 work with this format. In such cases, you can choose
 <code>output_format = pdf_document</code>, which is set to use
 <code>xelatex</code>.</p>
@@ -447,7 +450,8 @@ limitations: for example, <code>gmoTree</code> currently cannot handle
 long variable values that result in excessively long table cells. This
 can cause the PDF to display improperly in certain viewers, such as
 Nitro. To address this, carefully review your file. If necessary,
-consider using <code>output_format = latex_document</code>.
+consider using <code>output_format = latex_document</code> to generate a
+<code>.tex</code> file, which you can then compile into a PDF.
 Alternatively, open the file with a PDF viewer that can handle these
 cases, then save it there to ensure it displays correctly in other PDF
 viewers.</p>
@@ -456,8 +460,9 @@ viewers.</p>
 <h3 id="output-files">Output files<a class="anchor" aria-label="anchor" href="#output-files"></a>
 </h3>
 <p>By default, <code>gmoTree</code> codebooks are saved in your working
-directory with the default file name <code>codebook</code>. You can
-modify this by specifying a custom file name and directory path.</p>
+directory with the default file name <code>codebook</code>, followed by
+the file extension. You can modify this by specifying either a custom
+file name, another directory path, or both.</p>
 <p>For example, to save the codebook with a different name, use the
 following code:</p>
 <pre><code><span><span class="fu"><a href="../reference/codebook.html">codebook</a></span><span class="op">(</span></span>
@@ -507,7 +512,7 @@ open-source platform for laboratory, online, and field experiments.
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -15,42 +15,45 @@ delete_dropouts(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
-\item{final_apps}{Character.
+\item{final_apps}{Character string or character vector.
 The name(s) of the app(s) at which the participants have to finish the
 experiment.}
 
-\item{final_pages}{Character.
+\item{final_pages}{Character string or character vector.
 The name(s) of the page(s) at which the participants have to finish the
 experiment.}
 
-\item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
+\item{saved_vars}{Character string or character vector.
+The name(s) of variable(s) that need(s) to be
 stored in the list of information on deleted cases
 in \code{$info$deleted_cases}.}
 
-\item{inconsistent}{Character. Should the function continue or be stopped if
+\item{inconsistent}{Character string.
+Should the function continue or be stopped if
 at least one participant has inconsistent end_pages, inconsistent end_apps,
 or both? To continue, type \code{"yes"},
 to stop the function, type \code{"no"}.}
 
-\item{reason}{Character. The reason for deletion that should be stored in
+\item{reason}{Character string.
+The reason for deletion that should be stored in
 the list of information on deleted cases in \code{$info$deleted_cases}.}
 
 \item{info}{Logical. \code{TRUE} if a brief information on the dropout
 deletion process should be printed.}
 }
 \value{
-This function returns a duplicate of the original oTree list of data frames
+This function returns a duplicate of the original list of data frames
 but without the deleted cases.
 
 It adds information on the deleted cases to \code{$info$deleted_cases}. (This
 list is also filled by other functions.)
 
 In this list, you can find the following information:
-
-- \code{$full} = A data frame that contains information
+\itemize{
+\item \code{$full} = A data frame that contains information
 on all participants who did not finish the study;
 it shows their participant codes, the names of the apps in which they
 left the experiment,
@@ -61,22 +64,19 @@ with the name of the data frame in which the dropout was observed).
 Because participants usually appear in multiple app data frames,
 the \code{$info$deleted_cases$full} data frame may contain several entries
 for each person.
-
-- \code{$unique} = A data frame that contains similar information as
+\item \code{$unique} = A data frame that contains similar information as
 the \code{$full} data frame but with only one row per participant and
 no information on the data frame in which the dropout was observed.
-
-- \code{$all_end} = A table that provides information on the app and page
+\item \code{$all_end} = A table that provides information on the app and page
 combinations where participants ended the experiment.
 This table also includes information for participants who did not drop out
 of the experiment.
 The \code{$all_end} table is only shown if an \code{$all_apps_wide} data
 frame exists.
-
-- \code{$codes} = A vector containing the participant codes of
+\item \code{$codes} = A vector containing the participant codes of
 all deleted participants.
-
-- \code{$count} = The number of all deleted participants.
+\item \code{$count} = The number of all deleted participants.
+}
 
 It is important to note that if only the argument \code{final_pages} is set,
 this function does not distinguish between page names that reoccur in
@@ -86,7 +86,7 @@ If the columns \code{end_app} and \code{end_page} in the output are empty,
 these variables were not saved by oTree for the specific participants.
 This could be because empty rows were not deleted. This can be done
 by using the argument \code{del_empty = TRUE} when
-using \code{\link{import_otree}}.
+using \code{\link[=import_otree]{import_otree()}}.
 }
 \description{
 Delete the data of all participants who did not end the experiment at (a)
@@ -95,8 +95,8 @@ certain page(s) and/or app(s).
 Caution 1: This function does not delete cases from the original CSV and
 Excel files!
 
-Caution 2: This function does not delete cases from custom exports if the
-custom exports do not have a variable named \code{participant.code} and
+Caution 2: This function does not delete cases from custom export
+data frames if they do not have a variable named \code{participant.code} and
 a variable named \code{session.code}!
 
 Caution 3: This function does not delete any data from

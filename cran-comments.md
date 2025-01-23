@@ -1,3 +1,7 @@
+# Version 1.4.0 
+
+No comments.
+
 # Version 1.3.1
 
 Updated figure in vignette
@@ -25,7 +29,6 @@ Found the following files/directories:
   'lastMiKTeXException'
 ```
 [x] Can be ignored according to https://github.com/r-hub/rhub/issues/503.
-
 
 # Version 1.0.1 (Resubmission)
 

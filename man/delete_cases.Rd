@@ -15,20 +15,24 @@ delete_cases(
 )
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
-\item{pcodes}{Character. The value(s) of the participant.code variable of
-the participants whose data should be removed.}
+\item{pcodes}{Character string or character vector.
+The value(s) of the \code{participant.code} variable of
+the participant(s) whose data should be removed.}
 
-\item{plabels}{Character. The value(s) of the participant.label variable of
-the participants whose data should be removed.}
+\item{plabels}{Character string or character vector.
+The value(s) of the \code{participant.label} variable of
+the participant(s) whose data should be removed.}
 
-\item{saved_vars}{Character. The name(s) of variable(s) that need(s) to be
+\item{saved_vars}{Character string or character vector.
+The name(s) of variable(s) that need(s) to be
 stored in the list of information on deleted cases
 in \code{$info$deleted_cases}.}
 
-\item{reason}{Character. The reason for deletion that should be stored in
+\item{reason}{Character string.
+The reason for deletion that should be stored in
 the list of information on deleted cases in \code{$info$deleted_cases}.}
 
 \item{omit}{Logical. \code{TRUE} if the deleted cases should not be added to
@@ -45,22 +49,26 @@ It adds information on the deleted cases to \code{$info$deleted_cases}. (This
 list is also filled by other functions.)
 
 In this list, you can find the following information:
-
-- \code{$codes} = A vector with the participant codes of all deleted cases.
-
-- \code{$count} = The number of participants in \code{$codes}.
-
-- \code{$full} and \code{$unique} = The data frames \code{$full} and \code{$unique} contain information on each deleted participant and the reason why they were deleted. The entries to the \code{$full} and the \code{$unique} data frames are the same. Columns \code{"end_app"} and \code{"end_page"} are left empty intentionally because they are only filled by the \code{\link{delete_dropouts}} function.
+\itemize{
+\item \code{$codes} = A vector with the participant codes of all deleted cases.
+\item \code{$count} = The number of participants in \code{$codes}.
+\item \code{$full} and \code{$unique} = The data frames \code{$full}
+and \code{$unique} contain information on each deleted participant and
+the reason why they were deleted. The entries to the \code{$full} and
+the \code{$unique} data frames are the same. Columns \code{end_app}
+and \code{end_page} are left empty intentionally because they are only
+filled by the \code{\link[=delete_dropouts]{delete_dropouts()}} function.
+}
 }
 \description{
-Delete specific cases from all data frames in the oTree list.
+Delete specified cases from all data frames in the list of data frames.
 
 Caution 1: This function does not delete cases from the original
 CSV and Excel files!
 
-Caution 2: This function does not delete cases from custom exports
-and custom data frames if these data frames do not have a variable
-named participant.code!
+Caution 2: This function does not delete cases from
+custom data frames if these data frames do not have a variable
+named \code{participant.code}!
 
 Caution 3: This function does not delete any data from
 the \code{$Chats} data frame!
@@ -76,25 +84,27 @@ oTree <- gmoTree::oTree
 
 # Delete only one case
 oTree2 <- delete_cases(oTree,
-                       pcodes = "xmxl46rm",
-                       reason = "requested")
+  pcodes = "xmxl46rm",
+  reason = "requested")
 
 # Show changes in row numbers
-print(paste("Row numbers before deletion: ", nrow(oTree$all_apps_wide), nrow(oTree$survey),
-nrow(oTree$Time), nrow(oTree$Chats)))
+print(paste("Row numbers before deletion: ",
+  nrow(oTree$all_apps_wide), nrow(oTree$survey),
+  nrow(oTree$Time), nrow(oTree$Chats)))
 
-print(paste("Row numbers after deletion: ", nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+print(paste("Row numbers after deletion: ",
+  nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Delete several cases
 deletionlist <- c("4zhzdmzo", "xmxl46rm")
 oTree2 <- delete_cases(oTree,
-                       pcodes = deletionlist,
-                       reason = "requested")
+  pcodes = deletionlist,
+  reason = "requested")
 
 # Show row numbers again
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Show information on all deleted cases (also dropouts):
 oTree2$info$deleted_cases$full
@@ -107,7 +117,7 @@ oTree2 <- delete_cases(oTree,
 
 # Show row numbers again
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Check the "full" deletion information
 oTree2$info$deleted_cases$full
@@ -122,7 +132,7 @@ oTree2 <- delete_cases(oTree,
 
 # Show row numbers again
 print(paste(nrow(oTree2$all_apps_wide), nrow(oTree2$survey),
-nrow(oTree2$Time), nrow(oTree2$Chats)))
+  nrow(oTree2$Time), nrow(oTree2$Chats)))
 
 # Check the "full" deletion information
 oTree2$info$deleted_cases$full
@@ -138,12 +148,12 @@ oTree2$info$deleted_cases$count
 # Delete a session and delete a single case from another session
 oTree2 <- delete_sessions(oTree,
   scodes = c("vd1h01iv"),
-  reason = "Server Crash", 
+  reason = "Server Crash",
   saved_vars = "dictator.1.group.id_in_subsession")
 oTree2 <- delete_cases(oTree2,
-                       pcodes = "4zhzdmzo",
-                       reason = "requested")
-                       
+  pcodes = "4zhzdmzo",
+  reason = "requested")
+
 # Check the "full" deletion information
 oTree2$info$deleted_cases$full
 

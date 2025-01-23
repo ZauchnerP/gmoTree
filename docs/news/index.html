@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,19 +37,54 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.3.1" id="gmotree-131">gmoTree 1.3.1<a class="anchor" aria-label="anchor" href="#gmotree-131"></a></h2>
-<ul><li>Updated figure in vignette.</li>
+<h2 class="pkg-version" data-toc-text="1.4.0" id="gmotree-140">gmoTree 1.4.0<a class="anchor" aria-label="anchor" href="#gmotree-140"></a></h2>
+<ul><li>Changes in functions
+<ul><li>Can handle custom exports better. However, their names need to start with <code>custexp_</code>
+</li>
+<li>Changes in the <code><a href="../reference/codebook.html">codebook()</a></code> function
+<ul><li>Deprecated the <code>preamb</code> argument. There are known issues with the text created by this argument. Please remove any outdated preamble text from your old codebooks!</li>
+<li>The codebook now includes the <code>Subsession</code> class variables if <code>include_subs = TRUE</code>
+</li>
+<li>Replaced “Empty class” text in the output file with “No model fields except the built-in ones”</li>
+<li>
+<code>noargs</code> are now stored as Boolean (<code>TRUE</code>/<code>FALSE</code>) instead of strings (<code>"TRUE"</code> / <code>"FALSE"</code>)</li>
+<li>Made sure that <code>Constants</code> and <code>settings</code> variables are shown as lists and not vectors if they contain more than one element</li>
+</ul></li>
+<li>Changes in the <code><a href="../reference/delete_cases.html">delete_cases()</a></code> function
+<ul><li>Added more validation checks to prevent erroneous inputs</li>
+</ul></li>
+<li>Changes in the <code><a href="../reference/apptime.html">apptime()</a></code> function
+<ul><li>If the output includes only one app and no durations are calculated,<br>
+the app name is now omitted from the list structure to be consistent with cases where durations are calculated, e.g. <code>output$min_duration</code> instead of <code>output$appname$min_duration</code>
+</li>
+<li>Improved message output formatting:
+<ul><li>Messages are now always shown in the list element <code>messages</code> (not <code>message</code> as in some cases)</li>
+<li>If one app has no durations, only <code>messages</code> are shown, <code>duplicate_participants</code> and similar entries are omitted</li>
+<li>Additional refinements in message display</li>
+</ul></li>
+<li>Changes regarding warning messages</li>
+</ul></li>
+</ul></li>
+<li>Other changes
+<ul><li>Package is now linkable by other packages</li>
+<li>Linted code (more efficient &amp; readable)</li>
+<li>Minor changes in the documentation</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.3.1" id="gmotree-131">gmoTree 1.3.1<a class="anchor" aria-label="anchor" href="#gmotree-131"></a></h2><p class="text-muted">CRAN release: 2024-12-06</p>
+<ul><li>Updated figure in vignette</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.3.0" id="gmotree-130">gmoTree 1.3.0<a class="anchor" aria-label="anchor" href="#gmotree-130"></a></h2><p class="text-muted">CRAN release: 2024-12-06</p>
 <ul><li>Changes in <code><a href="../reference/codebook.html">codebook()</a></code>
 <ul><li>Bug fixes
 <ul><li>Resolved an issue with <code>Constants</code> vector presentations in the output files</li>
-<li>Fixed incorrect handling of equal signs (<code>=</code>) in documentation and choices.</li>
+<li>Fixed incorrect handling of equal signs (<code>=</code>) in documentation and choices</li>
 </ul></li>
 <li>New arguments
 <ul><li>
-<code>splitvarname</code> to deal with long variable names. Caveat: In some cases, columns may still overlap. Control your output carefully.</li>
+<code>splitvarname</code> to deal with long variable names. Caveat: In some cases, columns may still overlap. Control your output carefully!</li>
 <li>
 <code>sep_list</code> to decide on list presentation or newline presentation in the output file</li>
 <li>
@@ -94,9 +129,9 @@
 <h2 class="pkg-version" data-toc-text="1.1.0" id="gmotree-110">gmoTree 1.1.0<a class="anchor" aria-label="anchor" href="#gmotree-110"></a></h2><p class="text-muted">CRAN release: 2024-07-04</p>
 <ul><li>Changes in functions
 <ul><li>
-<code><a href="../reference/extime.html">extime()</a></code>: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the ‘seconds_on_page2’ variable.</li>
+<code><a href="../reference/extime.html">extime()</a></code>: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the <code>seconds_on_page2</code> variable</li>
 <li>
-<code><a href="../reference/apptime.html">apptime()</a></code>: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the ‘seconds_on_page2’ variable.</li>
+<code><a href="../reference/apptime.html">apptime()</a></code>: Enhanced efficiency and extended functionality: Introduced the capability to perform calculations using only the <code>seconds_on_page2</code> variable</li>
 </ul></li>
 <li>Linted code (more efficient &amp; readable)</li>
 <li>Minor changes in tests.R</li>
@@ -104,37 +139,38 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="gmotree-101">gmoTree 1.0.1<a class="anchor" aria-label="anchor" href="#gmotree-101"></a></h2><p class="text-muted">CRAN release: 2023-10-25</p>
-<ul><li>Minor changes in examples and DESCRIPTION file.</li>
+<ul><li>Minor changes in examples and DESCRIPTION file</li>
 <li>Changes in functions: NONE</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="gmotree-100">gmoTree 1.0.0<a class="anchor" aria-label="anchor" href="#gmotree-100"></a></h2>
-<p>File names of the examples are now portable.</p>
-<ul><li>Changes in functions
+<ul><li>File names of the examples are now portable</li>
+<li>Changes in functions
 <ul><li>
-<code><a href="../reference/import_otree.html">import_otree()</a></code>: Minor changes. Can also import portable file names now.</li>
+<code><a href="../reference/import_otree.html">import_otree()</a></code>: Minor changes. Can also import portable file names now</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.3" id="gmotree-003">gmoTree 0.0.3<a class="anchor" aria-label="anchor" href="#gmotree-003"></a></h2>
-<ul><li>Minor improvement of the documentation &amp; website.</li>
+<ul><li>Minor improvement of the documentation &amp; website</li>
 <li>Changes in functions: NONE</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2" id="gmotree-002">gmoTree 0.0.2<a class="anchor" aria-label="anchor" href="#gmotree-002"></a></h2>
-<ul><li>Minor improvement of the documentation &amp; website. (Sent to CRAN and omitted here.)</li>
+<p>Sent to CRAN and omitted here</p>
+<ul><li>Minor improvement of the documentation &amp; website</li>
 <li>Changes in functions: NONE</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.1" id="gmotree-001">gmoTree 0.0.1<a class="anchor" aria-label="anchor" href="#gmotree-001"></a></h2>
-<ul><li>Beta version of gmoTree published (formerly known as “ioTree”).</li>
+<ul><li>Beta version of gmoTree published (formerly known as “ioTree”)</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

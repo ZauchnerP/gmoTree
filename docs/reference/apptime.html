@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,29 +62,30 @@
 
 
 <dl><dt id="arg-otree">oTree<a class="anchor" aria-label="anchor" href="#arg-otree"></a></dt>
-<dd><p>A list of data frames that were created
-by <code><a href="import_otree.html">import_otree</a></code></p></dd>
+<dd><p>A list of data frames created
+with <code><a href="import_otree.html">import_otree()</a></code>.</p></dd>
 
 
 <dt id="arg-apps">apps<a class="anchor" aria-label="anchor" href="#arg-apps"></a></dt>
-<dd><p>Character. Name(s) of the app(s) for which the time
+<dd><p>Character string or character vector.
+Name(s) of the app(s) for which the time
 should be calculated.</p></dd>
 
 
 <dt id="arg-pcode">pcode<a class="anchor" aria-label="anchor" href="#arg-pcode"></a></dt>
-<dd><p>Character. The value of the <code>participant.code</code>
+<dd><p>Character string. The value of the <code>participant.code</code>
 variable if the time should only be calculated for one specified participant.</p></dd>
 
 
 <dt id="arg-plabel">plabel<a class="anchor" aria-label="anchor" href="#arg-plabel"></a></dt>
-<dd><p>Character. The value of the <code>participant.label</code>
+<dd><p>Character string. The value of the <code>participant.label</code>
 variable if the time should only be calculated for one specified participant.</p></dd>
 
 
 <dt id="arg-group-id">group_id<a class="anchor" aria-label="anchor" href="#arg-group-id"></a></dt>
 <dd><p>Integer. The value of the <code>group_id</code> variable if the
 time should only be calculated for one specified group. The <code>group_id</code>
-variable can be created with <code><a href="make_ids.html">make_ids</a></code>.</p></dd>
+variable can be created with <code><a href="make_ids.html">make_ids()</a></code>.</p></dd>
 
 
 <dt id="arg-seconds">seconds<a class="anchor" aria-label="anchor" href="#arg-seconds"></a></dt>
@@ -103,7 +104,7 @@ This parameter has no effect unless <code>rounded = TRUE</code>.</p></dd>
 
 
 <dt id="arg-sinfo">sinfo<a class="anchor" aria-label="anchor" href="#arg-sinfo"></a></dt>
-<dd><p>Character. <code>"session_id"</code> to use session ID
+<dd><p>Character string. <code>"session_id"</code> to use session ID
 for additional information in the data frame
 of single durations, <code>"session_code"</code> to use session codes,
 or <code>NULL</code> if no
@@ -165,12 +166,12 @@ it to the app(s).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16    7l0hmpcq qyu3qg0q     0.15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17    ia9rnfvc qyu3qg0q     0.15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $messages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $warnings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "164r1hs4" "ktjz5jli" "vbhvhozv" "2scvem7a" "7wa8kk3d" "znri6myc" "ao9kqvqn"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] "d4sq7zio"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $messages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show how much time the participant "a7dppel1" spent on</span></span></span>
@@ -198,11 +199,11 @@ it to the app(s).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   participant  session duration</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    lsl3vbij 7bfqtokx     0.13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $messages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $warnings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "164r1hs4"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $messages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Show how much time all participants spent on all apps</span></span></span>
@@ -237,12 +238,12 @@ it to the app(s).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15    1l5kal0r t0rog7nz     1.10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     iay3dhkn 7bfqtokx     1.87</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $chatapp$messages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $chatapp$warnings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "164r1hs4" "ktjz5jli" "vbhvhozv" "2scvem7a" "7wa8kk3d" "znri6myc" "ao9kqvqn"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] "d4sq7zio"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $chatapp$messages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $dictator</span>
@@ -279,11 +280,11 @@ it to the app(s).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     4zhzdmzo 7bfqtokx     5.87</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4     3ttf7yix 7bfqtokx     5.95</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $dictator$messages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $dictator$warnings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7wa8kk3d" "znri6myc" "ao9kqvqn" "d4sq7zio"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $dictator$messages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $survey</span>
@@ -316,12 +317,12 @@ it to the app(s).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13    wk247s9w t0rog7nz     0.73</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     46kxib6w 7bfqtokx     1.13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $survey$messages</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $survey$warnings</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "164r1hs4" "ktjz5jli" "vbhvhozv" "2scvem7a" "7wa8kk3d" "znri6myc" "ao9kqvqn"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] "d4sq7zio"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $survey$messages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "For some participants, no duration could be calculated. See list in $warnings."</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
@@ -331,7 +332,7 @@ it to the app(s).</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

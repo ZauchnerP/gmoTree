@@ -7,8 +7,8 @@
 delete_plabels(oTree, del_plabel = TRUE, del_mturk = TRUE)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
 \item{del_plabel}{Logical. \code{TRUE} if all participant labels
 should be deleted.}
@@ -26,7 +26,7 @@ If you work with MTurk, the MTurk IDs will be stored in the
 participant labels variable.
 This function deletes this variable in \code{$all_apps_wide}
 and every app data frame in the list of data frames that was created
-by \code{\link{import_otree}} and/or all
+by \code{\link[=import_otree]{import_otree()}} and/or all
 variables referring to MTurk, such as \code{participant.mturk_worker_id}.
 
 Caution: This function does not delete the variables from the original

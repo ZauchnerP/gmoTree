@@ -6,10 +6,14 @@ Bot outputs are saved by oTree without the date included. Hence, to
 import bot data, you must either rename the original bot files
 using the YYYY-MM-DD format or use the argument onlybots = TRUE.
 By using the second option, only data of bot files are imported.
+Since custom export files share the same names as the app files,
+they must be renamed by adding 'custexp_' as a prefix to
+correctly import them.
 Caution! Data can be downloaded from within the
 session and globally at the same time. If both files are downloaded,
 this can lead to the $all_apps_wide data being there twice! You can
-remove duplicate data by using delete_duplicate.
+remove duplicate data by
+using delete_duplicate().
 Caution! When importing Excel files, this function does not check
 for erroneous data structures
 and will combine all data frames with the same file name patterns.
@@ -21,10 +25,14 @@ Bot outputs are saved by oTree without the date included. Hence, to
 import bot data, you must either rename the original bot files
 using the YYYY-MM-DD format or use the argument onlybots = TRUE.
 By using the second option, only data of bot files are imported.
+Since custom export files share the same names as the app files,
+they must be renamed by adding 'custexp_' as a prefix to
+correctly import them.
 Caution! Data can be downloaded from within the
 session and globally at the same time. If both files are downloaded,
 this can lead to the $all_apps_wide data being there twice! You can
-remove duplicate data by using delete_duplicate.
+remove duplicate data by
+using delete_duplicate().
 Caution! When importing Excel files, this function does not check
 for erroneous data structures
 and will combine all data frames with the same file name patterns.
@@ -37,7 +45,7 @@ clean up your data appropriately."><meta property="og:image" content="https://za
 
     <a class="navbar-brand me-2" href="../index.html">gmoTree</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,17 +76,21 @@ clean up your data appropriately."><meta property="og:image" content="https://za
     </div>
 
     <div class="ref-description section level2">
-    <p>Import data files that were created by oTree.
-All files containing the pattern YYYY-MM-DD at the end
+    <p>Import data files that were created by oTree.</p>
+<p>All files containing the pattern YYYY-MM-DD at the end
 of their file names are considered oTree files.
 Bot outputs are saved by oTree without the date included. Hence, to
 import bot data, you must either rename the original bot files
 using the YYYY-MM-DD format or use the argument <code>onlybots = TRUE</code>.
-By using the second option, only data of bot files are imported.</p>
+By using the second option, only data of bot files are imported.
+Since custom export files share the same names as the app files,
+they must be renamed by adding 'custexp_' as a prefix to
+correctly import them.</p>
 <p>Caution! Data can be downloaded from within the
 session and globally at the same time. If both files are downloaded,
 this can lead to the <code>$all_apps_wide</code> data being there twice! You can
-remove duplicate data by using <code><a href="delete_duplicate.html">delete_duplicate</a></code>.</p>
+remove duplicate data by
+using <code><a href="delete_duplicate.html">delete_duplicate()</a></code>.</p>
 <p>Caution! When importing Excel files, this function does not check
 for erroneous data structures
 and will combine all data frames with the same file name patterns.
@@ -107,29 +119,30 @@ clean up your data appropriately.</p>
 
 
 <dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
-<dd><p>Character. The path to the files (default is the
-working directory).</p></dd>
+<dd><p>Character string or character vector.
+The path(s) to the files (default is the working directory).</p></dd>
 
 
 <dt id="arg-file-names">file_names<a class="anchor" aria-label="anchor" href="#arg-file-names"></a></dt>
-<dd><p>Character. The name(s) of the file(s) to be imported.
+<dd><p>Character string or character vector.
+The name(s) of the file(s) to be imported.
 If not specified, all files in the path and subfolders are imported.</p></dd>
 
 
 <dt id="arg-final-apps">final_apps<a class="anchor" aria-label="anchor" href="#arg-final-apps"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the app(s) at which the participants have to finish the
 experiment. If the argument final_apps is left empty, you can still call
 for deleting the participants who did not finish the experiment
-with <code><a href="delete_dropouts.html">delete_dropouts</a></code>.</p></dd>
+with <code><a href="delete_dropouts.html">delete_dropouts()</a></code>.</p></dd>
 
 
 <dt id="arg-final-pages">final_pages<a class="anchor" aria-label="anchor" href="#arg-final-pages"></a></dt>
-<dd><p>Character.
+<dd><p>Character string or character vector.
 The name(s) of the page(s) at which the participants have to finish the
 experiment. If the argument final_pages is left empty, you can still
 call for deleting the participants who did not finish the experiment
-with <code><a href="delete_dropouts.html">delete_dropouts</a></code>.</p></dd>
+with <code><a href="delete_dropouts.html">delete_dropouts()</a></code>.</p></dd>
 
 
 <dt id="arg-recursive">recursive<a class="anchor" aria-label="anchor" href="#arg-recursive"></a></dt>
@@ -158,7 +171,8 @@ import should be printed.</p></dd>
 
 
 <dt id="arg-encoding">encoding<a class="anchor" aria-label="anchor" href="#arg-encoding"></a></dt>
-<dd><p>Character. Encoding of the CSV files that are imported.
+<dd><p>Character string.
+Encoding of the CSV files that are imported.
 Default is <code>"UTF-8"</code>.</p></dd>
 
 </dl></div>
@@ -180,7 +194,8 @@ last page and/or app are not subtracted from this number.</p>
 the <code>participant._current_app_name</code>
 variable set. Empty rows are deleted from all app data frames
 and <code>$all_apps_wide</code> when using <code>del_empty = TRUE</code>. Empty rows in
-the <code>$Chats</code> and <code>$Time</code> data frames are not deleted.</p>
+the <code>$Chats</code> and <code>$Time</code> data frames as well as data frames
+whose names start with <code>custexp_</code> (custom export) are not deleted.</p>
 <p>If old and new oTree versions are combined, the <code>$Time</code> data frame
 contains variables called <code>participant_code</code>
 and <code>participant__code</code> (the difference is in the underscores).
@@ -319,7 +334,7 @@ only found in one column.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p><a href="impressum.html">Site notice</a></p>
+  <p>Developed by Patricia F. Zauchner.</p>
 </div>
 
 <div class="pkgdown-footer-right">

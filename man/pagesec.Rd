@@ -7,8 +7,8 @@
 pagesec(oTree, rounded = TRUE, digits = 2, minutes = FALSE, combine = FALSE)
 }
 \arguments{
-\item{oTree}{A list of data frames that were created
-by \code{\link{import_otree}}.}
+\item{oTree}{A list of data frames created
+with \code{\link[=import_otree]{import_otree()}}.}
 
 \item{rounded}{Logical. \code{TRUE} if the output should be rounded.}
 
@@ -26,7 +26,7 @@ merged in case data of several versions of oTree are used.}
 \value{
 This function returns a duplicate of the original oTree list of
 data frames that also contains a column in the \code{$Time} data frame
- named \code{seconds_on_page2} or \code{minutes_on_page}.
+named \code{seconds_on_page2} or \code{minutes_on_page}.
 }
 \description{
 Create a new variable in the \code{$Time} data frame that contains the time

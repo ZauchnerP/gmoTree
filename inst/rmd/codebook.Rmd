@@ -37,79 +37,22 @@ knitr::opts_chunk$set(smart = FALSE)
 data <- params$combined_codebook
 ```
 
-```{r preamb}
-if (!is.null(params$preamb) && params$preamb) {
-  cat("# Introduction to oTree data\n\n")
-  
-  
-  cat(sep = "", "In an oTree list of data frames, each application (app) is represented by its own data frame. Additionally, there is an `all_apps_wide` data frame that aggregates information from all apps.
-\n\n",
-
-# All apps wide  ####
-    "The `all_apps_wide` data frame is in a wide format, where each participant is represented by a single row. ", 
-
-    "Variables within the `all_apps_wide` data frame follow the naming convention:  \n\n",
-    "`oTree$all_apps_wide$appname.1.player.variablename`\n\n",
-    
-    "This convention reflects the hierarchical organization of the data, resembling a tree: ",
-    
-    "the variable `variablename` belongs to the class `Player`, which occurs in round `1` of the app `appname`, and is located in the data frame `all_apps_wide`, which is part of the list `oTree`.
-    \n\n", 
-
-# Classes ####
-    "In oTree, there are three types of classes: `Player`, `Group`, and `Participant`. ",
-
-
-"`Player` and `Group` variables are specific to each app, with values that may change across rounds. `Player` variables are unique to individual participants, whereas `Group` variables are shared among all members of a group. ",
-
-"`Participant` variables are individual-specific; however, unlike `Player` variables, they persist across apps. They can be accessed and updated within any app, with only their most recent value retained. ",
-    
-    "`Participant` variables are not included in this codebook. ",
-    
-    "For more detailed information on these concepts, refer to https://otree.readthedocs.io/en/latest/conceptual_overview.html.",
-
-# App data  ####
-
-    "\n\nIn contrast to `all_apps_wide`, the individual app data frames store data in a long format, where each row represents a single participant's data for a specific round. Variables in these app data frames follow this convention: ", 
-    
-    "`oTree$app$player.variablename`. ", 
-    
-    "Since the round number is saved in a separate variable and the app name is the name of the sublist, the last part only includes the variable name and its associated class.",
-
-"\n\n", 
-
-# This codebook  ####
-    
-    "The subsequent presentation of the variables' information is organized through the use of headings and tables. ", 
-    "The first-level headings correspond to the apps, the second-level headings indicate the class, and the tables at the final level contain the names and values of the variables as defined in the oTree code.", 
-
-
-    "\n\nStandard oTree variables, such as `player.payoff`, are not reported in this codebook.",
-    
-    " Especially round numbers are considered self-explanatory and are not elaborated on for each variable. ")
-    
-    if (params$include_cons) {
-      cat(sep = "", "The number of times an app is played can be found in the `Constants` variable `num_rounds`.")
-    }
-    
-}
-```
 
 ```{r background functions}
 split_var_text <- function(text, limit = 30L) {
   #' Split variable name if it is too long at the underscores
   #' Is needed because sometimes the variable names are too long
-  
+
   if (nchar(text) <= limit) {
     return(text)
   }
-  
+
   # Locate all positions of `_`
   underscore_positions <- gregexpr("_", text)[[1L]]
-  
+
   # Find the last underscore position before the limit
   split_position <- max(underscore_positions[underscore_positions < limit])
-  
+
   # Split the text at the found position and insert a line break
   if (split_position > 0L) {
     text <- paste0(
@@ -117,51 +60,51 @@ split_var_text <- function(text, limit = 30L) {
       substr(text, split_position + 1L, nchar(text))
     )
   }
-  
+
   return(text)
 }
 
 panderwithsplit <- function(table, splitvarname) {
     #' Run split_var_text at set longest varname if splitvarname == TRUE
     #' Is needed because sometimes the variable names are too long
-    
+
   table_copy <- table
   spaces <- 0L
   padding <- 4L
-  
+
     if (splitvarname) {
         # Split text and set default split.cells
         table_copy$Variable <- unlist(lapply(table_copy$Variable,
                                             split_var_text))
 
-        maxvarname <- 30 - padding # Keep default
+        maxvarname <- 30L - padding # Keep default
 
     } else {
         # Length of the longest variable name used to set split.cells
-        # (It is usually dynamic by default, however, 
-        # not if there are underscores 
+        # (It is usually dynamic by default, however,
+        # not if there are underscores
         # in the variable names)
-        maxvarname <- nchar(max(table_copy$Variable)) 
-        
+        maxvarname <- nchar(max(table_copy$Variable))
+
         if (maxvarname < 30L) {
             spaces <- 30L - maxvarname
         }
     }
-  
+
   out <- list()
   out$table <- table_copy
-  
+
   # Compute cell width
   n_uppercase <- sum(sapply(gregexpr("[A-Z]", maxvarname)[[1L]],
                             function(x) x > 0L))
   n_lowercase <- maxvarname - n_uppercase
-  
-  out$col1_length <- (n_lowercase + 
+
+  out$col1_length <- (n_lowercase +
                       n_uppercase * 1.142857 +  # n_uppercases are wider than lowercases
                       spaces * 0.98 +   # spaces are smaller than letters
-                      padding)  
+                      padding)
   out$col1_length <- round(out$col1_length)
-  out$col2_length <- 90L - out$col1_length 
+  out$col2_length <- 90L - out$col1_length
 
   return(out)
 }
@@ -169,12 +112,12 @@ panderwithsplit <- function(table, splitvarname) {
 list_to_string <- function(x) {
   # If x is a vector or list, convert it to a string representation
   if (is.vector(x)) {
-    
-    listvec <- "cfuck("
+
+    listvec <- "ctest("
     if (is.list(x)) {
       listvec <- "list("
     }
-    
+
     # Use lapply to recursively apply the function to any nested vectors
     elements <- lapply(x, function(e) {
       if (is.vector(e) && !is.atomic(e)) {
@@ -185,28 +128,28 @@ list_to_string <- function(x) {
         return(deparse(e))
       }
     })
-    # Create a string 
-    return(paste(listvec, paste(elements, collapse = ", "), ")", sep = ""))
+    # Create a string
+    return(paste0(listvec, paste(elements, collapse = ", "), ")"))
   }
   return(deparse(x))
 }
 
 makechunks <- function(variable, varval_i, chunk_size = 4L) {
   # Each chunk should only be 4 rows long
-  
+
   chunks <- list()
   cj <- 1L
-  
+
   # Iterate over the input and assign to chunks
   for (i in seq_along(varval_i)) {
-    
+
     varval_sub <- paste(varval_i[[i]], collapse = ", ")
-    
+
     if (i == 1L) {
       chunks[[cj]] <-  varval_sub
-      
+
     } else if ((i - 1L) %% chunk_size == 0L) {
-      
+
       # Start a new chunk
       cj <- cj + 1L
       chunks[[cj]] <- varval_sub
@@ -216,12 +159,12 @@ makechunks <- function(variable, varval_i, chunk_size = 4L) {
       chunks[[cj]] <- paste(chunks[[cj]], varval_sub, sep = "\\\n")
     }
   }
-  
+
   # Create output table variables and values
   table_variables <- rep("", length(chunks))
   table_variables[1L] <- variable  # Assign the variable name to the first chunk
   table_values <-  chunks  # The chunks are the valuesf
-  
+
   # Return the list of variables and values
   return(list(var = table_variables, val = table_values))
 
@@ -239,9 +182,9 @@ get_app <- function(params,
       params$app_doc &&
       !is.null(data[[folder]]$doc) &&
       data[[folder]]$doc != "") {
-    
+
      # Replace \\ with \n
-     data[[folder]]$doc <- gsub("\\\\", 
+     data[[folder]]$doc <- gsub("\\\\",
                                "\n\n",
                                data[[folder]]$doc)
      output <-  paste(output,
@@ -252,7 +195,7 @@ get_app <- function(params,
 }
 ```
 
-```{r group player function}
+```{r group player subsession function}
 values_group_player <- function(subdata, variable) {
 
   # Values  ####
@@ -262,7 +205,7 @@ values_group_player <- function(subdata, variable) {
     if ("doc" %in% names(subdata[[variable]]) &&
         subdata[[variable]][["doc"]] != ""
         ) {
-      
+
        varval <-
          paste0(varval,
                 "  Doc: ", subdata[[variable]][["doc"]],
@@ -280,7 +223,7 @@ values_group_player <- function(subdata, variable) {
         varval <-
           paste0(varval, "  Widget: ", subdata[[variable]]$widget, "\\\n")
     }
-    
+
     # Label
     if ("label" %in% names(subdata[[variable]]) &&
         subdata[[variable]][["label"]] != "") {
@@ -310,7 +253,7 @@ values_group_player <- function(subdata, variable) {
                           subdata[[variable]][["choices"]][["value"]],
                           collapse = "\\\n"),
                         "\\\n")
-          
+
         } else if ("value" %in% names(subdata[[variable]][["choices"]])) {
           varval <- paste0(varval, "  Options:\\\n")
           varval <- paste0(varval,
@@ -320,7 +263,7 @@ values_group_player <- function(subdata, variable) {
                             function(x) paste0("&nbsp;&nbsp;&nbsp;", x)),
                           collapse = "\\\n"),
                         "\\\n")
-          
+
         } else {
           varval <- paste0(varval, "  Options:\\\n")
           varval <- paste0(varval,
@@ -354,7 +297,7 @@ values_group_player <- function(subdata, variable) {
                          "  Maximum: ",
                          subdata[[variable]]$max, "\\\n")
     }
-    
+
     # Initial
     if (params$initial &&
         "initial" %in% names(subdata[[variable]])) {
@@ -365,97 +308,98 @@ values_group_player <- function(subdata, variable) {
 
     # Remove last carriage return  ####
     sub("\\\\\\n$", "", varval)
-    
+
     # Return  ####
     return(varval)
 }
 ```
 
 ```{r constants function}
-values_constants <- function(subdata, 
-                             class, 
+values_constants <- function(subdata,
+                             class,
                              folder) {
-  
-  # Initialize lists 
+
+  # Initialize lists
   table_variables <- vector("character", length = 0L)
   table_values <- vector("character", length = 0L)
-  
-  # Loop through variable names 
+
+  # Loop through variable names
   for (variable in names(subdata)) {
-    
+
     # Error messages (TODO do I even need them?)  ####
     if (is.null(subdata)) {
       stop("Data of class ", class, " in app ", folder, " is not there!")
     }
-    
+
     if (!is.list(subdata)) {
       stop("Data of class ", class, " in app ", folder, " is not a list!")
     }
-    
+
     if (is.null(variable)) {
       stop("Variable ", variable,
            " in class ", class,
            " in app ", folder,
            " is not there!")
     }
-    
+
     # Make table values  ####
     if (length(subdata[[variable]]) == 1L) {
-      
+
       table_variables <- c(table_variables, variable)
       table_values <- c(table_values, subdata[[variable]][[1L]])
 
     } else if (length(subdata[[variable]]) > 1L) {
-      
+
       varval_i <- ""
-      
-      if (params$sep_list == "newline") {     
-           if (all(lengths(subdata[[variable]]) == 1)) {
+
+      if (params$sep_list == "newline") {
+        
+           if (all(lengths(subdata[[variable]]) == 1L)) {
              # If each sublist only contains one element treat it as vector
-             
-               varval_i <- paste(subdata[[variable]], 
-                  collapse = ", ")  
-             
+
+               varval_i <- paste(subdata[[variable]],
+                  collapse = ", ")
+
            } else {
-             
+
              if (params$pdf) {
-                  chunkparts <- makechunks(variable = variable, 
+                  chunkparts <- makechunks(variable = variable,
                                            varval_i = subdata[[variable]])
                   variable <- unlist(chunkparts$var)
                   varval_i <- unlist(chunkparts$val)
-                  
-             } else {              
+
+             } else {
               # Iterate over each element in the sublist
               for (i in seq_along(subdata[[variable]])) {
-                x <- unlist(subdata[[variable]][i]) 
+                x <- unlist(subdata[[variable]][i])
                 varval_sub <- paste(x, collapse = ", ")
                 varval_i <- ifelse(varval_i == "",
                                    varval_sub,
                                    paste(varval_i,
                                          varval_sub,
                                          sep = "\\\n"))
-                    
+
               }
             }
            }
-        
+
           table_variables <- c(table_variables, variable)
           table_values <- c(table_values, varval_i)
-          
+
       } else if (params$sep_list == "vector") {
              table_variables <- c(table_variables, variable)
-             table_values <- c(table_values, 
+             table_values <- c(table_values,
                                list_to_string(subdata[[variable]]))
       }
-    } 
-  } 
-  
-  
+    }
+  }
+
+
   # Construct the final data frame
-  table <- data.frame(Variable = table_variables, 
-                      Value = table_values, 
+  table <- data.frame(Variable = table_variables,
+                      Value = table_values,
                       stringsAsFactors = FALSE)
-  
+
   return(table)
 }
 ```
@@ -464,7 +408,7 @@ values_constants <- function(subdata,
 data$settings <- NULL
 
 for (folder in names(data)) {
-  
+
   if (folder != "settings" && folder != "user_settings") {
 
     # App documentation and header
@@ -477,7 +421,9 @@ for (folder in names(data)) {
       subdata <- data[[folder]][[class]]
 
       if (class != "Constants" &&
-          class != "doc")  {
+          class != "doc" &&
+          !(class == "Subsession" && !include_subs)
+          )  {
 
         cat("\n\n## Class: ", class, "\n\n")
 
@@ -485,38 +431,38 @@ for (folder in names(data)) {
 
           # If pass
           if (is.null(names(subdata))) {
-              cat("\n\nEmpty class\n")
-            
+              cat("\n\nNo model fields except the built-in ones\n")
+
           } else {
 
               # For variables
               table_var <- data.frame(Variable = names(subdata))
-              
+
               table_var$Value <-
                 sapply(table_var$Variable,
                        FUN = function(x) values_group_player(subdata, x))
 
               # Remove last \n
-              table_var[nrow(table_var), ] <- 
-                sub(pattern = "\\\\\\n$", 
-                    replacement = "", 
+              table_var[nrow(table_var), ] <-
+                sub(pattern = "\\\\\\n$",
+                    replacement = "",
                     x = table_var[nrow(table_var), ])
-              
-              # Splitvariablename
-              xx <- panderwithsplit(table_var, 
+
+              # Split variable name
+              xx <- panderwithsplit(table_var,
                               params$splitvarname
                               )
 
               # Show app table
               pander::pander(xx$table,
-                split.cells = c(xx$col1_length, 
+                split.cells = c(xx$col1_length,
                                 xx$col2_length))
-              
-      
+
+
               cat("\n\n")
           }
         } else {
-              cat("\n\nEmpty class\n")
+              cat("\n\nNo model fields except the built-in ones\n")
         }
       } else if (class == "Constants" &&
                  params$include_cons) {
@@ -524,29 +470,30 @@ for (folder in names(data)) {
         cat("\n\n## Class: ", class, "\n\n")
 
         if (length(subdata) != 0L) {
-          
+
           # If pass
           if (is.null(names(subdata))) {
-            cat("\n\nEmpty class\n\n")
-            
+            # This will never occur
+            cat("\n\nNo Constants variables\n\n")
+
           } else {
 
             # Make table
             table_var <- values_constants(subdata = subdata,
-                                          class = class, 
+                                          class = class,
                                           folder = folder)
-            
-            
+
+
             # Split variable name
-            xx <- panderwithsplit(table_var, 
+            xx <- panderwithsplit(table_var,
                             params$splitvarname
                             )
 
-                          
+
             # Show Constants table
             pander::pander(xx$table,
               split.cells = c(xx$col1_length, xx$col2_length))
-            
+
             cat("\n\n")
 
           }

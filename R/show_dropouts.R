@@ -3,15 +3,15 @@
 #' Show information on the people who did not finish the experiment at (a)
 #' certain page(s) and/or app(s).
 #' @keywords oTree
-#' @param oTree A list of data frames that were created
-#' by \code{\link{import_otree}}.
-#' @param final_apps Character.
+#' @inheritParams apptime
+#' @param final_apps Character string or character vector.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment.
-#' @param final_pages Character.
+#' @param final_pages Character string or character vector.
 #' The name(s) of the page(s) at which the participants have to finish the
 #' experiment.
-#' @param saved_vars The name(s) of variable(s) that need(s) to be
+#' @param saved_vars Character string or character vector.
+#' The name(s) of variable(s) that need(s) to be
 #' shown in the list of information on dropout cases.
 #' @returns
 #' This function returns a list of information on participants who did not
@@ -56,7 +56,7 @@
 #' these variables were not saved by oTree for the specific participants.
 #' This could be because empty rows were not deleted. This can be done
 #' by using the argument \code{del_empty = TRUE}" when
-#' using \code{\link{import_otree}}.
+#' using \code{\link[=import_otree]{import_otree()}}.
 #' @examples
 #' # Use package-internal list of oTree data frames
 #' oTree <- gmoTree::oTree

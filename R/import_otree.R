@@ -1,7 +1,7 @@
 #' Import oTree data
 #' @description
 #' Import data files that were created by oTree.
-#' 
+#'
 #' All files containing the pattern YYYY-MM-DD at the end
 #' of their file names are considered oTree files.
 #' Bot outputs are saved by oTree without the date included. Hence, to
@@ -9,13 +9,14 @@
 #' using the YYYY-MM-DD format or use the argument \code{onlybots = TRUE}.
 #' By using the second option, only data of bot files are imported.
 #' Since custom export files share the same names as the app files,
-#' they must be renamed by adding 'custexp_' as a prefix to 
+#' they must be renamed by adding 'custexp_' as a prefix to
 #' correctly import them.
 #'
 #' Caution! Data can be downloaded from within the
 #' session and globally at the same time. If both files are downloaded,
 #' this can lead to the \code{$all_apps_wide} data being there twice! You can
-#' remove duplicate data by using \code{\link{delete_duplicate}}.
+#' remove duplicate data by
+#' using \code{\link[=delete_duplicate]{delete_duplicate()}}.
 #'
 #' Caution! When importing Excel files, this function does not check
 #' for erroneous data structures
@@ -23,23 +24,25 @@
 #' Before using the \code{CSV = FALSE} argument,
 #' clean up your data appropriately.
 #' @keywords oTree
-#' @param final_apps Character.
+#' @param final_apps Character string or character vector.
 #' The name(s) of the app(s) at which the participants have to finish the
 #' experiment. If the argument final_apps is left empty, you can still call
 #' for deleting the participants who did not finish the experiment
-#' with \code{\link{delete_dropouts}}.
-#' @param final_pages Character.
+#' with \code{\link[=delete_dropouts]{delete_dropouts()}}.
+#' @param final_pages Character string or character vector.
 #' The name(s) of the page(s) at which the participants have to finish the
 #' experiment. If the argument final_pages is left empty, you can still
 #' call for deleting the participants who did not finish the experiment
-#' with \code{\link{delete_dropouts}}.
-#' @param encoding Character. Encoding of the CSV files that are imported.
+#' with \code{\link[=delete_dropouts]{delete_dropouts()}}.
+#' @param encoding Character string.
+#' Encoding of the CSV files that are imported.
 #' Default is \code{"UTF-8"}.
-#' @param path Character. The path to the files (default is the
-#' working directory).
+#' @param path Character string or character vector.
+#' The path(s) to the files (default is the working directory).
 #' @param recursive Logical. \code{TRUE} if the files in the path's
 #' subfolders should also be imported.
-#' @param file_names Character. The name(s) of the file(s) to be imported.
+#' @param file_names Character string or character vector.
+#' The name(s) of the file(s) to be imported.
 #' If not specified, all files in the path and subfolders are imported.
 #' @param csv Logical. \code{TRUE} if only CSV files should be
 #' imported. \code{FALSE} if only Excel files should be imported.
@@ -69,7 +72,7 @@
 #' the \code{participant._current_app_name}
 #' variable set. Empty rows are deleted from all app data frames
 #' and \code{$all_apps_wide} when using \code{del_empty = TRUE}. Empty rows in
-#' the \code{$Chats} and \code{$Time} data frames as well as data frames 
+#' the \code{$Chats} and \code{$Time} data frames as well as data frames
 #' whose names start with \code{custexp_} (custom export) are not deleted.
 #'
 #' If old and new oTree versions are combined, the \code{$Time} data frame
@@ -170,13 +173,16 @@ import_otree <- function(
   }
 
   # Make messages
-  errorfiles <- data.frame(file = character(0L),
-                           content = character(0L))
-  warningfiles <- data.frame(file = character(0L),
-                             content = character(0L))
+  env <- new.env(parent = emptyenv())
+  env$errorfiles <- data.frame(file = character(0L),
+                           content = character(0L),
+                           stringsAsFactors = FALSE)
+  env$warningfiles <- data.frame(file = character(0L),
+                             content = character(0L),
+                             stringsAsFactors = FALSE)
   time_message <- character(0L)
   chat_message <- character(0L)
-  other_messages <- character(0L)
+  env$other_messages <- character(0L)
 
   # Define path
   if (!is.null(path)) {
@@ -205,7 +211,7 @@ import_otree <- function(
   } else {
     if (csv) {
       # For regex search later
-      # The second part refers to Chat and Time and is always csv
+      # The second part refers to Chats and Time and is always csv
       pattern_definer <-
         "[0-9]{4}-[0-9]{2}-[0-9]{2}\\.csv|[0-9]{4}-[0-9]{2}-[0-9]{2}\\)\\.csv"
     } else {
@@ -284,9 +290,7 @@ import_otree <- function(
 
   # Sort app-names
   appnames <- unique(app_filedf$app)
-  appnames <- appnames[order(appnames)]
-
-  ##########################################################
+  appnames <- sort(appnames, na.last = TRUE)  # There should be no NA however
 
   # Import all data except time and chat  ####
 
@@ -323,7 +327,6 @@ import_otree <- function(
                                            sheet = 1L)
 
                 # If data is there: Add data to data frame + info about it
-
                 if (!is.null(new) & nrow(new) > 0L) {
 
                   oTree[[App]] <- plyr::rbind.fill(new, oTree[[App]])
@@ -335,11 +338,12 @@ import_otree <- function(
                 }
               }, warning = function(w) {
 
-                # Append error message
-                warningfiles <<- rbind(
-                  warningfiles,
+                # Append warning message
+                env$warningfiles <- rbind(
+                  env$warningfiles,
                   data.frame(file = allAppsFilesWP[i],
-                             content = as.character(w)))
+                             content = as.character(w),
+                             stringsAsFactors = FALSE))
 
                 invokeRestart("muffleWarning")
 
@@ -348,10 +352,12 @@ import_otree <- function(
                 # error shown!
 
                 # Append error message
-                errorfiles <<-
-                  rbind(errorfiles,
-                    data.frame(file = allAppsFilesWP[i],
-                               content = as.character(e)))
+                env$errorfiles <-
+                  rbind(env$errorfiles,
+                        data.frame(file = allAppsFilesWP[i],
+                                   content = as.character(e),
+                                   stringsAsFactors = FALSE)
+                                   )
               }
             )
           }
@@ -387,17 +393,19 @@ import_otree <- function(
               }, warning = function(w) {
 
                 # Append warning message
-                warningfiles <<- rbind(warningfiles,
+                env$warningfiles <- rbind(env$warningfiles,
                                        data.frame(file = allAppsFilesWP[i],
-                                                  content = as.character(w)))
+                                                  content = as.character(w),
+                                                  stringsAsFactors = FALSE))
                 invokeRestart("muffleWarning")
               }
            )}, error = function(e) {
 
              # Append error message
-             errorfiles <<- rbind(errorfiles,
+             env$errorfiles <- rbind(env$errorfiles,
                                   data.frame(file = allAppsFilesWP[i],
-                                             content = as.character(e)))
+                                             content = as.character(e),
+                                             stringsAsFactors = FALSE))
            })
         }
       }
@@ -449,7 +457,7 @@ import_otree <- function(
   # Sort it
   time_files <- sort(time_files)
 
-  # Import time data
+  # Import Time data
   if (length(time_files) != 0L) {
 
     for (i in seq_along(time_files)) {
@@ -474,17 +482,19 @@ import_otree <- function(
           }
         }, warning = function(w) {
           # Append warning message
-          warningfiles <<- rbind(warningfiles,
+          env$warningfiles <- rbind(env$warningfiles,
                                  data.frame(file = time_files[i],
-                                            content = as.character(w)))
+                                            content = as.character(w),
+                                            stringsAsFactors = FALSE))
           invokeRestart("muffleWarning")
         })
       }, error = function(e) {
 
         # Append error message
-        errorfiles <<- rbind(errorfiles,
+        env$errorfiles <- rbind(env$errorfiles,
                              data.frame(file = time_files[i],
-                                        content = as.character(e)))
+                                        content = as.character(e),
+                                        stringsAsFactors = FALSE))
       })
     }
   }
@@ -525,16 +535,18 @@ import_otree <- function(
             }
 
           }, warning = function(w) {
-            warningfiles <<- rbind(warningfiles,
+            env$warningfiles <- rbind(env$warningfiles,
                                data.frame(file = chat_files[i],
-                                          content = as.character(w)))
+                                          content = as.character(w),
+                                          stringsAsFactors = FALSE))
             invokeRestart("muffleWarning")
           })
 
         }, error = function(e) {
-          errorfiles <<- rbind(errorfiles,
+          env$errorfiles <- rbind(env$errorfiles,
                                data.frame(file = chat_files[i],
-                                          content = as.character(e)))
+                                          content = as.character(e),
+                                          stringsAsFactors = FALSE))
         })
         # Info: That's so complicated, because tryCatch does not
         # continue after warnings and withCallingHandlers throws errors
@@ -559,9 +571,9 @@ import_otree <- function(
       delete_dropouts(oTree,
                       final_apps = final_apps,
                       final_pages = final_pages,
-                      info = TRUE)},
-      message = function(c) {
-        other_messages <<- c$message
+                      info = TRUE)
+      }, message = function(c) {
+        env$other_messages <- c$message
         invokeRestart("muffleMessage")
       }
     )
@@ -579,17 +591,18 @@ import_otree <- function(
                               numapps,
                               " app(s) and/or all_apps_wide"))
 
-      if (!is.null(errorfiles) &&
-          !nrow(errorfiles) == 0L) {
+      if (!is.null(env$errorfiles) &&
+          !nrow(env$errorfiles) == 0L) {
 
         # Make error messages
-        errorfiles$pasteresult <- paste0("File: ",
-                                         errorfiles$file,
+        env$errorfiles$pasteresult <- paste0("File: ",
+                                         env$errorfiles$file,
                                          ": ",
-                                         errorfiles$content)
+                                         env$errorfiles$content)
 
         errormessages <- paste0("Errors when importing these files:\n",
-                                paste(collapse = "\n", errorfiles$pasteresult))
+                                paste(collapse = "\n",
+                                      env$errorfiles$pasteresult))
 
         # Throw an error if there is nothing else in the oTree list
         if (length(oTree) == 0L) {
@@ -597,23 +610,26 @@ import_otree <- function(
         }
 
         # Combine with other messages
-        other_messages <- c(other_messages, errormessages)
+        env$other_messages <- c(env$other_messages, errormessages)
       }
 
       # First check if the file is not already in errorfiles
-      warningfiles <- warningfiles[!(warningfiles$file %in% errorfiles$file), ]
+      env$warningfiles <- env$warningfiles[!(env$warningfiles$file %in%
+                                       env$errorfiles$file), ]
 
-      if (!is.null(warningfiles) && !(nrow(warningfiles) == 0L)) {
+      if (!is.null(env$warningfiles) && !(nrow(env$warningfiles) == 0L)) {
+        # Does this even occur? Usually warnings are also in errors!
         # Make warning message
-        warningfiles$pasteresult <- paste0("File: ", warningfiles$file,
-                                           ": ", warningfiles$content)
+        env$warningfiles$pasteresult <-
+          paste0("File: ", env$warningfiles$file,
+                 ": ", env$warningfiles$content)
 
         # Combine with other messages
-        other_messages <- c(
+        env$other_messages <- c(
             paste0(
               "Warnings when importing these files (and other warnings):\n",
-              paste(collapse = "\n", warningfiles$pasteresult),
-              other_messages))
+              paste(collapse = "\n", env$warningfiles$pasteresult),
+              env$other_messages))
       }
 
       if ("Time" %in% names(oTree)) {
@@ -631,7 +647,7 @@ import_otree <- function(
       my_messages <- paste0(my_messages, "\n",
                            time_message, "\n",
                            chat_message, "\n",
-                           paste(other_messages, collapse = "\n"))
+                           paste(env$other_messages, collapse = "\n"))
       message(my_messages)
   }
 
