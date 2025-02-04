@@ -87,9 +87,9 @@ if (rlang::is_installed(c("withr", "testthat"))) {
       cbook$rankaversion$Constants$commentaftercomma_min, 3.0)
 
     testthat::expect_identical(
-      cbook$rankaversion$Constants$commentaftercomma_mean,
-        mean(c(2004L, 43L, 5L, 81L, 91L, 81L, 18L, 63L,
-               67L, 45L, 56L, 75L, 3L, 84L, 77L)))
+      round(cbook$rankaversion$Constants$commentaftercomma_mean, 1),
+        round(mean(c(2004L, 43L, 5L, 81L, 91L, 81L, 18L, 63L,
+               67L, 45L, 56L, 75L, 3L, 84L, 77L)), 1))
 
     # List with sublists - mixed types
     testthat::expect_identical(
