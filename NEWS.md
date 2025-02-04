@@ -1,5 +1,10 @@
 **Changes in CITATION file, NEWS file are not documented.**
 
+# gmoTree 1.4.1
+
+* Changes in meta data and tests
+* Changes in functions: NONE
+
 # gmoTree 1.4.0
 
 * Changes in functions

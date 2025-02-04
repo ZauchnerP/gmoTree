@@ -1,6 +1,6 @@
-# Version 1.4.0 
+# Version 1.4.1 
 
-No comments.
+Updated citation files and corrected some tests. No changes in the functions.
 
 # Version 1.3.1
 

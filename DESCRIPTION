@@ -1,6 +1,6 @@
 Package: gmoTree
 Title: Get and Modify 'oTree' Data
-Version: 1.4.0
+Version: 1.4.1
 Date: 2025-02-04
 Authors@R:
     person("Patricia F.", "Zauchner", , "patricia.zauchner@gmx.at", role = c("aut", "trl", "cre", "cph"),

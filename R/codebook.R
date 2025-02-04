@@ -441,7 +441,7 @@ codebook <- function(path = ".",
     # Preamb deprecated
     if (!isFALSE(preamb)) {
       lifecycle::deprecate_warn(
-        when = "1.4.0",
+        when = "1.4.1",
         what = "codebook(preamb)",
         details = " Please remove old preamble text from your old codebooks, as it contains errors."
       )
