@@ -116,8 +116,8 @@ if (rlang::is_installed(c("withr", "testthat"))) {
       cbook$rankaversion$Constants$onelevelvectorn_min, 1.0)
     testthat::expect_identical(
       cbook$rankaversion$Constants$onelevelvectorn_max, 17.0)
-    testthat::expect_identical(
-      cbook$rankaversion$Constants$onelevelvectorn_mean,
+    testthat::expect_true(
+      cbook$rankaversion$Constants$onelevelvectorn_mean ==
       mean(unlist(cbook$rankaversion$Constants$onelevelvectorn)))
 
     testthat::expect_identical(
@@ -707,6 +707,20 @@ if (rlang::is_installed(c("withr", "testthat"))) {
       output = "list",
       output_file = "cb_severallines",
       doc_info = TRUE)
+    
+    #  The newline sign \ should be removed: 
+    testthat::expect_true(
+      cbook$ocode_count$C$STRING_TO_GUESS ==
+        paste0("Die ältesten bekannten kieferlosen Fischartigen ", 
+        "(z. B. die Pteraspidomorphi) stammen aus dem frühen Ordovizium ", 
+        "vor rund 450–470 Millionen Jahren."))
+    
+    testthat::expect_true(
+    cbook$ocode_count$C$SOLUTION ==
+      paste0("get_char_counts(Die ältesten bekannten kieferlosen Fischartigen ", 
+      "(z. B. die Pteraspidomorphi) stammen aus dem frühen Ordovizium ", 
+      "vor rund 450–470 Millionen Jahren.)"
+    ))
   })
 
   testthat::test_that("Codebook (w) - vector var in settings and constants", {
@@ -791,10 +805,12 @@ if (rlang::is_installed(c("withr", "testthat"))) {
       doc_info = FALSE,
       app = "bargaining")
 
-   cbook$bargaining$Player$level2$choices[1L] == "No, I won't"
-   cbook$bargaining$Player$level2$choices[2L] == "yes, I will"
-   cbook$bargaining$Player$level2$choices[3L] == "Maybe I'll do"
-
+   # Tests
+   test1 <- cbook$bargaining$Player$level2$choices[1L] == "No, I won't"
+   test2 <- cbook$bargaining$Player$level2$choices[2L] == "yes, I will"
+   test3 <- cbook$bargaining$Player$level2$choices[3L] == "Maybe I'll do"
+   
+   testthat::expect_true(all(c(test1, test2, test3)))
   })
 
   testthat::test_that("Codebook - documentation of variables", {
@@ -981,8 +997,11 @@ if (rlang::is_installed(c("withr", "testthat"))) {
         settings_replace = NULL,
         doc_info = FALSE)
 
-    cbook$MIG1$Player$money_in_month$choices[1L] == "0-399"
-    cbook$MIG1$Player$money_in_month$choices[2L] == "400-699"
+    testthat::expect_true(
+      cbook$end$Player$money_in_month$choices$value[1L] == "0-399")
+    
+    testthat::expect_true(
+      cbook$end$Player$money_in_month$choices$value[2L] == "400-699")
   })
 
   testthat::test_that("Codebook - newlines in doc", {
